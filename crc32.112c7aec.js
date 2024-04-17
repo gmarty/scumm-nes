@@ -1,0 +1,2 @@
+(0,globalThis.parcelRequire3956.register)("axHDN",function(e,t){Object.defineProperty(e.exports,"default",{get:()=>l,set:void 0,enumerable:!0,configurable:!0});let r=(()=>{let e;let t=Array(256);for(let r=0;r<256;r++){e=r;for(let t=0;t<8;t++)e=1&e?3988292384^e>>>1:e>>>1;t[r]=e}return t})();var l=e=>{let t=-1;for(let l=0;l<e.byteLength;l++)t=t>>>8^r[(t^e.getUint8(l))&255];return(-1^t)>>>0}});
+//# sourceMappingURL=crc32.112c7aec.js.map
