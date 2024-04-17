@@ -16,7 +16,7 @@ const navigation = [
   },
   {
     name: 'GitHub',
-    href: pkg.homepage,
+    href: 'https://github.com/gmarty/scumm-nes',
     icon: (props) => (
       <svg
         viewBox="0 0 24 24"
