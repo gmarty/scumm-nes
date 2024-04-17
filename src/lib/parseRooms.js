@@ -320,6 +320,8 @@ const parseRooms = (arrayBuffer, i, offset = 0, characters = {}) => {
     const objectNameParser = new Parser(
       arrayBuffer.slice(objectOffs + objNameOffs, objectOffs + objectSize),
     );
+    // @todo Set the end of the ArrayBuffer slice.
+    const objectImagesParser = new Parser(arrayBuffer.slice(objectImageOffs));
     let objName = '';
     let charCode = '';
     try {
@@ -339,7 +341,6 @@ const parseRooms = (arrayBuffer, i, offset = 0, characters = {}) => {
       arrayBuffer.slice(objectOffs + 0x0f, objectOffs + objectSize),
     );
     const objScripts = [];
-    cur = 0x0f;
     while (objectScriptOffsParser.pointer < objectSize) {
       const verbId = objectScriptOffsParser.getUint8();
       if (verbId === 0) {
@@ -354,8 +355,6 @@ const parseRooms = (arrayBuffer, i, offset = 0, characters = {}) => {
     if (objectImageOffs === objectsStart) {
       tiles = null;
     } else {
-      // @todo Set the end of the ArrayBuffer slice.
-      const objectImagesParser = new Parser(arrayBuffer.slice(objectImageOffs));
       tiles = new Array(objHeight);
       for (let i = 0; i < objHeight; i++) {
         tiles[i] = [];
@@ -381,8 +380,8 @@ const parseRooms = (arrayBuffer, i, offset = 0, characters = {}) => {
     objectImages.push({ tiles });
 
     // @fixme This does not account for object scripts.
-    if (objectCodeMap.to < objectOffs + cur) {
-      objectCodeMap.to = objectOffs + cur;
+    if (objectCodeMap.to < objectOffs + objectImagesParser.pointer - 1) {
+      objectCodeMap.to = objectOffs + objectImagesParser.pointer - 1;
     }
 
     // Calculate the number of object script given the value of object name offset.
