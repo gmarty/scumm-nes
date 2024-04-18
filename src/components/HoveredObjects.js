@@ -1,17 +1,18 @@
 import { clsx } from 'clsx';
 
 const HoveredObjects = ({
+  width,
+  height,
   objects,
   hoveredObject,
   setHoveredObject,
   toggleObjectState,
-  zoom,
 }) => {
   return objects.map((object, i) => {
-    const width = object.width * 8 * zoom;
-    const height = object.height * 8 * zoom;
-    const left = object.x * 8 * zoom;
-    const top = object.y * 8 * zoom;
+    const objWidth = (object.width * 100) / width;
+    const objHeight = (object.height * 100) / height;
+    const left = (object.x * 100) / width;
+    const top = (object.y * 100) / height;
 
     return (
       <div
@@ -23,7 +24,12 @@ const HoveredObjects = ({
           'absolute cursor-pointer',
           hoveredObject === i && 'bg-primary-600/50',
         )}
-        style={{ width, height, left, top }}></div>
+        style={{
+          width: `${objWidth}%`,
+          height: `${objHeight}%`,
+          left: `${left}%`,
+          top: `${top}%`,
+        }}></div>
     );
   });
 };

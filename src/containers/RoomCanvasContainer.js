@@ -25,8 +25,8 @@ const RoomCanvasContainer = ({
       ref={canvasRef}
       width={width * 8}
       height={height * 8}
-      className="rounded"
-      style={{ width: width * 8 * zoom }}
+      className="w-full rounded"
+      style={{ maxWidth: width * 8 * zoom }}
     />
   );
 };

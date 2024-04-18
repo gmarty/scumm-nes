@@ -26,11 +26,12 @@ const Room = ({
           zoom={zoom}
         />
         <HoveredObjects
+          width={room.header.width}
+          height={room.header.height}
           objects={room.objects}
           hoveredObject={hoveredObject}
           setHoveredObject={setHoveredObject}
           toggleObjectState={toggleObjectState}
-          zoom={zoom}
         />
       </div>
     </>
