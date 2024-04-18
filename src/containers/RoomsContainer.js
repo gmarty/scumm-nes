@@ -58,6 +58,7 @@ const RoomsContainer = ({ rooms, roomgfx }) => {
           <RoomsObjectList
             objects={room.objects}
             objectImages={room.objectImages}
+            hoveredObject={hoveredObject}
             setHoveredObject={setHoveredObject}
             selectedObjects={selectedObjects}
             setSelectedObjectState={setSelectedObjectState}
@@ -73,6 +74,7 @@ const RoomsContainer = ({ rooms, roomgfx }) => {
             baseTiles={baseTiles}
             roomgfc={roomgfc}
             hoveredObject={hoveredObject}
+            setHoveredObject={setHoveredObject}
             selectedObjects={selectedObjects}
             toggleObjectState={toggleObjectState}
           />

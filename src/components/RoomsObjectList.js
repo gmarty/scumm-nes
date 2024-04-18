@@ -4,6 +4,7 @@ import ColumnListItem from './ColumnListItem';
 const RoomsObjectList = ({
   objects,
   objectImages,
+  hoveredObject,
   setHoveredObject,
   selectedObjects,
   setSelectedObjectState,
@@ -21,9 +22,12 @@ const RoomsObjectList = ({
       return (
         <ColumnListItem
           key={i}
-          className="ml-5 flex whitespace-nowrap leading-4 md:ml-6"
           onMouseOver={() => setHoveredObject(i)}
-          onMouseLeave={() => setHoveredObject(null)}>
+          onMouseLeave={() => setHoveredObject(null)}
+          className={clsx(
+            'flex whitespace-nowrap pl-6 leading-4 sm:pl-8 md:pl-9 lg:pl-10 xl:pl-11',
+            hoveredObject === i && 'bg-slate-300',
+          )}>
           <span className={namedClass}>{name}</span>
         </ColumnListItem>
       );
@@ -32,9 +36,12 @@ const RoomsObjectList = ({
     return (
       <ColumnListItem
         key={i}
-        className="flex gap-1 whitespace-nowrap leading-4 sm:gap-2"
         onMouseOver={() => setHoveredObject(i)}
-        onMouseLeave={() => setHoveredObject(null)}>
+        onMouseLeave={() => setHoveredObject(null)}
+        className={clsx(
+          'flex gap-1 whitespace-nowrap leading-4 sm:gap-2',
+          hoveredObject === i && 'bg-slate-300',
+        )}>
         <input
           type="checkbox"
           id={id}

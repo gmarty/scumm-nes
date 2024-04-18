@@ -7,6 +7,7 @@ const Room = ({
   baseTiles,
   roomgfc,
   hoveredObject,
+  setHoveredObject,
   selectedObjects,
   toggleObjectState,
 }) => {
@@ -27,6 +28,7 @@ const Room = ({
         <HoveredObjects
           objects={room.objects}
           hoveredObject={hoveredObject}
+          setHoveredObject={setHoveredObject}
           toggleObjectState={toggleObjectState}
           zoom={zoom}
         />
