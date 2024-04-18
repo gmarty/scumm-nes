@@ -43,7 +43,7 @@ const RoomsObjectList = ({
           className="size-4 cursor-pointer rounded border-gray-300 text-primary-600 focus:ring-primary-600"
         />
         <label
-          for={id}
+          htmlFor={id}
           className={clsx('cursor-pointer', namedClass)}>
           {name}
         </label>
