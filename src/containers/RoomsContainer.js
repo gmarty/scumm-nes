@@ -37,6 +37,12 @@ const RoomsContainer = ({ rooms, roomgfx }) => {
     setSelectedObjects(newSelectedObjects);
   };
 
+  const toggleObjectState = (id) => {
+    const newSelectedObjects = [...selectedObjects];
+    newSelectedObjects[id] = !newSelectedObjects[id];
+    setSelectedObjects(newSelectedObjects);
+  };
+
   return (
     <>
       <PrimaryColumn>
@@ -68,6 +74,7 @@ const RoomsContainer = ({ rooms, roomgfx }) => {
             roomgfc={roomgfc}
             hoveredObject={hoveredObject}
             selectedObjects={selectedObjects}
+            toggleObjectState={toggleObjectState}
           />
         )}
       </Main>

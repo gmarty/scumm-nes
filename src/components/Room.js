@@ -2,7 +2,14 @@ import ResourceMetadata from './ResourceMetadata';
 import RoomCanvasContainer from '../containers/RoomCanvasContainer';
 import HoveredObjects from './HoveredObjects';
 
-const Room = ({ room, baseTiles, roomgfc, hoveredObject, selectedObjects }) => {
+const Room = ({
+  room,
+  baseTiles,
+  roomgfc,
+  hoveredObject,
+  selectedObjects,
+  toggleObjectState,
+}) => {
   const zoom = 2;
 
   return (
@@ -20,6 +27,7 @@ const Room = ({ room, baseTiles, roomgfc, hoveredObject, selectedObjects }) => {
         <HoveredObjects
           objects={room.objects}
           hoveredObject={hoveredObject}
+          toggleObjectState={toggleObjectState}
           zoom={zoom}
         />
       </div>
