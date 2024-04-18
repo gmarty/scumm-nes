@@ -7,11 +7,14 @@ import Main from '../components/Main';
 import RoomsList from '../components/RoomsList';
 import RoomsObjectList from '../components/RoomsObjectList';
 import Room from '../components/Room';
+import RoomTabs from '../components/RoomTabs';
+import Palettes from '../components/Palettes';
 
 const RoomsContainer = ({ rooms, roomgfx }) => {
   const { roomId } = useParams();
   const [hoveredObject, setHoveredObject] = useState(null);
   const [selectedObjects, setSelectedObjects] = useState([]);
+  const [currentTab, setCurrentTab] = useState('Palettes');
   const [room, setRoom] = useState(null);
 
   const currentRoomId =
@@ -69,15 +72,26 @@ const RoomsContainer = ({ rooms, roomgfx }) => {
         {!room ? (
           <h1>Rooms</h1>
         ) : (
-          <Room
-            room={room}
-            baseTiles={baseTiles}
-            roomgfc={roomgfc}
-            hoveredObject={hoveredObject}
-            setHoveredObject={setHoveredObject}
-            selectedObjects={selectedObjects}
-            toggleObjectState={toggleObjectState}
-          />
+          <>
+            <Room
+              room={room}
+              baseTiles={baseTiles}
+              roomgfc={roomgfc}
+              hoveredObject={hoveredObject}
+              setHoveredObject={setHoveredObject}
+              selectedObjects={selectedObjects}
+              toggleObjectState={toggleObjectState}
+            />
+            <RoomTabs
+              currentTab={currentTab}
+              setCurrentTab={setCurrentTab}
+            />
+            {currentTab === 'Palettes' && (
+              <Palettes nametable={room.nametable} />
+            )}
+            {currentTab === 'Tilesets' && <h2>Tilesets</h2>}
+            {currentTab === 'Scripts' && <h2>Scripts</h2>}
+          </>
         )}
       </Main>
     </>
