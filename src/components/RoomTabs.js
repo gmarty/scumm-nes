@@ -20,7 +20,7 @@ const RoomTabs = ({ currentTab, setCurrentTab }) => {
           name="tabs"
           defaultValue={tabs.find((tab) => tab.current).name}
           onChange={({ target }) => setCurrentTab(target.value)}
-          className="block w-full rounded-md border-slate-300 focus:border-primary-500 focus:ring-primary-500">
+          className="block w-full rounded border-slate-300 focus:border-primary-500 focus:ring-primary-500">
           {tabs.map((tab) => (
             <option key={tab.name}>{tab.name}</option>
           ))}
@@ -38,7 +38,7 @@ const RoomTabs = ({ currentTab, setCurrentTab }) => {
                 tab.current
                   ? 'bg-slate-200 text-slate-700'
                   : 'text-slate-500 hover:text-slate-700',
-                'rounded-md px-3 py-2 text-sm font-medium',
+                'rounded px-3 py-2 text-sm font-medium',
               )}
               aria-current={tab.current ? 'page' : undefined}>
               {tab.name}

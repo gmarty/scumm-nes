@@ -25,6 +25,7 @@ const RoomCanvasContainer = ({
       ref={canvasRef}
       width={width * 8}
       height={height * 8}
+      className="rounded"
       style={{ width: width * 8 * zoom }}
     />
   );
