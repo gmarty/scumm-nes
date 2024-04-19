@@ -12,9 +12,7 @@ const RoomsObjectList = ({
   return objects.map((object, i) => {
     // Trim the final @.
     const name = object.name.replace(/@+$/, '') || 'Unnamed object';
-    const namedClass = object.name
-      ? 'first-letter:capitalize'
-      : 'italic text-slate-500';
+    const namedClass = object.name ? 'first-letter:capitalize' : 'italic';
     const id = `object-${i}`;
     const enabled = selectedObjects[i];
 

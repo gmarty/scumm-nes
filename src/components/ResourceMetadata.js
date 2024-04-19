@@ -14,7 +14,7 @@ const ResourceMetadata = ({ metadata }) => {
   );
 
   return (
-    <div className="grid w-max grid-cols-[auto_auto_auto] gap-x-2 gap-y-1 whitespace-nowrap rounded bg-slate-200 p-2 text-xs text-slate-700">
+    <div className="font-monocode grid w-max grid-cols-[auto_auto_auto] gap-x-2 gap-y-1 whitespace-nowrap rounded bg-slate-200 p-2 text-xs text-slate-700">
       <div className="font-bold">payload offset:</div>
       <div className="text-right font-mono">0x{hex(metadata.offset)}</div>
       <div className="font-mono opacity-50">({metadata.offset})</div>

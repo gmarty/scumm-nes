@@ -49,7 +49,7 @@ export default function Footer() {
   return (
     <footer className="bg-slate-900">
       <div className="flex max-w-7xl items-center justify-between gap-x-2 px-3 py-2 md:px-4">
-        <p className="text-balance text-center text-xs text-slate-400">
+        <p className="font-geohumanist text-balance text-center text-xs text-slate-400">
           &copy; 2024 SCUMM NES resource explorer
         </p>
         <div className="flex gap-x-2 sm:gap-x-4 md:gap-x-6">

@@ -2,7 +2,7 @@ const MainHeader = ({ title, children }) => {
   return (
     <div className="flex justify-between gap-4">
       {title && (
-        <h1 className="whitespace-nowrap text-2xl font-semibold text-slate-700">
+        <h1 className="whitespace-nowrap text-2xl font-semibold text-slate-700 md:text-3xl">
           {title}
         </h1>
       )}

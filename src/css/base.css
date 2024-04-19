@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  @apply font-neogrote;
+  @apply font-normal;
+  @apply bg-white;
+}
+
 canvas {
   image-rendering: pixelated;
 }
