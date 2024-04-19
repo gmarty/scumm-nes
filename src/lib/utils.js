@@ -8,16 +8,6 @@ const hex = (n, len = 2) => {
   return zeroPad(str, Math.max(len, l));
 };
 
-const decodeChar = (charCode, characters = {}) => {
-  let char = String.fromCharCode(charCode);
-
-  if (typeof characters[char] !== 'undefined') {
-    return characters[char];
-  }
-
-  return char;
-};
-
 const formatBytes = (bytes, decimals = 2) => {
   const k = 1024;
   const dm = decimals < 0 ? 0 : decimals;
@@ -36,4 +26,4 @@ const formatPercentage = (percent, decimals = 2) => {
   return `${(percent * 100).toFixed(dm)}%`;
 };
 
-export { zeroPad, hex, decodeChar, formatBytes, formatPercentage };
+export { zeroPad, hex, formatBytes, formatPercentage };

@@ -1,10 +1,9 @@
 import Parser from './parser';
-import { decodeChar } from './utils';
 
 const assert = console.assert;
 
 const parsePreps = (arrayBuffer, i, offset = 0, characters = {}) => {
-  const parser = new Parser(arrayBuffer);
+  const parser = new Parser(arrayBuffer, characters);
   const metadata = {
     id: i,
     offset,
@@ -12,21 +11,20 @@ const parsePreps = (arrayBuffer, i, offset = 0, characters = {}) => {
   };
 
   const preps = [];
-  let charCode;
+  let char;
   let prep = '';
 
-  for (let i = 0; i < arrayBuffer.byteLength; i++) {
-    charCode = parser.getUint8();
-    if (charCode === 0x00) {
+  for (let i = 0; i < parser.length; i++) {
+    char = parser.getChar();
+    if (char === 0x00) {
       preps.push(prep);
       prep = '';
       continue;
     }
-
-    prep += decodeChar(charCode, characters);
+    prep += char;
   }
 
-  assert(charCode === 0x00, 'The final character is not 0x00.');
+  assert(char === 0x00, 'The final character is not 0x00.');
 
   return {
     metadata,

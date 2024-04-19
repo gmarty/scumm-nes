@@ -1,5 +1,4 @@
 import Parser from './parser';
-import { decodeChar } from './utils';
 
 const assert = console.assert;
 
@@ -280,6 +279,8 @@ const parseRooms = (arrayBuffer, i, offset = 0, characters = {}) => {
 
     // @todo Set the end of the ArrayBuffer slice.
     const objectsParser = new Parser(arrayBuffer.slice(objectOffs));
+    // @todo Set the end of the ArrayBuffer slice.
+    const objectImagesParser = new Parser(arrayBuffer.slice(objectImageOffs));
 
     // Object content
     const objectSize = objectsParser.getUint16();
@@ -319,21 +320,18 @@ const parseRooms = (arrayBuffer, i, offset = 0, characters = {}) => {
     // Parse object name.
     const objectNameParser = new Parser(
       arrayBuffer.slice(objectOffs + objNameOffs, objectOffs + objectSize),
+      characters,
     );
-    // @todo Set the end of the ArrayBuffer slice.
-    const objectImagesParser = new Parser(arrayBuffer.slice(objectImageOffs));
+
     let objName = '';
-    let charCode = '';
-    try {
-      do {
-        charCode = objectNameParser.getUint8();
-        if (charCode === 0x00) {
-          break;
-        }
-        objName += decodeChar(charCode, characters);
-      } while (objectNameParser.pointer < objectSize);
-    } catch (err) {
-      console.error(err);
+    let char = '';
+
+    for (let i = 0; i < objectNameParser.length; i++) {
+      char = objectNameParser.getChar();
+      if (char === 0x00) {
+        break;
+      }
+      objName += char;
     }
 
     // Parse object script offsets.
