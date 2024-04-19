@@ -11,13 +11,16 @@ const Room = ({
   selectedObjects,
   toggleObjectState,
 }) => {
+  const { width } = room.header;
   const zoom = 2;
 
   return (
     <>
       <h1>Room {room.metadata.id}</h1>
       <ResourceMetadata metadata={room.metadata} />
-      <div className="relative overflow-hidden">
+      <div
+        className="relative overflow-hidden"
+        style={{ maxWidth: width * 8 * zoom }}>
         <RoomCanvasContainer
           room={room}
           baseTiles={baseTiles}
