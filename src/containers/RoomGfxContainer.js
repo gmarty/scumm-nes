@@ -1,9 +1,10 @@
 import Main from '../components/Main';
+import MainHeader from '../components/MainHeader';
 
 const RoomGfxContainer = ({ roomgfx }) => {
   return (
     <Main>
-      <h1>Room Gfx</h1>
+      <MainHeader title="Room Gfx" />
     </Main>
   );
 };

@@ -1,9 +1,10 @@
 import Main from '../components/Main';
+import MainHeader from '../components/MainHeader';
 
 const RomMapContainer = ({ rom, res, rooms }) => {
   return (
     <Main>
-      <h1>ROM Map</h1>
+      <MainHeader title="ROM Map" />
     </Main>
   );
 };

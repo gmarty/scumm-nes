@@ -1,3 +1,4 @@
+import MainHeader from './MainHeader';
 import ResourceMetadata from './ResourceMetadata';
 import RoomCanvasContainer from '../containers/RoomCanvasContainer';
 import HoveredObjects from './HoveredObjects';
@@ -16,8 +17,9 @@ const Room = ({
 
   return (
     <>
-      <h1>Room {room.metadata.id}</h1>
-      <ResourceMetadata metadata={room.metadata} />
+      <MainHeader title={`Room ${room.metadata.id}`}>
+        <ResourceMetadata metadata={room.metadata} />
+      </MainHeader>
       <div
         className="relative overflow-hidden"
         style={{ maxWidth: width * 8 * zoom }}>

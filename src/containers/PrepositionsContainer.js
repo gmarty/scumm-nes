@@ -1,7 +1,8 @@
 import SecondaryColumn from '../components/SecondaryColumn';
-import Main from '../components/Main';
 import ColumnListHeader from '../components/ColumnListHeader';
 import PrepositionsList from '../components/PrepositionsList';
+import Main from '../components/Main';
+import MainHeader from '../components/MainHeader';
 import ResourceMetadata from '../components/ResourceMetadata';
 
 const PrepositionsContainer = ({ preps, lang }) => {
@@ -15,8 +16,9 @@ const PrepositionsContainer = ({ preps, lang }) => {
         />
       </SecondaryColumn>
       <Main>
-        <h1>Prepositions</h1>
-        <ResourceMetadata metadata={preps.metadata} />
+        <MainHeader title="Prepositions">
+          <ResourceMetadata metadata={preps.metadata} />
+        </MainHeader>
       </Main>
     </>
   );
