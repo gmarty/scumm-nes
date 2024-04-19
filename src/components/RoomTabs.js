@@ -28,7 +28,7 @@ const RoomTabs = ({ currentTab, setCurrentTab }) => {
       </div>
       <div className="hidden sm:block">
         <nav
-          className="flex space-x-4"
+          className="flex gap-x-4"
           aria-label="Tabs">
           {tabs.map((tab) => (
             <button
