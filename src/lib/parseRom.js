@@ -7,7 +7,7 @@ const parseRom = (arrayBuffer, res) => {
   const roomgfx = [];
   const preps = [];
 
-  for (let i = 0; i < res.rooms.length; i++) {
+  for (let i = 0; i < res?.rooms?.length; i++) {
     const [offset, length] = res.rooms[i];
 
     if (length === 0) {
@@ -20,7 +20,7 @@ const parseRom = (arrayBuffer, res) => {
     rooms.push(item);
   }
 
-  for (let i = 0; i < res.roomgfx.length; i++) {
+  for (let i = 0; i < res?.roomgfx?.length; i++) {
     const [offset, length] = res.roomgfx[i];
 
     const buffer = arrayBuffer.slice(offset, offset + length);
@@ -29,7 +29,7 @@ const parseRom = (arrayBuffer, res) => {
     roomgfx.push(item);
   }
 
-  for (let i = 0; i < res.preplist.length; i++) {
+  for (let i = 0; i < res?.preplist?.length; i++) {
     const [offset, length] = res.preplist[i];
 
     const buffer = arrayBuffer.slice(offset, offset + length);

@@ -27,9 +27,6 @@ const DropZone = ({ children, isDragActive, isDragReject, errorCode }) => {
     case 'japanese-rom-unsupported':
       errorMsg = 'The Japanese Famicom version is not supported.';
       break;
-    case 'prototype-rom-unsupported':
-      errorMsg = 'The prototype version is not supported.';
-      break;
     case 'invalid-rom-file':
       errorMsg = 'Upload one of the ROMs of Maniac Mansion on NES.';
       break;

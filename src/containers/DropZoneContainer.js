@@ -28,8 +28,9 @@ const DropZoneContainer = ({ onFile }) => {
     };
     reader.onload = async () => {
       const { default: crc32 } = await import('../lib/crc32');
-      const { isJapaneseVersion, isPrototypeVersion, getResFromCrc32 } =
-        await import('../lib/getResFromCrc32');
+      const { isJapaneseVersion, getResFromCrc32 } = await import(
+        '../lib/getResFromCrc32'
+      );
 
       let arrayBuffer = reader.result;
       const dataView = new DataView(arrayBuffer);
@@ -37,11 +38,6 @@ const DropZoneContainer = ({ onFile }) => {
 
       if (isJapaneseVersion(c)) {
         setErrorCode('japanese-rom-unsupported');
-        return;
-      }
-
-      if (isPrototypeVersion(c)) {
-        setErrorCode('prototype-rom-unsupported');
         return;
       }
 

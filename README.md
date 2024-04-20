@@ -28,8 +28,9 @@ The following version are supported:
 - Italian
 - Spanish
 - Swedish
+- American English prototype (partial support)
 
-The Japanese version and the prototype are not supported.
+The Japanese version is not supported.
 
 ## What does it NOT do?
 
