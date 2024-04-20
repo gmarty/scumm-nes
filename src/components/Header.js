@@ -6,7 +6,7 @@ import meteor from '../assets/meteor.png';
 
 const navigation = [
   { name: 'Rooms', href: '/rooms/1' },
-  { name: 'Room Gfx', href: '/roomgfx' },
+  { name: 'Room Gfx', href: '/roomgfx/0' },
   { name: 'Prepositions', href: '/preps' },
   { name: 'ROM map', href: '/rom' },
 ];

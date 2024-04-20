@@ -9,6 +9,7 @@ import RoomsObjectList from '../components/RoomsObjectList';
 import Room from '../components/Room';
 import RoomTabs from '../components/RoomTabs';
 import Palettes from '../components/Palettes';
+import RoomGfx from '../components/RoomGfx';
 
 const RoomsContainer = ({ rooms, roomgfx }) => {
   const { roomId } = useParams();
@@ -52,7 +53,7 @@ const RoomsContainer = ({ rooms, roomgfx }) => {
         <ColumnListHeader>Rooms</ColumnListHeader>
         <RoomsList
           rooms={rooms}
-          currentRoomId={currentRoomId}
+          currentId={currentRoomId}
         />
       </PrimaryColumn>
       {room && room.objectImages.length > 0 && (
@@ -89,7 +90,14 @@ const RoomsContainer = ({ rooms, roomgfx }) => {
             {currentTab === 'Palettes' && (
               <Palettes nametable={room.nametable} />
             )}
-            {currentTab === 'Tilesets' && <h2>Tilesets</h2>}
+            {currentTab === 'Tilesets' && (
+              <RoomGfx
+                baseTiles={baseTiles}
+                nametable={room.nametable}
+                objectImages={room.objectImages}
+                roomgfc={roomgfc}
+              />
+            )}
             {currentTab === 'Scripts' && <h2>Scripts</h2>}
           </>
         )}

@@ -8,7 +8,7 @@ const ResourceMetadata = ({ metadata }) => {
       <div className="text-right font-mono">{metadata.decompressedSize}</div>
       <div className="font-mono opacity-50">
         ({formatPercentage(1 - metadata.size / metadata.decompressedSize)}{' '}
-        <span className="font-sans"> compression</span>)
+        <span className="font-sans"> compr.</span>)
       </div>
     </>
   );

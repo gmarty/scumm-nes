@@ -3,7 +3,7 @@ import { clsx } from 'clsx';
 const RoomTabs = ({ currentTab, setCurrentTab }) => {
   const tabs = [
     { name: 'Palettes', current: currentTab === 'Palettes' },
-    // { name: 'Tilesets', current: currentTab === 'Tilesets' },
+    { name: 'Tilesets', current: currentTab === 'Tilesets' },
     // { name: 'Scripts', current: currentTab === 'Scripts' },
   ];
 
@@ -28,7 +28,7 @@ const RoomTabs = ({ currentTab, setCurrentTab }) => {
       </div>
       <div className="hidden sm:block">
         <nav
-          className="flex gap-x-4"
+          className="flex gap-x-4 md:gap-5 xl:gap-6"
           aria-label="Tabs">
           {tabs.map((tab) => (
             <button

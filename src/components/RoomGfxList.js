@@ -1,10 +1,10 @@
 import ColumnListItem from './ColumnListItem';
 
-const RoomsList = ({ rooms, currentId }) => {
-  return rooms.map(({ metadata }) => {
+const RoomGfxList = ({ roomgfx, currentId }) => {
+  return roomgfx.map(({ metadata }) => {
     const selected = metadata.id === currentId;
-    const path = `/rooms/${metadata.id}`;
-    const label = `Room ${metadata.id}`;
+    const path = `/roomgfx/${metadata.id}`;
+    const label = `Tileset ${metadata.id}`;
 
     return (
       <ColumnListItem
@@ -16,4 +16,4 @@ const RoomsList = ({ rooms, currentId }) => {
   });
 };
 
-export default RoomsList;
+export default RoomGfxList;
