@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import PrimaryColumn from '../components/PrimaryColumn';
 import SecondaryColumn from '../components/SecondaryColumn';
-import ColumnListHeader from '../components/ColumnListHeader';
 import Main from '../components/Main';
 import RoomsList from '../components/RoomsList';
 import RoomsObjectList from '../components/RoomsObjectList';
@@ -50,7 +49,6 @@ const RoomsContainer = ({ rooms, roomgfx }) => {
   return (
     <>
       <PrimaryColumn>
-        <ColumnListHeader>Rooms</ColumnListHeader>
         <RoomsList
           rooms={rooms}
           currentId={currentRoomId}
@@ -58,7 +56,6 @@ const RoomsContainer = ({ rooms, roomgfx }) => {
       </PrimaryColumn>
       {room && room.objectImages.length > 0 && (
         <SecondaryColumn>
-          <ColumnListHeader>Objects</ColumnListHeader>
           <RoomsObjectList
             objects={room.objects}
             objectImages={room.objectImages}

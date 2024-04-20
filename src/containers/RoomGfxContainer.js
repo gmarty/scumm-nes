@@ -1,6 +1,5 @@
 import { useParams } from 'react-router-dom';
 import PrimaryColumn from '../components/PrimaryColumn';
-import ColumnListHeader from '../components/ColumnListHeader';
 import RoomGfxList from '../components/RoomGfxList';
 import Main from '../components/Main';
 import MainHeader from '../components/MainHeader';
@@ -21,7 +20,6 @@ const RoomGfxContainer = ({ roomgfx }) => {
   return (
     <>
       <PrimaryColumn>
-        <ColumnListHeader>Room Gfx</ColumnListHeader>
         <RoomGfxList
           roomgfx={roomgfx}
           currentId={currentGfcId}
