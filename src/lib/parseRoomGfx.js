@@ -1,8 +1,8 @@
-import Parser from './parser';
+import Parser from './parser.js';
 
 const assert = console.assert;
 
-const parseRoomGfx = (arrayBuffer, i, offset = 0) => {
+const parseRoomGfx = (arrayBuffer, i = 0, offset = 0) => {
   const parser = new Parser(arrayBuffer);
   const metadata = {
     id: i,

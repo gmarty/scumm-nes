@@ -21,6 +21,7 @@
     "staticPath": "public"
   },
   "scripts": {
+    "test": "node --test",
     "dev": "parcel",
     "start": "parcel",
     "build": "parcel build --public-url /scumm-nes"

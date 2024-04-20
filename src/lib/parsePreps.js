@@ -1,8 +1,8 @@
-import Parser from './parser';
+import Parser from './parser.js';
 
 const assert = console.assert;
 
-const parsePreps = (arrayBuffer, i, offset = 0, characters = {}) => {
+const parsePreps = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
   const parser = new Parser(arrayBuffer, characters);
   const metadata = {
     id: i,
