@@ -11,3 +11,9 @@ root.render(
     <App />
   </BrowserRouter>,
 );
+
+if (process.env.NODE_ENV === 'production' && insights) {
+  // Load the analytics.
+  insights.init('OTy7QFoUv4bUuKzo');
+  insights.trackPages();
+}
