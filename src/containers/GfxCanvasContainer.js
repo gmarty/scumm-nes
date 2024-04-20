@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
+import clsx from 'clsx';
 
 // See https://colorhunt.co/palette/293462f24c4cec9b3bf7d716
 const ROOM_PALETTE = ['#293462', '#F24C4C', '#EC9B3B', '#F7D716'];
@@ -11,7 +12,7 @@ const UNUSED_PALETTE = [
   'hsl(0, 0%, 90%)',
 ];
 
-const GfxContainer = ({
+const GfxCanvasContainer = ({
   gfx,
   nametable = null,
   objectImages = null,
@@ -48,10 +49,13 @@ const GfxContainer = ({
 
   return (
     <canvas
-      className={isComputing ? 'opacity-0 ' : 'opacity-100 transition-opacity'}
       ref={canvasRef}
       width={width}
       height={height}
+      className={clsx(
+        'rounded',
+        isComputing ? 'opacity-0' : 'opacity-100 transition-opacity',
+      )}
       style={{ width: width * zoom, height: height * zoom }}
     />
   );
@@ -75,24 +79,26 @@ const draw = (
     .filter(Boolean)
     .flat(2);
 
-  for (let i = 0; i < tilesNum; i++) {
+  for (let tile = 0; tile < tilesNum; tile++) {
     for (let j = 0; j < 8; j++) {
-      const n1 = gfx[i * 2 * 8 + j];
-      const n2 = gfx[(i * 2 + 1) * 8 + j];
+      const n1 = gfx[tile * 2 * 8 + j];
+      const n2 = gfx[(tile * 2 + 1) * 8 + j];
       for (let k = 0; k < 8; k++) {
         const mask = 1 << k;
         const val = (n1 & mask ? 1 : 0) | ((n2 & mask ? 1 : 0) << 1);
 
-        if (!nametableTiles || nametableTiles.includes(i + nametableStart)) {
-          ctx.fillStyle = ROOM_PALETTE[val];
-        } else if (objectImagesTiles.includes(i + nametableStart)) {
-          ctx.fillStyle = OBJECT_PALETTE[val];
+        let pal;
+        if (!nametableTiles || nametableTiles.includes(tile + nametableStart)) {
+          pal = ROOM_PALETTE;
+        } else if (objectImagesTiles.includes(tile + nametableStart)) {
+          pal = OBJECT_PALETTE;
         } else {
-          ctx.fillStyle = UNUSED_PALETTE[val];
+          pal = UNUSED_PALETTE;
         }
 
-        const sprX = i % rowLength;
-        const sprY = Math.floor(i / rowLength);
+        const sprX = tile % rowLength;
+        const sprY = Math.floor(tile / rowLength);
+        ctx.fillStyle = pal[val];
         ctx.fillRect(
           sprX * 8 + 7 - k + spacing * sprX,
           sprY * 8 + j + spacing * sprY,
@@ -104,4 +110,4 @@ const draw = (
   }
 };
 
-export default GfxContainer;
+export default GfxCanvasContainer;

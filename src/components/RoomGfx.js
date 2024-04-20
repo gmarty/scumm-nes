@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import GfxContainer from '../containers/GfxContainer';
+import GfxCanvasContainer from '../containers/GfxCanvasContainer';
 
 const RoomGfx = ({ baseTiles, nametable, objectImages, roomgfc }) => {
   return (
@@ -8,7 +8,7 @@ const RoomGfx = ({ baseTiles, nametable, objectImages, roomgfc }) => {
         className="text-center text-sm"
         to="/roomgfx/0">
         Base tileset ({baseTiles.gfx.length / 8 / 2} tiles)
-        <GfxContainer
+        <GfxCanvasContainer
           gfx={baseTiles.gfx}
           nametable={nametable}
           objectImages={objectImages}
@@ -20,7 +20,7 @@ const RoomGfx = ({ baseTiles, nametable, objectImages, roomgfc }) => {
         className="text-center text-sm"
         to={`/roomgfx/${nametable.tileset}`}>
         Tileset {nametable.tileset} ({roomgfc.gfx.length / 8 / 2} tiles)
-        <GfxContainer
+        <GfxCanvasContainer
           gfx={roomgfc.gfx}
           nametable={nametable}
           objectImages={objectImages}

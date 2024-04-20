@@ -4,7 +4,7 @@ import RoomGfxList from '../components/RoomGfxList';
 import Main from '../components/Main';
 import MainHeader from '../components/MainHeader';
 import ResourceMetadata from '../components/ResourceMetadata';
-import GfxContainer from './GfxContainer';
+import GfxCanvasContainer from './GfxCanvasContainer';
 
 const RoomGfxContainer = ({ roomgfx }) => {
   const { gfcId } = useParams();
@@ -36,7 +36,7 @@ const RoomGfxContainer = ({ roomgfx }) => {
             <ResourceMetadata metadata={roomgfc.metadata} />
           )}
         </MainHeader>
-        <GfxContainer
+        <GfxCanvasContainer
           gfx={roomgfc.gfx}
           zoom={3}
         />

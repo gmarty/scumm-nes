@@ -1,4 +1,5 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
+import clsx from 'clsx';
 import { nesNTSCPalette as nesPalette } from '../lib/palettes';
 
 const RoomCanvasContainer = ({
@@ -9,14 +10,17 @@ const RoomCanvasContainer = ({
   zoom = 1,
 }) => {
   const canvasRef = useRef(null);
+  const [isComputing, setIsComputing] = useState(true);
   const { width, height } = room.header;
 
   useEffect(() => {
+    setIsComputing(true);
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
 
     setTimeout(() => {
       draw(ctx, room, baseTiles, roomgfc, selectedObjects);
+      setIsComputing(false);
     });
   }, [room, baseTiles, roomgfc, selectedObjects]);
 
@@ -25,7 +29,10 @@ const RoomCanvasContainer = ({
       ref={canvasRef}
       width={width * 8}
       height={height * 8}
-      className="w-full rounded"
+      className={clsx(
+        'w-full rounded',
+        isComputing ? 'opacity-0' : 'opacity-100 transition-opacity',
+      )}
       style={{ maxWidth: width * 8 * zoom }}
     />
   );
@@ -62,19 +69,19 @@ const draw = (ctx, room, baseTiles, roomgfc, selectedObjects) => {
   }
 
   // Now generate the image of the room.
-  for (let y = 0; y < 16; y++) {
-    for (let x = 2; x < 62; x++) {
-      let tile = nametableObjCopy[y][x];
+  for (let sprY = 0; sprY < 16; sprY++) {
+    for (let sprX = 2; sprX < 62; sprX++) {
+      let tile = nametableObjCopy[sprY][sprX];
 
-      let gfc = baseTiles.gfx;
+      let gfx = baseTiles.gfx;
       if (tile >= baseTilesNum) {
         tile -= baseTilesNum;
-        gfc = roomgfc.gfx;
+        gfx = roomgfc.gfx;
       }
 
       const paletteId =
-        (attributes[((y << 2) & 0x30) | ((x >> 2) & 0xf)] >>
-          (((y & 2) << 1) | (x & 2))) &
+        (attributes[((sprY << 2) & 0x30) | ((sprX >> 2) & 0xf)] >>
+          (((sprY & 2) << 1) | (sprX & 2))) &
         0x3;
       const pal = [
         palette[paletteId * 4],
@@ -84,14 +91,14 @@ const draw = (ctx, room, baseTiles, roomgfc, selectedObjects) => {
       ].map((p) => nesPalette[p]);
 
       for (let j = 0; j < 8; j++) {
-        const n1 = gfc[tile * 2 * 8 + j];
-        const n2 = gfc[(tile * 2 + 1) * 8 + j];
+        const n1 = gfx[tile * 2 * 8 + j];
+        const n2 = gfx[(tile * 2 + 1) * 8 + j];
         for (let k = 0; k < 8; k++) {
           const mask = 1 << k;
           const val = (n1 & mask ? 1 : 0) | ((n2 & mask ? 1 : 0) << 1);
 
           ctx.fillStyle = pal[val];
-          ctx.fillRect((x - 2) * 8 + 7 - k, y * 8 + j, 1, 1);
+          ctx.fillRect((sprX - 2) * 8 + 7 - k, sprY * 8 + j, 1, 1);
         }
       }
     }
