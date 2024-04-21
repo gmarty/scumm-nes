@@ -7,6 +7,7 @@ const RoomCanvasContainer = ({
   baseTiles,
   roomgfc,
   selectedObjects,
+  hoveredBox,
   zoom = 1,
 }) => {
   const canvasRef = useRef(null);
@@ -14,15 +15,15 @@ const RoomCanvasContainer = ({
   const { width, height } = room.header;
 
   useEffect(() => {
-    setIsComputing(true);
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
 
     setTimeout(() => {
       draw(ctx, room, baseTiles, roomgfc, selectedObjects);
+      drawBoxes(ctx, room.boxes, hoveredBox);
       setIsComputing(false);
     });
-  }, [room, baseTiles, roomgfc, selectedObjects]);
+  }, [room, selectedObjects, hoveredBox]);
 
   return (
     <canvas
@@ -103,6 +104,35 @@ const draw = (ctx, room, baseTiles, roomgfc, selectedObjects) => {
       }
     }
   }
+};
+
+const drawBoxes = (ctx, boxes, hoveredBox) => {
+  if (hoveredBox === null) {
+    return;
+  }
+
+  // Draw the outlines of all the other boxes.
+  ctx.strokeStyle = 'rgb(2,132,199,.8)'; // bg-primary-600/80
+  boxes
+    .filter((box, i) => i !== hoveredBox)
+    .forEach((box) => {
+      drawBox(ctx, box);
+      ctx.stroke();
+    });
+
+  // Fill in the currently hovered box.
+  ctx.fillStyle = 'rgb(2,132,199,.5)'; // bg-primary-600/50
+  drawBox(ctx, boxes[hoveredBox]);
+  ctx.fill();
+};
+
+const drawBox = (ctx, { uy, ly, ulx, urx, llx, lrx }) => {
+  ctx.beginPath();
+  ctx.moveTo((ulx - 1) * 8, (uy - 1) * 2);
+  ctx.lineTo((urx + 1) * 8, (uy - 1) * 2);
+  ctx.lineTo((lrx + 1) * 8, (ly + 1) * 2);
+  ctx.lineTo((llx - 1) * 8, (ly + 1) * 2);
+  ctx.lineTo((ulx - 1) * 8, (uy - 1) * 2);
 };
 
 export default RoomCanvasContainer;

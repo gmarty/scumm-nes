@@ -437,11 +437,15 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
     const mask = boxesParser.getUint8();
     const flags = boxesParser.getUint8();
 
+    assert(ly >= uy, 'Y box bounds are out of order.');
+
     assert(mask === 0 || mask === 1, 'Box mask is neither 0 nor 1.');
     assert(flags === 0 || flags === 5, 'Box flag is neither 0 nor 5.');
 
     boxes.push({ uy, ly, ulx, urx, llx, lrx, mask, flags });
   }
+
+  assert(boxes.length > 0, 'Room has no boxes.');
 
   map.push({
     type: 'boxes',

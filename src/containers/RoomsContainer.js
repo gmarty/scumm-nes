@@ -5,6 +5,7 @@ import SecondaryColumn from '../components/SecondaryColumn';
 import Main from '../components/Main';
 import RoomsList from '../components/RoomsList';
 import RoomsObjectList from '../components/RoomsObjectList';
+import RoomsBoxList from '../components/RoomsBoxList';
 import Room from '../components/Room';
 import RoomTabs from '../components/RoomTabs';
 import Palettes from '../components/Palettes';
@@ -14,6 +15,7 @@ const RoomsContainer = ({ rooms, roomgfx }) => {
   const { roomId } = useParams();
   const [hoveredObject, setHoveredObject] = useState(null);
   const [selectedObjects, setSelectedObjects] = useState([]);
+  const [hoveredBox, setHoveredBox] = useState(null);
   const [currentTab, setCurrentTab] = useState('Palettes');
   const [room, setRoom] = useState(null);
 
@@ -54,16 +56,24 @@ const RoomsContainer = ({ rooms, roomgfx }) => {
           currentId={currentRoomId}
         />
       </PrimaryColumn>
-      {room && room.objectImages.length > 0 && (
+      {(room?.objectImages?.length || room?.boxes?.length) && (
         <SecondaryColumn>
-          <RoomsObjectList
-            objects={room.objects}
-            objectImages={room.objectImages}
-            hoveredObject={hoveredObject}
-            setHoveredObject={setHoveredObject}
-            selectedObjects={selectedObjects}
-            setSelectedObjectState={setSelectedObjectState}
-          />
+          {room?.objectImages?.length > 0 && (
+            <RoomsObjectList
+              objects={room.objects}
+              objectImages={room.objectImages}
+              hoveredObject={hoveredObject}
+              setHoveredObject={setHoveredObject}
+              selectedObjects={selectedObjects}
+              setSelectedObjectState={setSelectedObjectState}
+            />
+          )}
+          {room?.boxes?.length > 0 && (
+            <RoomsBoxList
+              boxes={room.boxes}
+              setHoveredBox={setHoveredBox}
+            />
+          )}
         </SecondaryColumn>
       )}
       <Main>
@@ -79,6 +89,7 @@ const RoomsContainer = ({ rooms, roomgfx }) => {
               setHoveredObject={setHoveredObject}
               selectedObjects={selectedObjects}
               toggleObjectState={toggleObjectState}
+              hoveredBox={hoveredBox}
             />
             <RoomTabs
               currentTab={currentTab}

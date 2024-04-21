@@ -11,6 +11,7 @@ const Room = ({
   setHoveredObject,
   selectedObjects,
   toggleObjectState,
+  hoveredBox,
 }) => {
   const { width } = room.header;
   const zoom = 2;
@@ -28,6 +29,7 @@ const Room = ({
           baseTiles={baseTiles}
           roomgfc={roomgfc}
           selectedObjects={selectedObjects}
+          hoveredBox={hoveredBox}
           zoom={zoom}
         />
         <HoveredObjects
