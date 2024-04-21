@@ -8,7 +8,7 @@ const ColumnListHeader = ({ className, children, ...props }) => {
         className,
       )}
       {...props}>
-      {children}
+      <h2>{children}</h2>
     </li>
   );
 };

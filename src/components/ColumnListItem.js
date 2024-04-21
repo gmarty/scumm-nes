@@ -14,7 +14,7 @@ const ColumnListItem = ({ path, selected, className, children, ...props }) => {
   ) : (
     <li
       className={clsx(
-        'bg-slate-700 py-1 text-slate-200 hover:bg-slate-600 hover:text-slate-100',
+        'py-1 hover:bg-slate-600 hover:text-slate-100',
         className,
       )}
       {...props}>
