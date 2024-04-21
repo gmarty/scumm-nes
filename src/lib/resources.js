@@ -107,7 +107,7 @@ const usa = {
   crc32Rom: 0x68309d06,
 };
 // prettier-ignore
-const  eur = {
+const eur = {
   roomgfx: [
     [0x04001, 0x03B9], [0x043BA, 0x069E], [0x04A58, 0x0327], [0x04D7F, 0x053B], [0x052BA, 0x06BE],
     [0x05978, 0x0682], [0x05FFA, 0x0778], [0x06772, 0x0517], [0x06C89, 0x07FB], [0x07484, 0x07BE],
@@ -215,7 +215,7 @@ const  eur = {
   crc32Rom: 0x90333aea,
 };
 // prettier-ignore
-const  swe = {
+const swe = {
   roomgfx: [
     [0x04001, 0x03F0], [0x043F1, 0x069E], [0x04A8F, 0x0327], [0x04DB6, 0x053B], [0x052F1, 0x06BE],
     [0x059AF, 0x0682], [0x06031, 0x0778], [0x067A9, 0x0517], [0x06CC0, 0x07FB], [0x074BB, 0x07BE],
@@ -310,10 +310,12 @@ const  swe = {
   sprlens: [[0x13E6A, 0x0115], [0x07F4F, 0x0006]],
   sproffs: [[0x2BCE0, 0x022A], [0x0BF4C, 0x000C]],
   sprdata: [[0x2C401, 0x2BE0], [0x0FE6B, 0x008A]],
-  charset: [[0x3f739, 0x0090]],
+  charset: [[0x3f739, 0x0094]],
   preplist: [[0x3fba9, 0x000e]],
   characters: {
-    '[': 'ä', '<': 'é', '\\': 'å', '>': 'ö', ']': 'ù', '{': '???',
+    '<': 'ä', '[': 'é', '\\': 'å', '>': 'ö',
+    // The 'ù' sign is in the base tileset but
+    // does not seem to be configured.
   },
   lang: 'sv',
   crc32: 0x3f2bda65,
@@ -415,19 +417,18 @@ const fra = {
   sprlens: [[0x0FE61, 0x0115], [0x07ED2, 0x0006]],
   sproffs: [[0x2F959, 0x022A], [0x07F32, 0x000C]],
   sprdata: [[0x2CA28, 0x2BE0], [0x07E48, 0x008A]],
-  charset: [[0x3f739, 0x0090]],
+  charset: [[0x3f739, 0x009A]],
   preplist: [[0x3fbaf, 0x0010]],
   characters: {
-    '[': 'é', '<': 'à', '\\': 'è', '>': 'ç', ']': 'ê', '|': 'ô', '{': 'î',
-    '=': 'â',
-    // ù, û
+    '[': 'é', '<': 'à', '\\': 'è', '>': 'ç', ']': 'ê', '|': 'ô',
+    '{': 'î', '=': 'â', '}': 'ù', '_': 'û',
   },
   lang: 'fr',
   crc32: 0xf4b70bfe,
   crc32Rom: 0x9118cd29,
 };
 // prettier-ignore
-const  ger = {
+const ger = {
   roomgfx: [
     [0x04001, 0x0406], [0x04407, 0x069E], [0x04AA5, 0x0327], [0x04DCC, 0x053B], [0x05307, 0x06BE],
     [0x059C5, 0x0682], [0x06047, 0x0778], [0x067BF, 0x0517], [0x06CD6, 0x07FB], [0x074D1, 0x07BE],
@@ -522,17 +523,19 @@ const  ger = {
   sprlens: [[0x2BE1A, 0x0115], [0x07F65, 0x0006]],
   sproffs: [[0x2F81F, 0x022A], [0x0BF61, 0x000C]],
   sprdata: [[0x2c8ee, 0x2be0], [0x0fe61, 0x008a]],
-  charset: [[0x3f739, 0x0090]],
+  charset: [[0x3f739, 0x0096]],
   preplist: [[0x3fbab, 0x000e]],
   characters: {
-    '[': 'ö', '<': 'ß', '\\': 'ä', '>': 'ü', ']': '(', '|': ')', '{': 'è',
+    '=': 'ß', '\\': 'ä', '{': 'ö', '[': 'ü', '(': '(', ')': ')',
+    // The 'è' sign is in the base tileset but
+    // does not seem to be configured.
   },
   lang: 'de',
   crc32: 0x60ea98a0,
   crc32Rom: 0x05455e77,
 };
 // prettier-ignore
-const  esp = {
+const esp = {
   roomgfx: [
     [0x04001, 0x041B], [0x0441C, 0x069E], [0x04ABA, 0x0327], [0x04DE1, 0x053B], [0x0531C, 0x06BE],
     [0x059DA, 0x0682], [0x0605C, 0x0778], [0x067D4, 0x0517], [0x06CEB, 0x07FB], [0x074E6, 0x07BE],
@@ -627,19 +630,18 @@ const  esp = {
   sprlens: [[0x2efe1, 0x0115], [0x07f7a, 0x0006]],
   sproffs: [[0x2f447, 0x022a], [0x0bf6f, 0x000c]],
   sprdata: [[0x2c401, 0x2be0], [0x0fe67, 0x008a]],
-  charset: [[0x3f739, 0x0090]],
+  charset: [[0x3f739, 0x0099]],
   preplist: [[0x3fbae, 0x000f]],
   characters: {
-    '[': 'á', '<': 'é', '|': 'í', '>': 'ó', ']': 'ú', '_': 'ü', '{': '¡',
-    '=': 'ñ',
-    // ¿
+    '[': 'á', '<': 'é', '|': 'í', '>': 'ó', ']': 'ú',
+    '{': '¿', '}': '¡', '=': 'ñ', '_': 'ü',
   },
   lang: 'es',
   crc32: 0xf5b2afca,
   crc32Rom: 0x901d691d,
 };
 // prettier-ignore
-const  ita = {
+const ita = {
   roomgfx: [
     [0x04001, 0x03EF], [0x043F0, 0x069E], [0x04A8E, 0x0327], [0x04DB5, 0x053B], [0x052F0, 0x06BE],
     [0x059AE, 0x0682], [0x06030, 0x0778], [0x067A8, 0x0517], [0x06CBF, 0x07FB], [0x074BA, 0x07BE],
@@ -734,10 +736,10 @@ const  ita = {
   sprlens: [[0x23de9, 0x0115], [0x07f4e, 0x0006]],
   sproffs: [[0x2bc37, 0x022a], [0x0bf48, 0x000c]],
   sprdata: [[0x2c8c0, 0x2be0], [0x0fe61, 0x008a]],
-  charset: [[0x3f739, 0x0090]],
+  charset: [[0x3f739, 0x0095]],
   preplist: [[0x3fbaa, 0x0010]],
   characters: {
-    '[': 'à', '<': 'è', '\\': 'ì', '>': 'ò', ']': 'ù',
+    '<': 'à', '\\': 'è', '>': 'ì', '|': 'ò', '}': 'ù',
   },
   lang: 'it',
   crc32: 0xdc529482,
@@ -844,7 +846,7 @@ const proto = {
   // sproffs: [[0x2BDC5, 0x022A], [0x0BFEA, 0x000C]],
   // // sprite data sets (packed NES sprite data)
   // sprdata: [[0x2CE11, 0x2BE0], [0x07F6B, 0x008A]],
-  // charset: [[0x3f6ee, 0x0090]],
+  charset: [[0x3f6ee, 0x0090]],
   preplist: [[0x3fb5a, 0x000e]],
   characters: {},
   lang: 'en-US',
