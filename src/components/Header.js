@@ -8,7 +8,7 @@ const navigation = [
   { name: 'Rooms', href: '/rooms/1' },
   { name: 'Room Gfx', href: '/roomgfx/0' },
   { name: 'Prepositions', href: '/preps' },
-  { name: 'ROM map', href: '/rom' },
+  { name: 'ROM map', href: '/rom-map' },
 ];
 
 export default function Header() {

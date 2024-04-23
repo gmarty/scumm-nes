@@ -47,33 +47,14 @@ const ResourceExplorer = ({ rom, res, resources }) => {
         }
       />
       <Route
-        path="/rom"
+        path="/rom-map"
         element={
           <RomMapContainer
             rom={rom}
             res={res}
-            rooms={resources.rooms}
           />
-        }>
-        <Route
-          path="rooms"
-          element={
-            <RomMapContainer
-              rom={rom}
-              rooms={resources.rooms}
-            />
-          }>
-          <Route
-            path=":roomId"
-            element={
-              <RomMapContainer
-                rom={rom}
-                rooms={resources.rooms}
-              />
-            }
-          />
-        </Route>
-      </Route>
+        }
+      />
     </Routes>
   );
 };
