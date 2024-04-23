@@ -34,6 +34,10 @@ class Parser {
     return char;
   }
 
+  peekUint8() {
+    return this.#view.getUint8(this.#ptr);
+  }
+
   // Return the position of the next byte to read.
   // @todo Return the last read character's instead.
   get pointer() {

@@ -4,7 +4,7 @@ const RoomTabs = ({ currentTab, setCurrentTab }) => {
   const tabs = [
     { name: 'Palettes', current: currentTab === 'Palettes' },
     { name: 'Tilesets', current: currentTab === 'Tilesets' },
-    // { name: 'Scripts', current: currentTab === 'Scripts' },
+    { name: 'Scripts', current: currentTab === 'Scripts' },
   ];
 
   return (

@@ -4,6 +4,8 @@ import parseRoomNametable from './room/parseRoomNametable.js';
 import parseRoomAttributes from './room/parseRoomAttributes.js';
 import parseRoomBoxes from './room/parseRoomBoxes.js';
 import parseRoomMatrix from './room/parseRoomMatrix.js';
+import { parseScript } from './parseScript.js';
+import { verbs } from '../opcodes.js';
 
 const assert = console.assert;
 
@@ -252,7 +254,18 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
         // End of objects scripts (usually beginning of name offset).
         break;
       }
-      objScripts.push([verbId, objectScriptOffsParser.getUint8()]);
+
+      const objectScriptStart = objectScriptOffsParser.getUint8();
+
+      const scriptOffsParser = new Parser(
+        arrayBuffer.slice(
+          objectOffs + objectScriptStart,
+          objectOffs + objectScriptStart + objectSize,
+        ),
+      );
+
+      const script = parseScript(scriptOffsParser, 0, 0);
+      objScripts.push([verbs[verbId] ?? `(${verbId})`, script]);
     }
 
     // Parse object images.
@@ -350,6 +363,20 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
 
   map.push(matrixMap);
 
+  console.log('ROOM', metadata.id, excdOffs, encdOffs);
+
+  let excdScript;
+  if (excdOffs !== 0) {
+    const excdScriptParser = new Parser(arrayBuffer.slice(excdOffs));
+    excdScript = parseScript(excdScriptParser, 0);
+  }
+
+  let encdScript;
+  if (encdOffs !== 0) {
+    const encdScriptParser = new Parser(arrayBuffer.slice(encdOffs));
+    encdScript = parseScript(encdScriptParser, 0);
+  }
+
   // Order ROM map by starting offset.
   map.sort((a, b) => a.from - b.from);
 
@@ -367,6 +394,8 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
     objectImages,
     objects,
     hasMask,
+    excdScript,
+    encdScript,
     map,
   };
 };
