@@ -35,12 +35,12 @@ const RomMapCanvasContainer = ({ rom, res, resourceList }) => {
 };
 
 const draw = (ctx, rom, res, resourceList) => {
-  // Background colour (for code).
-  const codeColour = resourceList.indexOf('other');
-  ctx.fillStyle = getResourceColour(codeColour, resourceList.length);
+  // Let's start by filling the canvas with the colour for 'other'.
+  const otherColour = resourceList.indexOf('other');
+  ctx.fillStyle = getResourceColour(otherColour, resourceList.length);
   ctx.fillRect(0, 0, WIDTH, HEIGHT);
 
-  // Mark padding (4 or more consecutive bytes of 0xff).
+  // Mark padding (4 consecutive bytes of 0xff).
   const view = new DataView(rom);
   const paddingColour = resourceList.indexOf('padding');
   ctx.fillStyle = getResourceColour(paddingColour, resourceList.length);
@@ -59,12 +59,12 @@ const draw = (ctx, rom, res, resourceList) => {
   }
 
   resourceList
-    // Remove pseudo resources like 'other' or 'padding'.
-    .filter((resourceLabel) => res[resourceLabel])
-    .forEach((resourceLabel, i) => {
-      const resource = res[resourceLabel];
-
-      ctx.fillStyle = getResourceColour(i, resourceList.length);
+    // Remove pseudo-resources like 'other' or 'padding'.
+    .filter((label) => res[label])
+    .forEach((label) => {
+      const resource = res[label];
+      const colour = resourceList.indexOf(label);
+      ctx.fillStyle = getResourceColour(colour, resourceList.length);
       for (let i = 0; i < resource.length; i++) {
         const [offset, length] = resource[i];
         for (let j = offset; j < offset + length; j++) {
