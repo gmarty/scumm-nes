@@ -2,6 +2,7 @@ import tailwindcssForms from '@tailwindcss/forms';
 import colors from 'tailwindcss/colors';
 
 const config = {
+  darkMode: 'selector',
   content: ['./src/**/*.{html,js}'],
   theme: {
     extend: {

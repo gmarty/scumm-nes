@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 import { nesNTSCPalette as nesPalette } from '../lib/palettes';
 
 const RoomCanvasContainer = ({

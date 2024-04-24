@@ -3,6 +3,7 @@ import RoomsContainer from './RoomsContainer';
 import RoomGfxContainer from './RoomGfxContainer';
 import PrepositionsContainer from './PrepositionsContainer';
 import RomMapContainer from './RomMapContainer';
+import SettingsContainer from './SettingsContainer';
 
 const ResourceExplorer = ({ rom, res, resources }) => {
   if (!resources) {
@@ -54,6 +55,10 @@ const ResourceExplorer = ({ rom, res, resources }) => {
             res={res}
           />
         }
+      />
+      <Route
+        path="/settings"
+        element={<SettingsContainer />}
       />
     </Routes>
   );

@@ -2,10 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
+/* With color-scheme the UA will style some elements appropriately. */
+:root {
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+  }
+}
+.light {
+  color-scheme: light;
+}
+.dark {
+  color-scheme: dark;
+}
+/* Transition color scheme change. */
+html {
+  transition-duration: 150ms;
+  transition-property: color, background-color;
+}
+
 html {
   @apply font-neogrote;
   @apply font-normal;
-  @apply bg-white;
+  @apply bg-slate-50;
+  @apply dark:bg-slate-900;
 }
 
 canvas {

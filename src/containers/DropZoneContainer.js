@@ -89,7 +89,7 @@ const DropZoneContainer = ({ onFile }) => {
   return (
     <Main>
       <div
-        className="h-full w-full"
+        className="h-full w-full p-4"
         {...getRootProps()}>
         <DropZone
           isDragActive={isDragActive}

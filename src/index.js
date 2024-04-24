@@ -1,6 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
+import { setColourTheme } from './lib/colourThemeUtils';
 
 const basename =
   process.env.NODE_ENV === 'development' ? undefined : '/scumm-nes';
@@ -11,6 +12,8 @@ root.render(
     <App />
   </BrowserRouter>,
 );
+
+setColourTheme(localStorage.getItem('theme'));
 
 if (process.env.NODE_ENV === 'production' && insights) {
   // Load the analytics.

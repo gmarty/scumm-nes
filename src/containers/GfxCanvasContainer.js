@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 
 // See https://colorhunt.co/palette/293462f24c4cec9b3bf7d716
 const ROOM_PALETTE = ['#293462', '#F24C4C', '#EC9B3B', '#F7D716'];

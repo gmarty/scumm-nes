@@ -36,8 +36,8 @@ const RoomTabs = ({ currentTab, setCurrentTab }) => {
               onClick={() => setCurrentTab(tab.name)}
               className={clsx(
                 tab.current
-                  ? 'bg-slate-200 text-slate-700'
-                  : 'text-slate-500 hover:text-slate-700',
+                  ? 'bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
+                  : 'text-slate-500 hover:text-slate-700 hover:dark:text-slate-300',
                 'rounded px-3 py-2 text-sm font-medium',
               )}
               aria-current={tab.current ? 'page' : undefined}>

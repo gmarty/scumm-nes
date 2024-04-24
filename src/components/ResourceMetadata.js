@@ -5,7 +5,7 @@ const ResourceMetadata = ({ metadata }) => {
   const compressionRow = metadata.decompressedSize && (
     <>
       <div className="font-bold">unpacked size:</div>
-      <div className="text-right font-mono">{metadata.decompressedSize}</div>
+      <div className="font-mono text-right">{metadata.decompressedSize}</div>
       <div className="font-mono opacity-50">
         ({formatPercentage(1 - metadata.size / metadata.decompressedSize)}{' '}
         <span className="font-sans"> compr.</span>)
@@ -14,12 +14,12 @@ const ResourceMetadata = ({ metadata }) => {
   );
 
   return (
-    <div className="font-monocode grid w-max grid-cols-[auto_auto_auto] gap-x-2 gap-y-1 whitespace-nowrap rounded bg-slate-200 p-2 text-xs text-slate-700">
+    <div className="grid w-max grid-cols-[auto_auto_auto] gap-x-2 gap-y-1 whitespace-nowrap rounded bg-slate-200 p-2 font-monocode text-xs text-slate-700 dark:bg-slate-800 dark:text-slate-300">
       <div className="font-bold">payload offset:</div>
-      <div className="text-right font-mono">0x{hex(metadata.offset)}</div>
+      <div className="font-mono text-right">0x{hex(metadata.offset)}</div>
       <div className="font-mono opacity-50">({metadata.offset})</div>
       <div className="font-bold">payload size:</div>
-      <div className="text-right font-mono">{metadata.size} B</div>
+      <div className="font-mono text-right">{metadata.size} B</div>
       <div className="font-mono opacity-50">{sizeInB}</div>
       {compressionRow}
     </div>

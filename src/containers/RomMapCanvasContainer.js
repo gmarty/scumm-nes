@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 import { getResourceColour } from '../lib/resourceUtils';
 
 const WIDTH = 512;
@@ -26,7 +26,7 @@ const RomMapCanvasContainer = ({ rom, res, resourceList }) => {
       width={WIDTH}
       height={HEIGHT}
       className={clsx(
-        'aspect-[4/3] w-full rounded border border-slate-700',
+        'aspect-[4/3] w-full rounded border border-slate-600 dark:border-slate-400',
         isComputing ? 'opacity-0' : 'opacity-100 transition-opacity',
       )}
       style={{ maxWidth: WIDTH }}
