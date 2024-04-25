@@ -22,7 +22,7 @@ const ThemeSwitcher = ({ theme, setTheme, themeOptions }) => {
                   active && 'ring-2 ring-primary-600 ring-offset-2',
                   checked
                     ? 'bg-primary-600 text-slate-100 hover:bg-primary-500'
-                    : 'bg-slate-200 text-slate-900 ring-1 ring-inset ring-slate-300 hover:bg-slate-100 dark:bg-slate-800 dark:text-slate-100 dark:ring-slate-700 hover:dark:bg-slate-900',
+                    : 'bg-slate-200 text-slate-900 ring-1 ring-inset ring-slate-300 hover:bg-slate-200/50 dark:bg-slate-800 dark:text-slate-100 dark:ring-slate-700 hover:dark:bg-slate-800/50',
                   'cursor-pointer focus:outline-none',
                   'flex w-48 max-w-48 flex-initial items-center justify-center rounded-md px-3 py-3 text-sm font-semibold sm:flex-1',
                 )

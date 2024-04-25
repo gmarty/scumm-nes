@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { clsx } from 'clsx';
-import { nesNTSCPalette as nesPalette } from '../lib/palettes';
+import { getPalette } from '../lib/paletteUtils';
 
 const RoomCanvasContainer = ({
   room,
@@ -84,12 +84,12 @@ const draw = (ctx, room, baseTiles, roomgfc, selectedObjects) => {
         (attributes[((sprY << 2) & 0x30) | ((sprX >> 2) & 0xf)] >>
           (((sprY & 2) << 1) | (sprX & 2))) &
         0x3;
-      const pal = [
+      const pal = getPalette([
         palette[paletteId * 4],
         palette[paletteId * 4 + 1],
         palette[paletteId * 4 + 2],
         palette[paletteId * 4 + 3],
-      ].map((p) => nesPalette[p]);
+      ]);
 
       for (let j = 0; j < 8; j++) {
         const n1 = gfx[tile * 2 * 8 + j];
