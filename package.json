@@ -1,6 +1,6 @@
 {
   "name": "scumm-nes",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "An app to explore the content of the Maniac Mansion game on NES.",
   "author": "edo999@gmail.com",
   "license": "BlueOak-1.0.0",
@@ -19,6 +19,9 @@
   "source": "src/index.html",
   "staticFiles": {
     "staticPath": "public"
+  },
+  "bin": {
+    "scumm-nes": "index.js"
   },
   "scripts": {
     "test": "node --test",

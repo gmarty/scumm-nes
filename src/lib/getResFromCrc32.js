@@ -1,4 +1,4 @@
-import res from './resources';
+import res from './resources.js';
 
 const isJapaneseVersion = (c) => c === 0x3da2085e || c === 0xf526cea8;
 const getResFromCrc32 = (c) =>
