@@ -5,7 +5,12 @@ const RoomsList = ({ rooms, currentId }) => {
   return (
     <>
       <ColumnListHeader>Rooms</ColumnListHeader>
-      {rooms.map(({ metadata }) => {
+      {rooms.map(({ metadata, header }) => {
+        if (!header) {
+          // Some rooms are empty.
+          return null;
+        }
+
         const selected = metadata.id === currentId;
         const path = `/rooms/${metadata.id}`;
         const label = `Room ${metadata.id}`;

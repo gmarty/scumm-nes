@@ -10,6 +10,10 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
     size: arrayBuffer.byteLength,
   };
 
+  if (arrayBuffer.byteLength === 0) {
+    return { metadata };
+  }
+
   const chunkSize = parser.getUint16(); // Room res size
 
   assert(

@@ -10,10 +10,6 @@ const parseRom = (arrayBuffer, res) => {
   for (let i = 0; i < res?.rooms?.length; i++) {
     const [offset, length] = res.rooms[i];
 
-    if (length === 0) {
-      continue;
-    }
-
     const buffer = arrayBuffer.slice(offset, offset + length);
     const item = parseRooms(buffer, i, offset, res.characters);
     item.buffer = buffer;

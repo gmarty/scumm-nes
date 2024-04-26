@@ -48,6 +48,10 @@ const RoomsContainer = ({ rooms, roomgfx }) => {
     setSelectedObjects(newSelectedObjects);
   };
 
+  if (room && !room.header) {
+    return null;
+  }
+
   return (
     <>
       <PrimaryColumn>
