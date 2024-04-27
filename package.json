@@ -29,8 +29,8 @@
   "scripts": {
     "test": "node --test",
     "coverage": "node --experimental-test-coverage --test",
-    "dev": "parcel",
-    "start": "parcel",
+    "dev": "rm -rf dist .parcel-cache && parcel",
+    "start": "rm -rf dist .parcel-cache && parcel",
     "build": "parcel build --public-url /scumm-nes"
   },
   "dependencies": {
