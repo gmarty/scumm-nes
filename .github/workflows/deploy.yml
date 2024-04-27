@@ -20,9 +20,12 @@ jobs:
     steps:
       - name: Checkout the repository using git
         uses: actions/checkout@v4
-      - run: node --version
+      - name: Set node version
+        uses: actions/setup-node@v4
+        with:
+          node-version: '>=20'
       - name: Cache node modules
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}

@@ -1,5 +1,5 @@
-import parseRooms from '../lib/parseRooms.js';
-import parseRoomGfx from '../lib/parseRoomGfx.js';
+import parseRooms from './parseRooms.js';
+import parseRoomGfx from './parseRoomGfx.js';
 import parsePreps from './parsePreps.js';
 
 const parseRom = (arrayBuffer, res) => {

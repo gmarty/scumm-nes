@@ -13,7 +13,7 @@ const App = () => {
   const navigate = useNavigate();
 
   const onFile = async (rom, res) => {
-    const { default: parseRom } = await import('./lib/parseRom');
+    const { default: parseRom } = await import('./lib/parser/parseRom');
     setRom(rom);
     setRes(res);
     setResources(parseRom(rom, res));

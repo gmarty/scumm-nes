@@ -9,7 +9,7 @@ import {
   isJapaneseVersion,
   getResFromCrc32,
 } from './src/lib/getResFromCrc32.js';
-import parseRom from './src/lib/parseRom.js';
+import parseRom from './src/lib/parser/parseRom.js';
 import { stringify } from './src/lib/cliUtils.js';
 
 const options = {

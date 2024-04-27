@@ -3,8 +3,8 @@ class Parser {
   #ptr = 0;
   #characters = {};
 
-  constructor(arrayBuffer, characters = {}) {
-    this.#view = new DataView(arrayBuffer);
+  constructor(buffer, characters = {}) {
+    this.#view = new DataView(buffer);
     this.#characters = characters;
   }
 
@@ -25,7 +25,7 @@ class Parser {
       return 0x00;
     }
 
-    const char = String.fromCharCode(charCode);
+    const char = String.fromCodePoint(charCode);
 
     if (typeof this.#characters[char] !== 'undefined') {
       return this.#characters[char];

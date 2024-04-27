@@ -23,8 +23,12 @@
   "bin": {
     "scumm-nes": "index.js"
   },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "test": "node --test",
+    "coverage": "node --experimental-test-coverage --test",
     "dev": "parcel",
     "start": "parcel",
     "build": "parcel build --public-url /scumm-nes"

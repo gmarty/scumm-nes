@@ -40,7 +40,7 @@ It does not modify the ROM, it is only an explorer of the resources present in t
 
 ## Contribute
 
-To run it locally, clone the repo and install the dependencies:
+To run it locally, make sure that node v20 or higher is installed, clone the repo, and install the dependencies:
 
 ```sh
 npm install
