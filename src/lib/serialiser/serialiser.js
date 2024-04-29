@@ -19,6 +19,12 @@ class Serialiser {
     this.#view.setUint8(this.#ptr++, value);
   }
 
+  setUint16(value = 0x00) {
+    this.#view.buffer.resize(this.#ptr + 2);
+    this.#view.setUint16(this.#ptr, value, true);
+    this.#ptr += 2;
+  }
+
   setString(str) {
     // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/codePointAt#looping_with_codepointat
     for (let codePoint of str) {
