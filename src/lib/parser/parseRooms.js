@@ -1,5 +1,7 @@
 import Parser from './parser.js';
 import parseRoomHeader from './room/parseRoomHeader.js';
+import parseRoomBoxes from './room/parseRoomBoxes.js';
+import parseRoomMatrix from './room/parseRoomMatrix.js';
 
 const assert = console.assert;
 
@@ -43,7 +45,6 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
 
   const objectImages = [];
   const objects = [];
-  const boxes = [];
 
   // These 2 are optional.
   if (excdOffs > 0) {
@@ -382,49 +383,23 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
     map.push(objectCodeMap, objectImageMap);
   }
 
-  // Parse boxes.
-  // @todo Set the end of the ArrayBuffer slice.
-  const boxesParser = new Parser(arrayBuffer.slice(boxOffs));
-  const boxNum = boxesParser.getUint8();
+  // Parse boxes and matrix.
+  const { boxes, boxesMap } = parseRoomBoxes(
+    // @todo Set the end of the ArrayBuffer slice.
+    arrayBuffer.slice(boxOffs),
+    boxOffs,
+  );
 
-  for (let j = 0; j < boxNum; j++) {
-    const uy = boxesParser.getUint8();
-    const ly = boxesParser.getUint8();
-    const ulx = boxesParser.getUint8();
-    const urx = boxesParser.getUint8();
-    const llx = boxesParser.getUint8();
-    const lrx = boxesParser.getUint8();
-    const mask = boxesParser.getUint8();
-    const flags = boxesParser.getUint8();
+  map.push(boxesMap);
 
-    assert(ly >= uy, 'Y box bounds are out of order.');
-
-    assert(mask === 0 || mask === 1, 'Box mask is neither 0 nor 1.');
-    assert(flags === 0 || flags === 5, 'Box flag is neither 0 nor 5.');
-
-    boxes.push({ uy, ly, ulx, urx, llx, lrx, mask, flags });
-  }
-
-  assert(boxes.length > 0, 'Room has no boxes.');
-
-  map.push({
-    type: 'boxes',
-    from: boxOffs,
-    to: boxesParser.pointer - 1,
-  });
-
-  const matrixSize = boxNum * (boxNum + 1);
-  const matrixMap = {
-    type: 'matrix',
-    from: boxesParser.pointer - 1,
-    to: boxesParser.pointer - 1 + matrixSize,
-  };
-  const matrix = [];
-  for (let j = 0; j < boxNum; j++) {
-    for (let k = 0; k < boxNum; k++) {
-      matrix.push(boxesParser.getUint8());
-    }
-  }
+  const { matrixUnks, matrix, matrixMap } = parseRoomMatrix(
+    arrayBuffer.slice(
+      boxesMap.to + 1,
+      boxesMap.to + 1 + boxes.length * (boxes.length + 1),
+    ),
+    boxesMap.to + 1,
+    boxes.length,
+  );
 
   map.push(matrixMap);
 
@@ -437,6 +412,7 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
     objectImagesOffs,
     objectsOffs,
     boxes,
+    matrixUnks,
     matrix,
     nametable,
     attributes,
