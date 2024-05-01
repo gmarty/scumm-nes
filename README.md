@@ -38,7 +38,21 @@ The app doesn't use the runtime code used by the NES to start and play the game.
 
 It does not modify the ROM, it is only an explorer of the resources present in the game.
 
-## Contribute
+## How to use it?
+
+On top of the app, there is a command line interface to export the resources to JSON. This is useful to do process or compare the data.
+
+```
+node index.js --input path/to/rom --output resources.json
+```
+
+Options:
+
+- `--input`, `-i` Path to a ROM or PRG file.
+- `--output`, `-o` Path to a JSON filename to be created.
+- `--version`, `-v` Print the version number.
+
+## How to contribute?
 
 To run it locally, make sure that node v20 or higher is installed, clone the repo, and install the dependencies:
 
@@ -65,8 +79,7 @@ Then deploy the content of the `dist` folder.
 ## Future improvements
 
 - Use Typescript.
-- Write tests.
-- The parsing scripts should be callable from a CLI.
+- Write more tests.
 - Parse more resource types (scripts, sounds...).
 - QoF improvements (store the ROM files locally...)
 - Enable modification of the resources to create new games.
