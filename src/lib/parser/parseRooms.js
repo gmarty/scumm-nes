@@ -1,5 +1,6 @@
 import Parser from './parser.js';
 import parseRoomHeader from './room/parseRoomHeader.js';
+import parseRoomNametable from './room/parseRoomNametable.js';
 import parseRoomBoxes from './room/parseRoomBoxes.js';
 import parseRoomMatrix from './room/parseRoomMatrix.js';
 
@@ -63,50 +64,17 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
   }
 
   // Parse gfx nametable.
-  const nametableParser = new Parser(arrayBuffer.slice(nametableOffs));
+  const { nametable, nametableMap } = parseRoomNametable(
+    arrayBuffer.slice(nametableOffs, attrOffs),
+    nametableOffs,
+    width,
+  );
 
-  const tileset = nametableParser.getUint8();
-
-  const palette = [];
-  const nametableObj = Array(16);
-  for (let i = 0; i < 16; i++) {
-    palette[i] = nametableParser.getUint8();
-  }
-  for (let i = 0; i < 16; i++) {
-    nametableObj[i] = Array(64).fill(0);
-    nametableObj[i][0] = 0;
-    nametableObj[i][1] = 0;
-    let n = 0;
-    while (n < width) {
-      const loop = nametableParser.getUint8();
-      if (loop & 0x80) {
-        for (let j = 0; j < (loop & 0x7f); j++) {
-          nametableObj[i][2 + n++] = nametableParser.getUint8();
-        }
-      } else {
-        const data = nametableParser.getUint8();
-        for (let j = 0; j < (loop & 0x7f); j++) {
-          nametableObj[i][2 + n++] = data;
-        }
-      }
-    }
-  }
-
-  const nametable = {
-    tileset,
-    palette,
-    nametableObj,
-  };
-
-  map.push({
-    type: 'nametable',
-    from: nametableOffs,
-    to: nametableOffs + nametableParser.pointer - 1,
-  });
+  map.push(nametableMap);
 
   assert(
-    nametableOffs + nametableParser.pointer === attrOffs,
-    'name table overlaps on attributes table.',
+    nametableMap.to + 1 === attrOffs,
+    'Gfx nametable overlaps on attributes table.',
   );
 
   // Parse gfx attrtable.
@@ -222,7 +190,7 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
   const objectImagesStart = Math.min(...objectImagesOffs);
   const objectsStart = Math.min(...objectsOffs);
 
-  // End rang values will be set later.
+  // End range values will be set later.
   const objectImageMap = {
     type: 'objectImages',
     from: objectImagesStart,
