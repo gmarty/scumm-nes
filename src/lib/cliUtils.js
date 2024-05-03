@@ -2,7 +2,6 @@ import { hex } from './utils.js';
 
 const stringify = (signature, size, resources, res) => {
   resources.rooms.forEach((item) => {
-    delete item.map;
     delete item.buffer;
   });
   resources.roomgfx.forEach((item) => delete item.buffer);
