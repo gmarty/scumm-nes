@@ -1,11 +1,9 @@
 #!/usr/bin/env node --experimental-json-modules
 
 import { parseArgs } from 'node:util';
-import { basename, extname } from 'node:path';
-import { writeFile } from 'node:fs/promises';
-import { loadRom } from '../src/lib/cliUtils.js';
+import { basename } from 'node:path';
+import { loadRom, saveRom, inject } from '../src/lib/cliUtils.js';
 import serialisePreps from '../src/lib/serialiser/serialisePreps.js';
-import { inject, prependNesHeader } from '../src/lib/inject.js';
 
 /*
 Modify prepositions experiment:
@@ -50,13 +48,8 @@ const [offset, length] = res.preplist[0];
 
 let nesHackRom = inject(rom, prepBuffer, offset, length);
 
-const inputExtname = extname(values.input).toLowerCase();
-if (inputExtname === '.prg') {
-  nesHackRom = prependNesHeader(nesHackRom);
-}
-
 try {
-  await writeFile(output, Buffer.from(nesHackRom));
+  await saveRom(output, Buffer.from(nesHackRom));
 } catch (err) {
   console.error(`Output ROM file could not be saved.`);
   console.error(err);

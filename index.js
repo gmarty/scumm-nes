@@ -6,7 +6,7 @@ import { open, writeFile } from 'node:fs/promises';
 import pkg from './package.json' with { type: 'json' };
 import { loadRom } from './src/lib/cliUtils.js';
 import parseRom from './src/lib/parser/parseRom.js';
-import { stringify } from './src/lib/cliUtils.js';
+import { stringifyResources } from './src/lib/cliUtils.js';
 
 const options = {
   version: {
@@ -79,11 +79,6 @@ if (!values.output) {
   process.exit(1);
 }
 
-const inputExtname = extname(values.input).toLowerCase();
-if (inputExtname !== '.prg' && inputExtname !== '.nes') {
-  console.error('Only PRG and NES files are accepted.');
-  process.exit(1);
-}
 const outputExtname = extname(values.output).toLowerCase();
 if (outputExtname !== '.json') {
   console.error(
@@ -116,7 +111,7 @@ try {
 }
 
 const resources = parseRom(rom, res);
-const content = stringify(hash, rom.byteLength, resources, res);
+const content = stringifyResources(hash, rom.byteLength, resources, res);
 
 try {
   await writeFile(values.output, content, { encoding: 'utf-8' });
