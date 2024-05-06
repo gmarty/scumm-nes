@@ -27,26 +27,26 @@ describe('parseRoomMatrix', () => {
     const { matrix } = parseRoomMatrix(roomMatrixEmptyBuffer(0), 0, 0);
 
     assert.ok(Array.isArray(matrix));
-    assert.ok(matrix.length === 0);
+    assert.equal(matrix.length, 0);
   });
 
   it('should parse several matrices.', () => {
     const { matrix } = parseRoomMatrix(roomMatrixEmptyBuffer(5), 0, 5);
 
-    assert.ok(matrix.length === 25);
+    assert.equal(matrix.length, 25);
   });
 
   it('should return an array of unknown values.', () => {
     const { matrixUnks } = parseRoomMatrix(roomMatrixEmptyBuffer(0), 0, 0);
 
     assert.ok(Array.isArray(matrixUnks));
-    assert.ok(matrixUnks.length === 0);
+    assert.equal(matrixUnks.length, 0);
   });
 
   it('should parse several unknown values.', () => {
     const { matrixUnks } = parseRoomMatrix(roomMatrixEmptyBuffer(5), 0, 5);
 
-    assert.ok(matrixUnks.length === 5);
+    assert.equal(matrixUnks.length, 5);
   });
 
   it('should return a map object.', () => {

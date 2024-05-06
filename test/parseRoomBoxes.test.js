@@ -27,13 +27,13 @@ describe('parseRoomBoxes', () => {
     const { boxes } = parseRoomBoxes(roomBoxesEmptyBuffer(1));
 
     assert.ok(Array.isArray(boxes));
-    assert.ok(boxes.length === 1);
+    assert.equal(boxes.length, 1);
   });
 
   it('should parse several room boxes.', () => {
     const { boxes } = parseRoomBoxes(roomBoxesEmptyBuffer(5));
 
-    assert.ok(boxes.length === 5);
+    assert.equal(boxes.length, 5);
   });
 
   it('should return a map object.', () => {

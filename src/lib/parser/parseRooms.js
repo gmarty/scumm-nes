@@ -1,6 +1,7 @@
 import Parser from './parser.js';
 import parseRoomHeader from './room/parseRoomHeader.js';
 import parseRoomNametable from './room/parseRoomNametable.js';
+import parseRoomAttributes from './room/parseRoomAttributes.js';
 import parseRoomBoxes from './room/parseRoomBoxes.js';
 import parseRoomMatrix from './room/parseRoomMatrix.js';
 
@@ -78,35 +79,17 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
   );
 
   // Parse gfx attrtable.
-  const attrtableParser = new Parser(arrayBuffer.slice(attrOffs));
+  const { attributes, attributesMap } = parseRoomAttributes(
+    arrayBuffer.slice(attrOffs, maskOffs),
+    attrOffs,
+    width,
+  );
 
-  const attributes = Array(64).fill(0);
-  for (let n = 0; n < 64; ) {
-    const loop = attrtableParser.getUint8();
-    if (loop & 0x80) {
-      for (let j = 0; j < (loop & 0x7f); j++) {
-        attributes[n++] = attrtableParser.getUint8();
-      }
-    } else {
-      const data = attrtableParser.getUint8();
-      for (let j = 0; j < (loop & 0x7f); j++) {
-        attributes[n++] = data;
-      }
-    }
-    if (!(n & 7) && width === 0x1c) {
-      n += 8;
-    }
-  }
-
-  map.push({
-    type: 'attributes',
-    from: attrOffs,
-    to: attrOffs + attrtableParser.pointer - 1,
-  });
+  map.push(attributesMap);
 
   assert(
-    attrOffs + attrtableParser.pointer === maskOffs,
-    'Attributes table overlaps on mask table.',
+    attributesMap.to + 1 === maskOffs,
+    'Gfx attributes table overlaps on gfx mask table.',
   );
 
   // Parse gfx masktable.
@@ -351,7 +334,7 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
     map.push(objectCodeMap, objectImageMap);
   }
 
-  // Parse boxes and matrix.
+  // Parse boxes.
   const { boxes, boxesMap } = parseRoomBoxes(
     // @todo Set the end of the ArrayBuffer slice.
     arrayBuffer.slice(boxOffs),
@@ -360,6 +343,7 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
 
   map.push(boxesMap);
 
+  // Parse matrix.
   const { matrixUnks, matrix, matrixMap } = parseRoomMatrix(
     arrayBuffer.slice(
       boxesMap.to + 1,
