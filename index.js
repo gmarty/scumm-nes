@@ -2,13 +2,9 @@
 
 import { parseArgs } from 'node:util';
 import { basename, extname } from 'node:path';
-import { open, readFile, writeFile } from 'node:fs/promises';
+import { open, writeFile } from 'node:fs/promises';
 import pkg from './package.json' with { type: 'json' };
-import crc32 from './src/lib/crc32.js';
-import {
-  isJapaneseVersion,
-  getResFromCrc32,
-} from './src/lib/getResFromCrc32.js';
+import { loadRom } from './src/lib/cliUtils.js';
 import parseRom from './src/lib/parser/parseRom.js';
 import { stringify } from './src/lib/cliUtils.js';
 
@@ -110,37 +106,24 @@ if (outputFileExists) {
 }
 
 // Load the input file.
-const romPath = values.input;
-let rom;
+let rom, res, hash;
 try {
-  rom = await readFile(romPath);
-} catch (e) {
-  console.error(`Error opening input file '${romPath}'.`);
+  ({ rom, res, hash } = await loadRom(values.input));
+} catch (err) {
+  console.error(`Input ROM file could not be opened.`);
+  console.error(err);
   process.exit(1);
 }
 
-const dataView = new DataView(rom.buffer);
-const signature = crc32(dataView);
-
-if (isJapaneseVersion(signature)) {
-  console.error('The Japanese Famicom version is not supported.');
-  process.exit(1);
-}
-
-const res = getResFromCrc32(signature);
-const resources = parseRom(rom.buffer, res);
-
-if (!resources) {
-  console.error('Upload one of the ROMs of Maniac Mansion on NES.');
-  process.exit(1);
-}
-
-// Process the result of a parsing.
-const content = stringify(signature, rom.buffer.byteLength, resources, res);
+const resources = parseRom(rom, res);
+const content = stringify(hash, rom.byteLength, resources, res);
 
 try {
   await writeFile(values.output, content, { encoding: 'utf-8' });
-  console.log('Output file successfully written.');
-} catch (e) {
+} catch (err) {
   console.error(`Error writing output file '${values.output}'.`);
+  console.error(err);
+  process.exit(1);
 }
+
+console.log('Output file successfully written.');

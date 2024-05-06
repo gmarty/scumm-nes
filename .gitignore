@@ -134,3 +134,5 @@ dist
 prg/
 rom/
 TODO.md
+*.nes
+*.prg

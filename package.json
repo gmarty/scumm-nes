@@ -1,6 +1,6 @@
 {
   "name": "scumm-nes",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "An app to explore the content of the Maniac Mansion game on NES.",
   "author": "edo999@gmail.com",
   "license": "BlueOak-1.0.0",
