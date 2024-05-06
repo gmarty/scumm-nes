@@ -15,7 +15,7 @@ const loadRom = async (romPath = '') => {
     rom = await readFile(romPath);
     rom = rom.buffer;
   } catch (err) {
-    throw new Error(`Error opening file '${romPath}'.`);
+    throw new Error(err);
   }
 
   const dataView = new DataView(rom);
@@ -36,16 +36,16 @@ const loadRom = async (romPath = '') => {
   return { rom, res, hash };
 };
 
-const saveRom = async (romPath = '', buffer) => {
-  const inputExtname = extname(romPath).toLowerCase();
-  if (inputExtname === '.prg') {
+const saveRom = async (dstPath = '', srcPath = '', buffer) => {
+  const srcExtname = extname(srcPath).toLowerCase();
+  if (srcExtname === '.prg') {
     buffer = prependNesHeader(buffer);
   }
 
   try {
-    await writeFile(romPath, buffer);
+    await writeFile(dstPath, Buffer.from(buffer));
   } catch (err) {
-    throw new Error(`Error saving file '${romPath}'.`);
+    throw new Error(err);
   }
 };
 
@@ -67,13 +67,9 @@ const inject = (rom, buffer, offset = 0, length = 0) => {
   let overwrites = false;
   for (let i = 0; i < buffer.byteLength; i++) {
     if (bufferView.getUint8(i) !== view.getUint8(offset + i)) {
+      view.setUint8(offset + i, bufferView.getUint8(i));
       overwrites = true;
     }
-    view.setUint8(offset + i, bufferView.getUint8(i));
-  }
-
-  if (overwrites) {
-    console.log('Some values were overwritten.');
   }
 
   // Pad the rest of the allocated space with 0x00.
@@ -81,7 +77,7 @@ const inject = (rom, buffer, offset = 0, length = 0) => {
     view.setUint8(offset + i, 0xff);
   }
 
-  return rom;
+  return overwrites;
 };
 
 const stringifyResources = (hash, size, resources, res) => {

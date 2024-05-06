@@ -46,10 +46,10 @@ const newPreps = ['wo', 'ni', 'de', 'e'];
 const prepBuffer = serialisePreps(newPreps);
 const [offset, length] = res.preplist[0];
 
-let nesHackRom = inject(rom, prepBuffer, offset, length);
+inject(rom, prepBuffer, offset, length);
 
 try {
-  await saveRom(output, Buffer.from(nesHackRom));
+  await saveRom(output, values.input, rom);
 } catch (err) {
   console.error(`Output ROM file could not be saved.`);
   console.error(err);
