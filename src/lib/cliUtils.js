@@ -4,6 +4,15 @@ import crc32 from './crc32.js';
 import { isJapaneseVersion, getResFromCrc32 } from './getResFromCrc32.js';
 import { hex } from './utils.js';
 
+const BANK_SIZE = 0x4000;
+// prettier-ignore
+const NES_HEADER = new Uint8Array([
+  0x4e, 0x45, 0x53, 0x1a, // NES
+  0x10, 0x00, 0x12, 0x00,
+  0x00, 0x00, 0x00, 0x00,
+  0x00, 0x00, 0x00, 0x00,
+]);
+
 const loadRom = async (romPath = '') => {
   const inputExtname = extname(romPath).toLowerCase();
   if (inputExtname !== '.prg' && inputExtname !== '.nes') {
@@ -100,29 +109,44 @@ const stringifyResources = (hash, size, resources, res) => {
   return JSON.stringify(data, null, '  ');
 };
 
-// prettier-ignore
-const nesHeader = new Uint8Array([
-  0x4e, 0x45, 0x53, 0x1a, // NES
-  0x10, 0x00, 0x12, 0x00,
-  0x00, 0x00, 0x00, 0x00,
-  0x00, 0x00, 0x00, 0x00,
-]);
-
 // Append a NES header to a PRG buffer.
 const prependNesHeader = (prg) => {
-  const rom = new ArrayBuffer(nesHeader.length + prg.byteLength);
+  const rom = new ArrayBuffer(NES_HEADER.length + prg.byteLength);
   const romView = new DataView(rom);
   const prgView = new DataView(prg);
 
-  for (let i = 0; i < nesHeader.length; i++) {
-    romView.setUint8(i, nesHeader[i]);
+  for (let i = 0; i < NES_HEADER.length; i++) {
+    romView.setUint8(i, NES_HEADER[i]);
   }
 
-  for (let i = nesHeader.length; i < rom.byteLength; i++) {
-    romView.setUint8(i, prgView.getUint8(i - nesHeader.length));
+  const banksNum = prg.byteLength / BANK_SIZE;
+  romView.setUint16(4, banksNum, true); // Patch the NES header.
+
+  for (let i = NES_HEADER.length; i < rom.byteLength; i++) {
+    romView.setUint8(i, prgView.getUint8(i - NES_HEADER.length));
   }
 
   return rom;
 };
 
-export { loadRom, saveRom, inject, stringifyResources };
+// Expand a PRG by adding 16 banks of memory.
+const expandRom = (rom) => {
+  const romView = new DataView(rom);
+  const romSize = rom.byteLength + 16 * BANK_SIZE;
+  const newRom = new ArrayBuffer(romSize);
+  const newRomView = new DataView(newRom);
+
+  // Copy over the ROM data to the new buffer.
+  for (let i = 0; i < romView.byteLength; i++) {
+    newRomView.setUint8(i, romView.getUint8(i));
+  }
+
+  // Fill the blank memory with 0xff.
+  for (let i = romView.byteLength; i < romSize; i++) {
+    newRomView.setUint8(i, 0xff);
+  }
+
+  return newRom;
+};
+
+export { loadRom, saveRom, inject, stringifyResources, expandRom };
