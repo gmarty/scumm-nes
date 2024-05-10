@@ -44,7 +44,13 @@ const parseRoomHeader = (arrayBuffer) => {
   const excdOffs = parser.getUint16(); // Exit script (EXCD) offset
   const encdOffs = parser.getUint16(); // Entry script (ENCD) offset
 
-  return {
+  const headerMap = {
+    type: 'header',
+    from: 0x00,
+    to: 0x1c,
+  };
+
+  const header = {
     chunkSize,
     unk1,
     unk2,
@@ -63,6 +69,8 @@ const parseRoomHeader = (arrayBuffer) => {
     excdOffs,
     encdOffs,
   };
+
+  return { headerMap, header };
 };
 
 export default parseRoomHeader;

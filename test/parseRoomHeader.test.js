@@ -17,15 +17,41 @@ const roomHeaderBuffer = () => {
 
 describe('parseRoomHeader', () => {
   it('should return a non empty object.', () => {
-    const header = parseRoomHeader(roomHeaderBuffer());
+    const { header } = parseRoomHeader(roomHeaderBuffer());
 
     assert.equal(typeof header, 'object');
-    assert.ok(Object.keys(header).length > 0);
+    assert.deepEqual(Object.keys(header), [
+      'chunkSize',
+      'unk1',
+      'unk2',
+      'width',
+      'height',
+      'unk3',
+      'nametableOffs',
+      'attrOffs',
+      'maskOffs',
+      'unk4',
+      'unk5',
+      'objectsNum',
+      'boxOffs',
+      'soundsNum',
+      'scriptsNum',
+      'excdOffs',
+      'encdOffs',
+    ]);
+  });
+
+  it('should return a map object.', () => {
+    const { headerMap } = parseRoomHeader(roomHeaderBuffer());
+
+    assert.equal(typeof headerMap, 'object');
+    assert.equal(headerMap.from, 0);
+    assert.equal(headerMap.to, 28);
   });
 
   it('should be the inverse of serialiseRoomHeader.', () => {
     const initialBuffer = roomHeaderBuffer();
-    const header = parseRoomHeader(initialBuffer);
+    const { header } = parseRoomHeader(initialBuffer);
     const buffer = serialiseRoomHeader(header);
 
     assert.deepEqual(initialBuffer, buffer);

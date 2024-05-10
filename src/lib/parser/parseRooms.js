@@ -13,25 +13,20 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
     offset,
     size: arrayBuffer.byteLength,
   };
+  const map = [];
 
   if (arrayBuffer.byteLength === 0) {
-    return { metadata };
+    return { metadata, map };
   }
 
-  const header = parseRoomHeader(arrayBuffer.slice(0, 0x1c));
+  const { headerMap, header } = parseRoomHeader(arrayBuffer.slice(0, 0x1c));
 
   assert(
     header.chunkSize === arrayBuffer.byteLength,
     'Room res size flag does not match chunk size.',
   );
 
-  let map = [
-    {
-      type: 'header',
-      from: 0x00,
-      to: 0x1a + 2,
-    },
-  ];
+  map.push(headerMap);
 
   const {
     chunkSize,

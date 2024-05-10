@@ -40,7 +40,7 @@ describe('serialiseRoomHeader', () => {
 
   it('should be the inverse of parseRoomHeader.', () => {
     const buffer = serialiseRoomHeader(room.header);
-    const header = parseRoomHeader(buffer);
+    const { header } = parseRoomHeader(buffer);
 
     assert.deepEqual(room.header, header);
   });
