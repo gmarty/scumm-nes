@@ -63,31 +63,37 @@ const saveRom = async (romPath = '', buffer) => {
 };
 
 // Overwrite part of a ROM with a buffer at a given offset.
-const inject = (rom, buffer, offset = 0, length = 0) => {
-  if (length === 0) {
-    return rom;
+// Return true if some data were overwritten.
+const inject = (rom, buffer, offset = 0, length = null) => {
+  if (buffer.byteLength === 0) {
+    return false;
   }
 
-  const view = new DataView(rom);
-  const bufferView = new DataView(buffer);
-
-  if (buffer.byteLength > length) {
+  if (Number.isInteger(length) && buffer.byteLength > length) {
     console.warn(
       'Injected buffer is larger than allocated space. This may result in malfunctions.',
     );
   }
 
+  const view = new DataView(rom);
+  const bufferView = new DataView(buffer);
   let overwrites = false;
+
   for (let i = 0; i < buffer.byteLength; i++) {
-    if (bufferView.getUint8(i) !== view.getUint8(offset + i)) {
+    if (view.getUint8(offset + i) !== bufferView.getUint8(i)) {
       view.setUint8(offset + i, bufferView.getUint8(i));
       overwrites = true;
     }
   }
 
-  // Pad the rest of the allocated space with 0x00.
-  for (let i = buffer.byteLength; i < length; i++) {
-    view.setUint8(offset + i, 0xff);
+  if (Number.isInteger(length)) {
+    // Pad the rest of the allocated space with 0xff.
+    for (let i = buffer.byteLength; i < length; i++) {
+      if (view.getUint8(offset + i) !== 0xff) {
+        view.setUint8(offset + i, 0xff);
+        overwrites = true;
+      }
+    }
   }
 
   return overwrites;
