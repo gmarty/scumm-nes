@@ -44,7 +44,7 @@ try {
 rom = expandRom(rom);
 
 try {
-  await saveRom(output, values.input, rom);
+  await saveRom(output, rom);
 } catch (err) {
   console.error(`Output ROM file could not be saved.`);
   console.error(err);

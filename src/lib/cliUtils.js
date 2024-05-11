@@ -27,6 +27,11 @@ const loadRom = async (romPath = '') => {
     throw new Error(err);
   }
 
+  // Remove the NES header, so we keep the PRG only.
+  if (hasNesHeader(rom)) {
+    rom = rom.slice(16);
+  }
+
   const dataView = new DataView(rom);
   const hash = crc32(dataView);
 
@@ -45,14 +50,13 @@ const loadRom = async (romPath = '') => {
   return { rom, res, hash };
 };
 
-const saveRom = async (dstPath = '', srcPath = '', buffer) => {
-  const srcExtname = extname(srcPath).toLowerCase();
-  if (srcExtname === '.prg') {
+const saveRom = async (romPath = '', buffer) => {
+  if (!hasNesHeader(buffer)) {
     buffer = prependNesHeader(buffer);
   }
 
   try {
-    await writeFile(dstPath, Buffer.from(buffer));
+    await writeFile(romPath, Buffer.from(buffer));
   } catch (err) {
     throw new Error(err);
   }
@@ -109,6 +113,17 @@ const stringifyResources = (hash, size, resources, res) => {
   return JSON.stringify(data, null, '  ');
 };
 
+// Return true if an arrayBuffer has a NES header.
+const hasNesHeader = (bin) => {
+  const view = new DataView(bin);
+  for (let i = 0; i < 4; i++) {
+    if (view.getUint8(i) !== NES_HEADER[i]) {
+      return false;
+    }
+  }
+  return true;
+};
+
 // Append a NES header to a PRG buffer.
 const prependNesHeader = (prg) => {
   const rom = new ArrayBuffer(NES_HEADER.length + prg.byteLength);
@@ -149,4 +164,11 @@ const expandRom = (rom) => {
   return newRom;
 };
 
-export { loadRom, saveRom, inject, stringifyResources, expandRom };
+export {
+  loadRom,
+  saveRom,
+  inject,
+  stringifyResources,
+  hasNesHeader,
+  expandRom,
+};

@@ -49,7 +49,7 @@ const [offset, length] = res.preplist[0];
 inject(rom, prepBuffer, offset, length);
 
 try {
-  await saveRom(output, values.input, rom);
+  await saveRom(output, rom);
 } catch (err) {
   console.error(`Output ROM file could not be saved.`);
   console.error(err);
