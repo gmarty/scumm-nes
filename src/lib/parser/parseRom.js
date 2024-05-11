@@ -1,10 +1,12 @@
 import parseRooms from './parseRooms.js';
 import parseRoomGfx from './parseRoomGfx.js';
+import parseGlobdata from './parseGlobdata.js';
 import parsePreps from './parsePreps.js';
 
 const parseRom = (arrayBuffer, res) => {
   const rooms = [];
   const roomgfx = [];
+  const globdata = [];
   const preps = [];
 
   for (let i = 0; i < res?.rooms?.length; i++) {
@@ -25,6 +27,15 @@ const parseRom = (arrayBuffer, res) => {
     roomgfx.push(item);
   }
 
+  for (let i = 0; i < res?.globdata?.length; i++) {
+    const [offset, length] = res.globdata[i];
+
+    const buffer = arrayBuffer.slice(offset, offset + length);
+    const item = parseGlobdata(buffer, i, offset);
+    item.buffer = buffer;
+    globdata.push(item);
+  }
+
   for (let i = 0; i < res?.preplist?.length; i++) {
     const [offset, length] = res.preplist[i];
 
@@ -37,6 +48,7 @@ const parseRom = (arrayBuffer, res) => {
   return {
     rooms,
     roomgfx,
+    globdata,
     preps,
   };
 };

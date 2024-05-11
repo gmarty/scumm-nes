@@ -18,6 +18,7 @@ const ResourceExplorer = ({ rom, res, resources }) => {
           <RoomsContainer
             rooms={resources.rooms}
             roomgfx={resources.roomgfx}
+            globdata={resources.globdata[0]}
           />
         }>
         <Route
@@ -26,6 +27,7 @@ const ResourceExplorer = ({ rom, res, resources }) => {
             <RoomsContainer
               rooms={resources.rooms}
               roomgfx={resources.roomgfx}
+              globdata={resources.globdata[0]}
             />
           }
         />

@@ -11,7 +11,7 @@ import RoomTabs from '../components/RoomTabs';
 import Palettes from '../components/Palettes';
 import RoomGfx from '../components/RoomGfx';
 
-const RoomsContainer = ({ rooms, roomgfx }) => {
+const RoomsContainer = ({ rooms, roomgfx, globdata }) => {
   const { roomId } = useParams();
   const [hoveredObject, setHoveredObject] = useState(null);
   const [selectedObjects, setSelectedObjects] = useState([]);
@@ -32,7 +32,12 @@ const RoomsContainer = ({ rooms, roomgfx }) => {
     setRoom(room);
 
     // Clear the selected objects when the room changes.
-    const selectedObjects = Array(room?.header?.objectsNum || 0).fill(false);
+    const selectedObjects = Array(room?.header?.objectsNum || 0);
+    for (let i = 0; i < selectedObjects.length; i++) {
+      const objNum = room.objects[i].num;
+      const initialState = globdata.globdata[objNum];
+      selectedObjects[i] = !!(initialState & 0b10000000);
+    }
     setSelectedObjects(selectedObjects);
   }, [roomId]);
 
