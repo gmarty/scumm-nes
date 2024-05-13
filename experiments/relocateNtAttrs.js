@@ -51,7 +51,7 @@ rom = expandRom(rom);
 // Write the nametable and attributes from bank 16 onwards.
 const view = new DataView(rom);
 const roomNum = 55;
-let bank = 16;
+let bank = 17;
 let bankOffset = 0;
 console.log('Bank:', bank);
 
@@ -93,16 +93,18 @@ for (let i = 0; i < roomNum; i++) {
   inject(rom, nametableBuffer, ntOffset, nametableLength);
   inject(rom, attrsBuffer, atOffset, attrsLength);
 
-  // Update room header
-  if (view.getUint16(offset + 8, true) !== 0) {
-    throw new Error('The value of unk3 is not 0.');
-  }
+  // Update room header.
+  view.setUint16(offset + 0x08, bankOffset, true); // unk3
+  view.setUint16(offset + 0x0c, bankOffset + nametableLength, true); // unk4
+  view.setUint8(offset + 0x12, bank - 16); // unk5
 
-  view.setUint8(offset + 7, bank); // Was the second byte of room height.
-  view.setUint16(offset + 8, bankOffset, true); // unk3
-  view.setUint16(offset + 12, bankOffset + nametableLength, true); // unk4
-
-  console.log('offset = 0x%s', hex(bankOffset));
+  console.log(
+    'Room %s: bank = 0x%s, nt offset = 0x%s, attrs offset = 0x%s',
+    i,
+    hex(bank - 16),
+    hex(bankOffset),
+    hex(bankOffset + nametableLength),
+  );
   bankOffset += nametableLength;
   bankOffset += attrsLength;
 }
