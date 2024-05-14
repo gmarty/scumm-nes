@@ -26,4 +26,16 @@ const formatPercentage = (percent, decimals = 2) => {
   return `${(percent * 100).toFixed(dm)}%`;
 };
 
-export { zeroPad, hex, formatBytes, formatPercentage };
+// Return true if an arrayBuffer has a NES header.
+const hasNesHeader = (bin) => {
+  const NES_HEADER = new Uint8Array([0x4e, 0x45, 0x53, 0x1a]);
+  const view = new DataView(bin);
+  for (let i = 0; i < NES_HEADER.length; i++) {
+    if (view.getUint8(i) !== NES_HEADER[i]) {
+      return false;
+    }
+  }
+  return true;
+};
+
+export { zeroPad, hex, formatBytes, formatPercentage, hasNesHeader };
