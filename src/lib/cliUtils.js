@@ -2,7 +2,7 @@ import { extname } from 'node:path';
 import { readFile, writeFile } from 'node:fs/promises';
 import crc32 from './crc32.js';
 import { isJapaneseVersion, getResFromCrc32 } from './getResFromCrc32.js';
-import { hex } from './utils.js';
+import { hex, hasNesHeader } from './utils.js';
 
 const BANK_SIZE = 0x4000;
 // prettier-ignore
@@ -119,17 +119,6 @@ const stringifyResources = (hash, size, resources, res) => {
   return JSON.stringify(data, null, '  ');
 };
 
-// Return true if an arrayBuffer has a NES header.
-const hasNesHeader = (bin) => {
-  const view = new DataView(bin);
-  for (let i = 0; i < 4; i++) {
-    if (view.getUint8(i) !== NES_HEADER[i]) {
-      return false;
-    }
-  }
-  return true;
-};
-
 // Append a NES header to a PRG buffer.
 const prependNesHeader = (prg) => {
   const rom = new ArrayBuffer(NES_HEADER.length + prg.byteLength);
@@ -170,11 +159,4 @@ const expandRom = (rom) => {
   return newRom;
 };
 
-export {
-  loadRom,
-  saveRom,
-  inject,
-  stringifyResources,
-  hasNesHeader,
-  expandRom,
-};
+export { loadRom, saveRom, inject, stringifyResources, expandRom };
