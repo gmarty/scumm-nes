@@ -2,7 +2,7 @@ import parseRooms from './parseRooms.js';
 import parseRoomGfx from './parseRoomGfx.js';
 import parseGlobdata from './parseGlobdata.js';
 import parsePreps from './parsePreps.js';
-import parseScripts from './parseScripts.js';
+import parseScript from './parseScript.js';
 
 const parseRom = (arrayBuffer, res) => {
   const rooms = [];
@@ -51,7 +51,7 @@ const parseRom = (arrayBuffer, res) => {
     }
 
     const resBuffer = arrayBuffer.slice(offset, offset + length);
-    const script = parseScripts(resBuffer, i, offset);
+    const script = parseScript(resBuffer, i, offset);
 
     scripts.push(script);
   }

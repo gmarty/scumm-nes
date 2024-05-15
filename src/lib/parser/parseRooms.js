@@ -4,7 +4,7 @@ import parseRoomNametable from './room/parseRoomNametable.js';
 import parseRoomAttributes from './room/parseRoomAttributes.js';
 import parseRoomBoxes from './room/parseRoomBoxes.js';
 import parseRoomMatrix from './room/parseRoomMatrix.js';
-import { parseScript } from './parseScript.js';
+import parseScriptCode from './parseScriptCode.js';
 import { verbs } from '../opcodes.js';
 
 const assert = console.assert;
@@ -264,7 +264,7 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
         ),
       );
 
-      const script = parseScript(scriptOffsParser, 0, 0);
+      const script = parseScriptCode(scriptOffsParser, 0, 0);
       objScripts.push([verbs[verbId] ?? `(${verbId})`, script]);
     }
 
@@ -368,13 +368,13 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
   let excdScript;
   if (excdOffs !== 0) {
     const excdScriptParser = new Parser(arrayBuffer.slice(excdOffs));
-    excdScript = parseScript(excdScriptParser, 0);
+    excdScript = parseScriptCode(excdScriptParser, 0);
   }
 
   let encdScript;
   if (encdOffs !== 0) {
     const encdScriptParser = new Parser(arrayBuffer.slice(encdOffs));
-    encdScript = parseScript(encdScriptParser, 0);
+    encdScript = parseScriptCode(encdScriptParser, 0);
   }
 
   // Order ROM map by starting offset.
