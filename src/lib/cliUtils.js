@@ -1,7 +1,12 @@
 import { extname } from 'node:path';
 import { readFile, writeFile } from 'node:fs/promises';
 import crc32 from './crc32.js';
-import { isJapaneseVersion, getResFromCrc32 } from './getResFromCrc32.js';
+import {
+  BASE_ROMS,
+  isJapaneseVersion,
+  getResFromCrc32,
+  getResFromBaseRom,
+} from './getResFromCrc32.js';
 import { hex, hasNesHeader } from './utils.js';
 
 const BANK_SIZE = 0x4000;
@@ -13,7 +18,7 @@ const NES_HEADER = new Uint8Array([
   0x00, 0x00, 0x00, 0x00,
 ]);
 
-const loadRom = async (romPath = '') => {
+const loadRom = async (romPath = '', baseRom = null) => {
   const inputExtname = extname(romPath).toLowerCase();
   if (inputExtname !== '.prg' && inputExtname !== '.nes') {
     throw new Error('Only PRG and NES files are accepted.');
@@ -39,11 +44,29 @@ const loadRom = async (romPath = '') => {
     throw new Error('The Japanese Famicom version is not supported.');
   }
 
-  const res = getResFromCrc32(hash);
+  let res;
+  if (baseRom) {
+    res = getResFromBaseRom(baseRom);
+    if (typeof baseRom !== 'string' || !res) {
+      const baseRomList = BASE_ROMS.map(
+        ({ name, alpha2code }) => `${alpha2code} (${name})`,
+      );
+      baseRomList.sort();
+      const formatter = new Intl.ListFormat('en-GB', {
+        style: 'long',
+        type: 'conjunction',
+      });
+      throw new Error(
+        `Base ROM only accepts the following values: ${formatter.format(baseRomList)}.`,
+      );
+    }
+  } else {
+    res = getResFromCrc32(hash);
+  }
 
   if (!res) {
     throw new Error(
-      `The file at '${romPath}' is not a valid ROM of Maniac Mansion on NES.`,
+      `The file '${romPath}' is not a valid ROM of Maniac Mansion on NES. If it's a ROM hack, pass the base ROM version to --base-rom.`,
     );
   }
 

@@ -7,10 +7,8 @@ import {
   TransitionChild,
 } from '@headlessui/react';
 import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
-import resources from '../lib/resources';
+import { BASE_ROMS } from '../lib/getResFromCrc32';
 
-const BASE_ROMS = resources.map(({ metadata: { name } }) => name);
-BASE_ROMS.sort();
 const defaultValue = 'USA'; // The USA version is the most commonly used base ROM.
 
 const BaseRomDialog = ({ open, setOpen, setBaseRom }) => {
@@ -101,8 +99,8 @@ const BaseRomSelector = ({ setBaseRom }) => {
         className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-primary-600 sm:text-sm sm:leading-6"
         defaultValue={defaultValue}
         onChange={({ target }) => setBaseRom(target.value)}>
-        {BASE_ROMS.map((baseRom) => (
-          <option key={baseRom}>{baseRom}</option>
+        {BASE_ROMS.map(({ name }) => (
+          <option key={name}>{name}</option>
         ))}
       </select>
     </>
