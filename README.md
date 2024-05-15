@@ -49,6 +49,7 @@ node index.js --input path/to/rom --output resources.json
 Options:
 
 - `--input`, `-i` Path to a ROM or PRG file.
+- `--base-rom`, `-b` The base ROM version of the input ROM.
 - `--output`, `-o` Path to a JSON filename to be created.
 - `--version`, `-v` Print the version number.
 

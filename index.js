@@ -23,6 +23,10 @@ const options = {
     type: 'string',
     short: 'i',
   },
+  'base-rom': {
+    type: 'string',
+    short: 'b',
+  },
   output: {
     type: 'string',
     short: 'o',
@@ -56,6 +60,7 @@ if (values.help || (!values.input && !values.output)) {
 
 \x1b[1mOptions\x1b[0m
   --input, -i    Path to a ROM or PRG file.
+  --base-rom, -b The base ROM version of the input ROM.
   --output, -o   Path to a JSON filename to be created.
   --version, -v  Print the version number.
 
@@ -103,7 +108,7 @@ if (outputFileExists) {
 // Load the input file.
 let rom, res, hash;
 try {
-  ({ rom, res, hash } = await loadRom(values.input));
+  ({ rom, res, hash } = await loadRom(values.input, values['base-rom']));
 } catch (err) {
   console.error(`Input ROM file could not be opened.`);
   console.error(err);

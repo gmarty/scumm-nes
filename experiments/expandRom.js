@@ -17,6 +17,10 @@ const { values } = parseArgs({
       type: 'string',
       short: 'i',
     },
+    'base-rom': {
+      type: 'string',
+      short: 'b',
+    },
   },
   strict: true,
 });
@@ -27,14 +31,14 @@ if (!values.input) {
   It creates a new ROM file called '${output}' in current path.
 
 \x1b[1mUsage\x1b[0m
-  node ${basename(import.meta.url)} --input path/to/rom`);
+  node ${basename(import.meta.url)} --input path/to/rom [--base-rom xx]`);
   process.exit(0);
 }
 
 // Load the input file.
 let rom;
 try {
-  ({ rom } = await loadRom(values.input));
+  ({ rom } = await loadRom(values.input, values['base-rom']));
 } catch (err) {
   console.error(`Input ROM file could not be opened.`);
   console.error(err);
