@@ -4,7 +4,7 @@ import { parseArgs } from 'node:util';
 import { basename } from 'node:path';
 import { loadRom, saveRom, expandRom, inject } from '../src/lib/cliUtils.js';
 import parseRoom from '../src/lib/parser/parseRooms.js';
-import { hex } from '../src/lib/utils.js';
+import { zeroPad, hex } from '../src/lib/utils.js';
 
 /*
 Relocate nametable and attributes:
@@ -21,6 +21,10 @@ const { values } = parseArgs({
       type: 'string',
       short: 'i',
     },
+    'base-rom': {
+      type: 'string',
+      short: 'b',
+    },
   },
   strict: true,
 });
@@ -32,14 +36,14 @@ if (!values.input) {
   It creates a new ROM file called '${output}' in current path.
 
 \x1b[1mUsage\x1b[0m
-  node ${basename(import.meta.url)} --input path/to/rom`);
+  node ${basename(import.meta.url)} --input path/to/rom [--base-rom xx]`);
   process.exit(0);
 }
 
 // Load the input file.
 let rom, res;
 try {
-  ({ rom, res } = await loadRom(values.input));
+  ({ rom, res } = await loadRom(values.input, values['base-rom']));
 } catch (err) {
   console.error(`Input ROM file could not be opened.`);
   console.error(err);
@@ -68,6 +72,7 @@ for (let i = 0; i < roomNum; i++) {
 
   // Nametable
   ({ from, to } = resources.map.find(({ type }) => type === 'nametable'));
+  from += 17; // Skip the tileset id and palette.
   const nametableLength = to - from;
   const nametableBuffer = roomBuffer.slice(from, to);
   for (let i = offset + from; i < offset + to; i++) {
@@ -94,16 +99,20 @@ for (let i = 0; i < roomNum; i++) {
   inject(rom, attrsBuffer, atOffset, attrsLength);
 
   // Update room header.
-  view.setUint16(offset + 0x08, bankOffset, true); // unk3
-  view.setUint16(offset + 0x0c, bankOffset + nametableLength, true); // unk4
+  view.setUint16(offset + 0x08, bankOffset + BANK_SIZE * 2, true); // unk3
+  view.setUint16(
+    offset + 0x0c,
+    bankOffset + BANK_SIZE * 2 + nametableLength,
+    true,
+  ); // unk4
   view.setUint8(offset + 0x12, bank - 16); // unk5
 
   console.log(
     'Room %s: bank = 0x%s, nt offset = 0x%s, attrs offset = 0x%s',
-    i,
+    zeroPad(i),
     hex(bank - 16),
-    hex(bankOffset),
-    hex(bankOffset + nametableLength),
+    hex(bankOffset, 4),
+    hex(bankOffset + nametableLength, 4),
   );
   bankOffset += nametableLength;
   bankOffset += attrsLength;
