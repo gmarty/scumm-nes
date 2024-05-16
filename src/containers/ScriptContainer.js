@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import PrimaryColumn from '../components/PrimaryColumn';
 import Main from '../components/Main';
@@ -7,16 +6,12 @@ import Script from '../components/Script';
 
 const ScriptContainer = ({ scripts }) => {
   const { scriptId } = useParams();
-  const [script, setScript] = useState(null);
 
   const currentScriptId =
     typeof scriptId === 'undefined' ? null : parseInt(scriptId, 10);
 
-  useEffect(() => {
-    const script =
-      scripts.find(({ metadata }) => metadata.id === currentScriptId) || null;
-    setScript(script);
-  }, [scriptId]);
+  const script =
+    scripts.find(({ metadata }) => metadata.id === currentScriptId) || null;
 
   return (
     <>
