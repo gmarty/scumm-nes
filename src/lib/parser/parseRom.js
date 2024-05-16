@@ -19,10 +19,6 @@ const parseRom = (arrayBuffer, res) => {
     const item = parseRooms(buffer, i, offset, res.characters);
     item.buffer = buffer;
     rooms.push(item);
-
-    if (item.objects !== undefined) {
-      objects = objects.concat(item.objects);
-    }
   }
 
   for (let i = 0; i < res?.roomgfx?.length; i++) {
