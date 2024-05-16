@@ -2,16 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { hex } from '../lib/utils.js';
 
-const prettifyScriptCommand = function (row) {
-  const opCode = row[0];
+const prettifyArguments = (operation) => {
+  const opCode = operation[0];
+  let args = operation.slice(2);
 
-  const operation = (
-    <span className="text-indigo-600 dark:text-indigo-300">
-      ({hex(opCode, 2)}) {row[1]}
-    </span>
-  );
-
-  let args = row.slice(2);
   switch (opCode) {
     case 0x18: // goTo
       args = [
@@ -126,43 +120,27 @@ const prettifyScriptCommand = function (row) {
       ];
       break;
   }
+  return args;
+};
+
+const ScriptCodeInstruction = ({ command }) => {
+  const opCode = hex(command[0], 2);
+  const instruction = command[1];
+  const args = prettifyArguments(command);
 
   return (
-    <>
-      {operation}{' '}
+    <span>
+      <span className="text-primary-600 dark:text-primary-300">
+        (${opCode}) {instruction}
+      </span>{' '}
       {args.map((arg, i) => (
-        <>
+        <span key={`${i}`}>
           {arg}
           {i < args.length - 1 ? <span className={'opacity-50'}>, </span> : ''}
-        </>
+        </span>
       ))}
-    </>
+    </span>
   );
 };
 
-const ScriptRows = ({ scriptRows }) => {
-  if (!scriptRows) {
-    return null;
-  }
-
-  return (
-    <div className="text-xs">
-      {scriptRows.map((row) => (
-        <>
-          <div
-            id={`L${row[0]}`}
-            className="flex gap-4 px-2 font-monocode">
-            <Link
-              className="font-thin opacity-50"
-              to={`#L${row[0]}`}>
-              0x{row[0]}
-            </Link>
-            <span>{prettifyScriptCommand(row[1])}</span>
-          </div>
-        </>
-      ))}
-    </div>
-  );
-};
-
-export default ScriptRows;
+export default ScriptCodeInstruction;

@@ -1,4 +1,4 @@
-import ScriptRows from './ScriptRows';
+import ScriptCode from './ScriptCode';
 
 const RoomScripts = ({ excdScript, encdScript }) => {
   return (
@@ -6,13 +6,13 @@ const RoomScripts = ({ excdScript, encdScript }) => {
       <div>
         <h2>Enter Script</h2>
         <div>
-          <ScriptRows scriptRows={encdScript} />
+          <ScriptCode code={encdScript} />
         </div>
       </div>
       <div>
         <h2>Exit Script</h2>
         <div>
-          <ScriptRows scriptRows={excdScript} />
+          <ScriptCode code={excdScript} />
         </div>
       </div>
     </div>

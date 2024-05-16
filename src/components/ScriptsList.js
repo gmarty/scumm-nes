@@ -7,14 +7,18 @@ const ScriptsList = ({ scripts, currentId }) => {
       <ColumnListHeader>Scripts</ColumnListHeader>
       {scripts
         .sort((a, b) => a.num > b.num)
-        .map((script) => {
-          const selected = script.metadata.id === currentId;
-          const path = `/scripts/${script.metadata.id}`;
-          const label = `Script ${script.metadata.id}`;
+        .map(({ metadata, code }) => {
+          if (code.length == 0) {
+            return null;
+          }
+
+          const selected = metadata.id === currentId;
+          const path = `/scripts/${metadata.id}`;
+          const label = `Script ${metadata.id}`;
 
           return (
             <ColumnListItem
-              key={script.metadata.id}
+              key={metadata.id}
               path={selected ? null : path}>
               {label}
             </ColumnListItem>

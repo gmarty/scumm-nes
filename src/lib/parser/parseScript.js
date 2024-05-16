@@ -2,8 +2,6 @@ import parseScriptCode from './parseScriptCode.js';
 import Parser from './parser.js';
 const assert = console.assert;
 
-const SIZEOF_BOX = 8;
-
 const parseScript = (arrayBuffer, i, offset = 0) => {
   const parser = new Parser(arrayBuffer);
   const metadata = {
@@ -12,20 +10,35 @@ const parseScript = (arrayBuffer, i, offset = 0) => {
     size: arrayBuffer.byteLength,
   };
 
+  if (arrayBuffer.byteLength === 0) {
+    return { metadata, header: {}, code: [] };
+  }
+
   const chunkSize = parser.getUint16();
+  const unk1 = parser.getUint8();
+  const unk2 = parser.getUint8();
 
   assert(
     chunkSize === arrayBuffer.byteLength,
     'Script res size flag does not match chunk size.',
   );
 
-  // const scriptBuffer = arrayBuffer.slice(4, 4 + arrayBuffer.length);
-  parser.getUint8();
-  parser.getUint8();
+  assert(unk1 === 0, 'Unknown 1 is not 0.');
+
+  const header = {
+    chunkSize,
+    unk1,
+    unk2,
+  };
+
+  // Skip script 59 and 90 as they seem to be corrupted
+  if (i === 0x3b || i === 0x5a) {
+    return { metadata, header, code: [] };
+  }
 
   const code = parseScriptCode(parser, 0x0004);
 
-  return { metadata, code };
+  return { metadata, header, code };
 };
 
 export default parseScript;

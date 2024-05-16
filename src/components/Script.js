@@ -1,7 +1,7 @@
 import React from 'react';
 import MainHeader from './MainHeader';
 import ResourceMetadata from './ResourceMetadata';
-import ScriptRows from './ScriptRows';
+import ScriptCode from './ScriptCode';
 
 const Script = ({ script }) => {
   if (!script) {
@@ -15,7 +15,7 @@ const Script = ({ script }) => {
       </MainHeader>
 
       <div className="text-xs">
-        <ScriptRows scriptRows={script.script} />
+        <ScriptCode code={script.code} />
       </div>
     </>
   );

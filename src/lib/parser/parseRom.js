@@ -41,14 +41,9 @@ const parseRom = (arrayBuffer, res) => {
 
   for (let i = 0; i < res.scripts.length; i++) {
     const [offset, length] = res.scripts[i];
-    if (length === 0) {
-      console.log(`Script ${i}`, 'Skipping 0-length resource.');
-      continue;
-    }
 
     const resBuffer = arrayBuffer.slice(offset, offset + length);
     const script = parseScript(resBuffer, i, offset);
-
     scripts.push(script);
   }
 
