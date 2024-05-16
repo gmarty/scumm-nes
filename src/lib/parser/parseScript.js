@@ -23,7 +23,6 @@ const parseScript = (arrayBuffer, i, offset = 0) => {
   parser.getUint8();
   parser.getUint8();
 
-  console.log(`SCRIPT ${i}`);
   const code = parseScriptCode(parser, 0x0004);
 
   return { metadata, code };

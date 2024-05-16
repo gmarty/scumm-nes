@@ -363,8 +363,6 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
 
   map.push(matrixMap);
 
-  console.log('ROOM', metadata.id, excdOffs, encdOffs);
-
   let excdScript;
   if (excdOffs !== 0) {
     const excdScriptParser = new Parser(arrayBuffer.slice(excdOffs));
