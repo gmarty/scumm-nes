@@ -11,28 +11,21 @@ const getWord = (parser) => {
 
 const getVariable = (parser) => {
   const i = parser.getUint8();
-  let str = '';
-  if (i < varNames.length && varNames[i]) {
-    return (str = varNames[i]);
-  } else if (i & 0x8000) {
-    console.log('VAR with BIT');
-    str += `Var[${(i & 0x0fff) >> 4} Bit ${i & 0x000f}`;
-  } else {
-    const varIndex = i & 0xfff;
-    if (varIndex >= 0x320) {
-      s = '??Var??';
-    } else {
-      s = 'Var';
-    }
-    str += `${s}[${varIndex}`;
-  }
 
   if (i & 0x2000) {
     // Not implemented
     console.error('Not implemented');
   }
-  str += ']';
-  return str;
+
+  if (i < varNames.length && varNames[i]) {
+    return varNames[i];
+  } else if (i & 0x8000) {
+    return `Var[${(i & 0x0fff) >> 4} Bit ${i & 0x000f}]`;
+  } else {
+    const varIndex = i & 0xfff;
+    const s = varIndex >= 0x320 ? '??Var??' : 'Var';
+    return `${s}[${varIndex}]`;
+  }
 };
 
 const getVariableOrByte = (parser, condition) => {
