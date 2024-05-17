@@ -107,7 +107,7 @@ describe('parseRoomNametable', () => {
 
     assert.equal(typeof nametableMap, 'object');
     assert.equal(nametableMap.from, 0);
-    assert.equal(nametableMap.to, 16);
+    assert.equal(nametableMap.to, 17);
   });
 
   it('should return a map object with a start offset.', () => {
@@ -117,7 +117,7 @@ describe('parseRoomNametable', () => {
     );
 
     assert.equal(nametableMap.from, 0xabc);
-    assert.equal(nametableMap.to, 0xacc);
+    assert.equal(nametableMap.to, 0xacd);
   });
 
   it('should be the inverse of serialiseRoomNametable.', () => {

@@ -25,7 +25,7 @@ const parseRoomAttributes = (arrayBuffer, offset = 0, width = 0) => {
   const attributesMap = {
     type: 'attributes',
     from: offset,
-    to: offset + parser.pointer - 1,
+    to: offset + parser.pointer,
   };
 
   return {

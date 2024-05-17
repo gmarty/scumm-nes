@@ -48,7 +48,7 @@ describe('parseRoomAttributes', () => {
 
     assert.equal(typeof attributesMap, 'object');
     assert.equal(attributesMap.from, 0);
-    assert.equal(attributesMap.to, 1);
+    assert.equal(attributesMap.to, 2);
   });
 
   it('should return a map object with a start offset.', () => {
@@ -58,7 +58,7 @@ describe('parseRoomAttributes', () => {
     );
 
     assert.equal(attributesMap.from, 0xabc);
-    assert.equal(attributesMap.to, 0xabd);
+    assert.equal(attributesMap.to, 0xabe);
   });
 
   it('should be the inverse of serialiseRoomAttributes.', () => {

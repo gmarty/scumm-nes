@@ -35,7 +35,6 @@ class Parser {
   }
 
   // Return the position of the next byte to read.
-  // @todo Return the last read character's instead.
   get pointer() {
     return this.#ptr;
   }

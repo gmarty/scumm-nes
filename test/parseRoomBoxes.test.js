@@ -41,21 +41,21 @@ describe('parseRoomBoxes', () => {
 
     assert.equal(typeof boxesMap, 'object');
     assert.equal(boxesMap.from, 0);
-    assert.equal(boxesMap.to, 8);
+    assert.equal(boxesMap.to, 9);
   });
 
   it('should return a map object with a start offset.', () => {
     const { boxesMap } = parseRoomBoxes(roomBoxesEmptyBuffer(1), 0xabc);
 
     assert.equal(boxesMap.from, 0xabc);
-    assert.equal(boxesMap.to, 0xac4);
+    assert.equal(boxesMap.to, 0xac5);
   });
 
   it('should return a map object with an end offset.', () => {
     const { boxesMap } = parseRoomBoxes(roomBoxesEmptyBuffer(5), 0xabc);
 
     assert.equal(boxesMap.from, 0xabc);
-    assert.equal(boxesMap.to, 0xae4);
+    assert.equal(boxesMap.to, 0xae5);
   });
 
   it('should be the inverse of serialiseRoomBoxes.', () => {

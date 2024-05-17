@@ -26,7 +26,7 @@ const parseRoomMatrix = (arrayBuffer, offset = 0, boxNum = 1) => {
   const matrixMap = {
     type: 'matrix',
     from: offset,
-    to: offset + parser.pointer - 1,
+    to: offset + parser.pointer,
   };
 
   return { matrixUnks, matrix, matrixMap };

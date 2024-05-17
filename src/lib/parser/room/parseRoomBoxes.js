@@ -30,7 +30,7 @@ const parseRoomBoxes = (arrayBuffer, offset = 0) => {
   const boxesMap = {
     type: 'boxes',
     from: offset,
-    to: offset + parser.pointer - 1,
+    to: offset + parser.pointer,
   };
 
   return { boxes, boxesMap };

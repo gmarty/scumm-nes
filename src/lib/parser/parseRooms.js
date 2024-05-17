@@ -48,14 +48,14 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
     map.push({
       type: 'excdOffs',
       from: excdOffs,
-      to: encdOffs - 1, // Hack
+      to: encdOffs, // Hack
     });
   }
   if (encdOffs > 0) {
     map.push({
       type: 'encdOffs',
       from: encdOffs,
-      to: chunkSize - 1, // Hack
+      to: chunkSize, // Hack
     });
   }
 
@@ -69,7 +69,7 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
   map.push(nametableMap);
 
   assert(
-    nametableMap.to + 1 === attrOffs,
+    nametableMap.to === attrOffs,
     'Gfx nametable overlaps on attributes table.',
   );
 
@@ -83,7 +83,7 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
   map.push(attributesMap);
 
   assert(
-    attributesMap.to + 1 === maskOffs,
+    attributesMap.to === maskOffs,
     'Gfx attributes table overlaps on gfx mask table.',
   );
 
@@ -124,7 +124,7 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
     map.push({
       type: 'masktable',
       from: maskOffs,
-      to: maskOffs + masktableParser.pointer - 1,
+      to: maskOffs + masktableParser.pointer,
     });
   } else {
     map.push({
@@ -147,7 +147,7 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
       {
         type: 'objectsOffs',
         from: 0x1c + objectsNum * 2,
-        to: 0x1c + objectsNum * 4 - 1,
+        to: 0x1c + objectsNum * 4,
       },
     );
   }
@@ -285,8 +285,8 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
     objectImages.push({ tiles });
 
     // @fixme This does not account for object scripts.
-    if (objectCodeMap.to < objectOffs + objectImagesParser.pointer - 1) {
-      objectCodeMap.to = objectOffs + objectImagesParser.pointer - 1;
+    if (objectCodeMap.to < objectOffs + objectImagesParser.pointer) {
+      objectCodeMap.to = objectOffs + objectImagesParser.pointer;
     }
 
     // Calculate the number of object script given the value of object name offset.
@@ -341,10 +341,10 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
   // Parse matrix.
   const { matrixUnks, matrix, matrixMap } = parseRoomMatrix(
     arrayBuffer.slice(
-      boxesMap.to + 1,
-      boxesMap.to + 1 + boxes.length * (boxes.length + 1),
+      boxesMap.to,
+      boxesMap.to + boxes.length * (boxes.length + 1),
     ),
-    boxesMap.to + 1,
+    boxesMap.to,
     boxes.length,
   );
 
