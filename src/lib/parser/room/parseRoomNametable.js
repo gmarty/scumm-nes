@@ -54,7 +54,7 @@ const parseRoomNametable = (arrayBuffer, offset = 0, width = 0) => {
   const nametableMap = {
     type: 'nametable',
     from: offset,
-    to: offset + parser.pointer - 1,
+    to: offset + parser.pointer,
   };
 
   return {

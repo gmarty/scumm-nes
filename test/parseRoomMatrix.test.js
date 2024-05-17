@@ -54,21 +54,21 @@ describe('parseRoomMatrix', () => {
 
     assert.equal(typeof matrixMap, 'object');
     assert.equal(matrixMap.from, 0);
-    assert.equal(matrixMap.to, 1);
+    assert.equal(matrixMap.to, 2);
   });
 
   it('should return a map object with a start offset.', () => {
     const { matrixMap } = parseRoomMatrix(roomMatrixEmptyBuffer(1), 0xabc, 1);
 
     assert.equal(matrixMap.from, 0xabc);
-    assert.equal(matrixMap.to, 0xabd);
+    assert.equal(matrixMap.to, 0xabe);
   });
 
   it('should return a map object with an end offset.', () => {
     const { matrixMap } = parseRoomMatrix(roomMatrixEmptyBuffer(5), 0xabc, 5);
 
     assert.equal(matrixMap.from, 0xabc);
-    assert.equal(matrixMap.to, 0xad9);
+    assert.equal(matrixMap.to, 0xada);
   });
 
   it('should be the inverse of serialiseRoomMatrix.', () => {
