@@ -107,12 +107,19 @@ for (let i = 0; i < roomNum; i++) {
   ); // unk4
   view.setUint8(offset + 0x12, bank - 16); // unk5
 
+  const headerLength = 0x10;
   console.log(
-    'Room %s: bank = 0x%s, nt offset = 0x%s, attrs offset = 0x%s',
+    'Room %s (%s) @ 0x%s: bank %s, nt offset 0x%s @ 0x%s (%s bytes), attrs offset 0x%s @ 0x%s (%s bytes)',
+    hex(i, 2),
     zeroPad(i),
-    hex(bank - 16),
+    hex(offset + headerLength),
+    hex(bank - 16, 2),
     hex(bankOffset, 4),
+    hex(ntOffset + headerLength),
+    nametableLength,
     hex(bankOffset + nametableLength, 4),
+    hex(atOffset + headerLength),
+    attrsLength
   );
   bankOffset += nametableLength;
   bankOffset += attrsLength;
