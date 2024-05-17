@@ -4,6 +4,7 @@ import RoomGfxContainer from './RoomGfxContainer';
 import PrepositionsContainer from './PrepositionsContainer';
 import RomMapContainer from './RomMapContainer';
 import SettingsContainer from './SettingsContainer';
+import ScriptContainer from './ScriptContainer';
 
 const ResourceExplorer = ({ rom, res, resources }) => {
   if (!resources) {
@@ -49,6 +50,14 @@ const ResourceExplorer = ({ rom, res, resources }) => {
           />
         }
       />
+      <Route
+        path="/scripts"
+        element={<ScriptContainer scripts={resources.scripts} />}>
+        <Route
+          path=":scriptId"
+          element={<ScriptContainer scripts={resources.scripts} />}
+        />
+      </Route>
       <Route
         path="/rom-map"
         element={

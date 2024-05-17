@@ -10,6 +10,7 @@ import Room from '../components/Room';
 import RoomTabs from '../components/RoomTabs';
 import Palettes from '../components/Palettes';
 import RoomGfx from '../components/RoomGfx';
+import RoomScripts from '../components/RoomScripts';
 
 const RoomsContainer = ({ rooms, roomgfx, globdata }) => {
   const { roomId } = useParams();
@@ -115,7 +116,12 @@ const RoomsContainer = ({ rooms, roomgfx, globdata }) => {
                 roomgfc={roomgfc}
               />
             )}
-            {currentTab === 'Scripts' && <h2>Scripts</h2>}
+            {currentTab === 'Scripts' && (
+              <RoomScripts
+                excdScript={room.excdScript}
+                encdScript={room.encdScript}
+              />
+            )}
           </>
         )}
       </Main>
