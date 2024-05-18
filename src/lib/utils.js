@@ -2,10 +2,10 @@ const zeroPad = (s, len = 2) => {
   return String(s).padStart(len, '0');
 };
 
-const hex = (n, len = 2) => {
+const hex = (n, len = null) => {
   const str = n.toString(16);
   const l = Math.ceil(str.length / 2) * 2; // Even number of 0s.
-  return zeroPad(str, Math.max(len, l));
+  return zeroPad(str, len || l);
 };
 
 const formatBytes = (bytes, decimals = 2) => {
