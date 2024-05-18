@@ -10,6 +10,9 @@ const config = {
         primary: colors.sky,
         gray: colors.slate,
       },
+      gridTemplateColumns: {
+        14: 'repeat(14, minmax(0, 1fr))',
+      },
     },
     // prettier-ignore
     // https://github.com/system-fonts/modern-font-stacks

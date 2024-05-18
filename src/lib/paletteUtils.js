@@ -67,4 +67,4 @@ const getLuminosity = (color = '') => {
   return m[0] * 0.299 + m[1] * 0.587 + m[2] * 0.114;
 };
 
-export { getPalette };
+export { getPalette, getLuminosity };

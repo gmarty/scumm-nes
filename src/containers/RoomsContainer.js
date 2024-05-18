@@ -54,6 +54,12 @@ const RoomsContainer = ({ rooms, roomgfx, globdata }) => {
     setSelectedObjects(newSelectedObjects);
   };
 
+  const updatePalette = (i, colourId) => {
+    const newRoom = structuredClone(room);
+    newRoom.nametable.palette[i] = colourId;
+    setRoom(newRoom);
+  };
+
   if (room && !room.header) {
     return null;
   }
@@ -106,7 +112,10 @@ const RoomsContainer = ({ rooms, roomgfx, globdata }) => {
               setCurrentTab={setCurrentTab}
             />
             {currentTab === 'Palettes' && (
-              <Palettes nametable={room.nametable} />
+              <Palettes
+                palette={room.nametable.palette}
+                onUpdate={updatePalette}
+              />
             )}
             {currentTab === 'Tilesets' && (
               <RoomGfx

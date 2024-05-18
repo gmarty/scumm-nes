@@ -1,6 +1,12 @@
-const ColourSwatch = ({ colour }) => (
+import { clsx } from 'clsx';
+
+const ColourSwatch = ({ colour, className, ...props }) => (
   <span
-    className="inline-block h-6 w-8 rounded border border-slate-600 dark:border-slate-400"
+    {...props}
+    className={clsx(
+      'inline-block h-6 w-8 rounded border border-neutral-500',
+      className,
+    )}
     style={{ backgroundColor: colour }}
   />
 );
