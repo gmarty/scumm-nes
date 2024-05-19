@@ -56,7 +56,14 @@ const RoomsContainer = ({ rooms, roomgfx, globdata }) => {
 
   const updatePalette = (i, colourId) => {
     const newRoom = structuredClone(room);
-    newRoom.nametable.palette[i] = colourId;
+    if (i % 4 === 0) {
+      // Keep the first colours in sync.
+      for (let i = 0; i < 16; i += 4) {
+        newRoom.nametable.palette[i] = colourId;
+      }
+    } else {
+      newRoom.nametable.palette[i] = colourId;
+    }
     setRoom(newRoom);
   };
 
