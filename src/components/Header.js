@@ -15,7 +15,7 @@ import meteor from '../assets/meteor.png';
 
 const navigation = [
   { name: 'Rooms', href: '/rooms/1' },
-  { name: 'Room Gfx', href: '/roomgfx/0' },
+  { name: 'Gfx', href: '/roomgfx/0' },
   { name: 'Scripts', href: '/scripts/1' },
   { name: 'Prepositions', href: '/preps' },
   { name: 'ROM map', href: '/rom-map' },

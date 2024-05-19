@@ -3,6 +3,7 @@ import parseRoomGfx from './parseRoomGfx.js';
 import parseGlobdata from './parseGlobdata.js';
 import parsePreps from './parsePreps.js';
 import parseScript from './parseScript.js';
+import parseTitles from './parseTitles.js';
 
 const parseRom = (arrayBuffer, res) => {
   const rooms = [];
@@ -10,7 +11,7 @@ const parseRom = (arrayBuffer, res) => {
   const globdata = [];
   const scripts = [];
   const preps = [];
-  let objects = [];
+  const titles = [];
 
   for (let i = 0; i < res?.rooms?.length; i++) {
     const [offset, length] = res.rooms[i];
@@ -56,13 +57,24 @@ const parseRom = (arrayBuffer, res) => {
     preps.push(item);
   }
 
+  // The title screens are stored outside of SCUMM.
+  for (let i = 0; i < res?.titleoffs?.length; i++) {
+    const [offset, length] = res.titleoffs[i];
+
+    // @todo Figure out the length of the title chunks.
+    const buffer = arrayBuffer.slice(offset); //, offset + length);
+    const item = parseTitles(buffer, i, offset);
+    item.buffer = buffer;
+    titles.push(item);
+  }
+
   return {
     rooms,
     roomgfx,
     globdata,
     preps,
     scripts,
-    objects,
+    titles,
   };
 };
 

@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import RoomsContainer from './RoomsContainer';
-import RoomGfxContainer from './RoomGfxContainer';
+import GfxContainer from './GfxContainer';
 import PrepositionsContainer from './PrepositionsContainer';
 import RomMapContainer from './RomMapContainer';
 import SettingsContainer from './SettingsContainer';
@@ -35,10 +35,38 @@ const ResourceExplorer = ({ rom, res, resources }) => {
       </Route>
       <Route
         path="/roomgfx"
-        element={<RoomGfxContainer roomgfx={resources.roomgfx} />}>
+        element={
+          <GfxContainer
+            roomgfx={resources.roomgfx}
+            titlegfx={resources.titles}
+          />
+        }>
         <Route
           path=":gfcId"
-          element={<RoomGfxContainer roomgfx={resources.roomgfx} />}
+          element={
+            <GfxContainer
+              roomgfx={resources.roomgfx}
+              titlegfx={resources.titles}
+            />
+          }
+        />
+      </Route>
+      <Route
+        path="/titlegfx"
+        element={
+          <GfxContainer
+            roomgfx={resources.roomgfx}
+            titlegfx={resources.titles}
+          />
+        }>
+        <Route
+          path=":gfcId"
+          element={
+            <GfxContainer
+              roomgfx={resources.roomgfx}
+              titlegfx={resources.titles}
+            />
+          }
         />
       </Route>
       <Route

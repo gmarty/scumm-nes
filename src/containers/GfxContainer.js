@@ -1,19 +1,21 @@
-import { useParams } from 'react-router-dom';
+import { useMatch, useParams } from 'react-router-dom';
 import PrimaryColumn from '../components/PrimaryColumn';
 import RoomGfxList from '../components/RoomGfxList';
+import TitleGfxList from '../components/TitleGfxList';
 import Main from '../components/Main';
 import MainHeader from '../components/MainHeader';
 import ResourceMetadata from '../components/ResourceMetadata';
 import GfxCanvasContainer from './GfxCanvasContainer';
 
-const RoomGfxContainer = ({ roomgfx }) => {
+const GfxContainer = ({ roomgfx, titlegfx }) => {
+  const isRoomGfx = !!useMatch('/roomgfx/:gfcId');
   const { gfcId } = useParams();
 
   const currentGfcId =
     typeof gfcId === 'undefined' ? null : parseInt(gfcId, 10);
-  const roomgfc = roomgfx[currentGfcId];
+  const gfc = isRoomGfx ? roomgfx[currentGfcId] : titlegfx[currentGfcId];
 
-  if (!roomgfc) {
+  if (!gfc) {
     return null;
   }
 
@@ -21,23 +23,29 @@ const RoomGfxContainer = ({ roomgfx }) => {
     <>
       <PrimaryColumn>
         <RoomGfxList
-          roomgfx={roomgfx}
-          currentId={currentGfcId}
+          gfx={roomgfx}
+          currentId={isRoomGfx ? currentGfcId : null}
+        />
+        <TitleGfxList
+          gfx={titlegfx}
+          currentId={isRoomGfx ? null : currentGfcId}
         />
       </PrimaryColumn>
       <Main>
         <MainHeader
           title={
             currentGfcId === null
-              ? 'Room graphics'
-              : `Room graphics tileset ${currentGfcId}`
+              ? 'Graphics'
+              : isRoomGfx
+                ? `Room graphics tileset ${currentGfcId}`
+                : `Title graphics tileset ${currentGfcId}`
           }>
           {currentGfcId !== null && (
-            <ResourceMetadata metadata={roomgfc.metadata} />
+            <ResourceMetadata metadata={gfc.metadata} />
           )}
         </MainHeader>
         <GfxCanvasContainer
-          gfx={roomgfc.gfx}
+          gfx={gfc.gfx}
           zoom={3}
         />
       </Main>
@@ -45,4 +53,4 @@ const RoomGfxContainer = ({ roomgfx }) => {
   );
 };
 
-export default RoomGfxContainer;
+export default GfxContainer;

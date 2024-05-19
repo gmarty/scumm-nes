@@ -1,13 +1,13 @@
 import ColumnListHeader from './ColumnListHeader';
 import ColumnListItem from './ColumnListItem';
 
-const RoomGfxList = ({ gfx, currentId }) => {
+const TitleGfxList = ({ gfx, currentId }) => {
   return (
     <>
-      <ColumnListHeader>Room gfx</ColumnListHeader>
+      <ColumnListHeader>Title gfx</ColumnListHeader>
       {gfx.map(({ metadata }) => {
         const selected = metadata.id === currentId;
-        const path = `/roomgfx/${metadata.id}`;
+        const path = `/titlegfx/${metadata.id}`;
         const label = `Tileset ${metadata.id}`;
 
         return (
@@ -22,4 +22,4 @@ const RoomGfxList = ({ gfx, currentId }) => {
   );
 };
 
-export default RoomGfxList;
+export default TitleGfxList;

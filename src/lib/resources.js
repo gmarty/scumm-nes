@@ -102,6 +102,7 @@ const usa = {
   sprdata: [[0x2ce11, 0x2be0], [0x07f6b, 0x008a]],
   charset: [[0x3f6ee, 0x0090]],
   preplist: [[0x3fb5a, 0x000e]],
+  titleoffs: [[0x2701, 0x0000], [0x324d, 0x0000]],
   characters: {},
   version: 'USA',
   lang: 'en-US',
@@ -212,6 +213,7 @@ const eur = {
   sprdata: [[0x2ce11, 0x2be0], [0x0be28, 0x008a]],
   charset: [[0x3f724, 0x0090]],
   preplist: [[0x3fb90, 0x000e]],
+  titleoffs: [[0x2701, 0x0000], [0x324d, 0x0000]],
   characters: {},
   version: 'Europe',
   lang: 'en-GB',
@@ -317,6 +319,7 @@ const swe = {
   sprdata: [[0x2c401, 0x2be0], [0x0fe6b, 0x008a]],
   charset: [[0x3f739, 0x0094]],
   preplist: [[0x3fba9, 0x000e]],
+  titleoffs: [[0x02701, 0x0000], [0x0320f, 0x0000]],
   characters: {
     '<': 'ä', '[': 'é', '\\': 'å', '>': 'ö',
     // The 'ù' sign is in the base tileset but
@@ -426,6 +429,7 @@ const fra = {
   sprdata: [[0x2ca28, 0x2be0], [0x07e48, 0x008a]],
   charset: [[0x3f739, 0x009a]],
   preplist: [[0x3fbaf, 0x0010]],
+  titleoffs: [[0x02701, 0x0000], [0x0320f, 0x0000]],
   characters: {
     '[': 'é', '<': 'à', '\\': 'è', '>': 'ç', ']': 'ê', '|': 'ô',
     '{': 'î', '=': 'â', '}': 'ù', '_': 'û',
@@ -534,6 +538,7 @@ const ger = {
   sprdata: [[0x2c8ee, 0x2be0], [0x0fe61, 0x008a]],
   charset: [[0x3f739, 0x0096]],
   preplist: [[0x3fbab, 0x000e]],
+  titleoffs: [[0x02701, 0x0000], [0x0320f, 0x0000]],
   characters: {
     '=': 'ß', '\\': 'ä', '{': 'ö', '[': 'ü', '(': '(', ')': ')',
     // The 'è' sign is in the base tileset but
@@ -643,6 +648,7 @@ const esp = {
   sprdata: [[0x2c401, 0x2be0], [0x0fe67, 0x008a]],
   charset: [[0x3f739, 0x0099]],
   preplist: [[0x3fbae, 0x000f]],
+  titleoffs: [[0x02701, 0x0000], [0x0320f, 0x0000]],
   characters: {
     '[': 'á', '<': 'é', '|': 'í', '>': 'ó', ']': 'ú',
     '{': '¿', '}': '¡', '=': 'ñ', '_': 'ü',
@@ -751,6 +757,7 @@ const ita = {
   sprdata: [[0x2c8c0, 0x2be0], [0x0fe61, 0x008a]],
   charset: [[0x3f739, 0x0095]],
   preplist: [[0x3fbaa, 0x0010]],
+  titleoffs: [[0x02701, 0x0000], [0x0320f, 0x0000]],
   characters: {
     '<': 'à', '\\': 'è', '>': 'ì', '|': 'ò', '}': 'ù',
   },
@@ -863,6 +870,7 @@ const proto = {
   sprdata: [[0x2ce11, 0x2be0], [0x07f6b, 0x008a]],
   charset: [[0x3f6ee, 0x0090]],
   preplist: [[0x3fb5a, 0x000e]],
+  titleoffs: [[0x2701, 0x0000], [0x325b, 0x0000]],
   characters: {},
   version: 'prototype',
   lang: 'en-US',
