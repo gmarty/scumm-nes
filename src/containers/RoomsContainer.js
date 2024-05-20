@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useMatch, useParams } from 'react-router-dom';
 import PrimaryColumn from '../components/PrimaryColumn';
 import SecondaryColumn from '../components/SecondaryColumn';
 import Main from '../components/Main';
 import RoomsList from '../components/RoomsList';
+import TitlesList from '../components/TitlesList';
 import RoomsObjectList from '../components/RoomsObjectList';
 import RoomsBoxList from '../components/RoomsBoxList';
 import Room from '../components/Room';
@@ -12,16 +13,16 @@ import Palettes from '../components/Palettes';
 import RoomGfx from '../components/RoomGfx';
 import RoomScripts from '../components/RoomScripts';
 
-const RoomsContainer = ({ rooms, roomgfx, globdata }) => {
-  const { roomId } = useParams();
+const RoomsContainer = ({ rooms, titles, roomgfx, globdata }) => {
+  const isRoom = !!useMatch('/rooms/:id');
+  const { id } = useParams();
   const [hoveredObject, setHoveredObject] = useState(null);
   const [selectedObjects, setSelectedObjects] = useState([]);
   const [hoveredBox, setHoveredBox] = useState(null);
   const [currentTab, setCurrentTab] = useState('Palettes');
   const [room, setRoom] = useState(null);
 
-  const currentRoomId =
-    typeof roomId === 'undefined' ? null : parseInt(roomId, 10);
+  const currentId = typeof id === 'undefined' ? null : parseInt(id, 10);
   const baseTiles = roomgfx?.find(({ metadata }) => metadata.id === 0);
   let roomgfc = roomgfx?.find(
     ({ metadata }) => metadata.id === room?.nametable?.tileset,
@@ -29,7 +30,7 @@ const RoomsContainer = ({ rooms, roomgfx, globdata }) => {
 
   useEffect(() => {
     const room =
-      rooms.find(({ metadata }) => metadata.id === currentRoomId) || null;
+      rooms.find(({ metadata }) => metadata.id === currentId) || null;
     setRoom(room);
 
     // Clear the selected objects when the room changes.
@@ -40,7 +41,7 @@ const RoomsContainer = ({ rooms, roomgfx, globdata }) => {
       selectedObjects[i] = !!(initialState & 0b10000000);
     }
     setSelectedObjects(selectedObjects);
-  }, [roomId]);
+  }, [id]);
 
   const setSelectedObjectState = (id, state) => {
     const newSelectedObjects = [...selectedObjects];
@@ -75,8 +76,12 @@ const RoomsContainer = ({ rooms, roomgfx, globdata }) => {
     <>
       <PrimaryColumn>
         <RoomsList
-          rooms={rooms}
-          currentId={currentRoomId}
+          items={rooms}
+          currentId={isRoom ? currentId : null}
+        />
+        <TitlesList
+          items={titles}
+          currentId={isRoom ? null : currentId}
         />
       </PrimaryColumn>
       {(room?.objectImages?.length || room?.boxes?.length) && (

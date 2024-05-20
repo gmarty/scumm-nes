@@ -12,7 +12,7 @@ const parseRoomNametable = (arrayBuffer, offset = 0, width = 0) => {
   }
 
   const nametableObj = Array(16);
-  for (let i = 0; i < 16; i++) {
+  for (let i = 0; i < nametableObj.length; i++) {
     nametableObj[i] = Array(64).fill(0);
     nametableObj[i][0] = 0;
     nametableObj[i][1] = 0;

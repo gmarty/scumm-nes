@@ -18,6 +18,7 @@ It currently support:
 - Rooms (partially)
 - Room graphics
 - Prepositions
+- Title screens
 
 The following version are supported:
 

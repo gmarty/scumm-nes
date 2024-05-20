@@ -1,6 +1,6 @@
 import MainHeader from './MainHeader';
 import ResourceMetadata from './ResourceMetadata';
-import RoomCanvasContainer from '../containers/RoomCanvasContainer';
+import ScreenCanvasContainer from '../containers/ScreenCanvasContainer';
 import HoveredObjects from './HoveredObjects';
 
 const Room = ({
@@ -24,10 +24,10 @@ const Room = ({
       <div
         className="relative overflow-hidden"
         style={{ maxWidth: width * 8 * zoom }}>
-        <RoomCanvasContainer
-          room={room}
+        <ScreenCanvasContainer
+          screen={room}
           baseTiles={baseTiles}
-          roomgfc={roomgfc}
+          gfc={roomgfc}
           selectedObjects={selectedObjects}
           hoveredBox={hoveredBox}
           zoom={zoom}

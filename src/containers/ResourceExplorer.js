@@ -3,6 +3,7 @@ import RoomsContainer from './RoomsContainer';
 import GfxContainer from './GfxContainer';
 import PrepositionsContainer from './PrepositionsContainer';
 import RomMapContainer from './RomMapContainer';
+import TitlesContainer from './TitlesContainer';
 import SettingsContainer from './SettingsContainer';
 import ScriptContainer from './ScriptContainer';
 
@@ -18,17 +19,37 @@ const ResourceExplorer = ({ rom, res, resources }) => {
         element={
           <RoomsContainer
             rooms={resources.rooms}
+            titles={resources.titles}
             roomgfx={resources.roomgfx}
             globdata={resources.globdata[0]}
           />
         }>
         <Route
-          path=":roomId"
+          path=":id"
           element={
             <RoomsContainer
               rooms={resources.rooms}
+              titles={resources.titles}
               roomgfx={resources.roomgfx}
               globdata={resources.globdata[0]}
+            />
+          }
+        />
+      </Route>
+      <Route
+        path="/titles"
+        element={
+          <TitlesContainer
+            rooms={resources.rooms}
+            titles={resources.titles}
+          />
+        }>
+        <Route
+          path=":id"
+          element={
+            <TitlesContainer
+              rooms={resources.rooms}
+              titles={resources.titles}
             />
           }
         />

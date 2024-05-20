@@ -2,28 +2,31 @@ import { useRef, useState, useEffect } from 'react';
 import { clsx } from 'clsx';
 import { getPalette } from '../lib/paletteUtils';
 
-const RoomCanvasContainer = ({
-  room,
+// Display a screen on a canvas. Used by rooms and title screens.
+
+const ScreenCanvasContainer = ({
+  screen,
   baseTiles,
-  roomgfc,
+  gfc,
   selectedObjects,
   hoveredBox,
+  crop = true,
   zoom = 1,
 }) => {
   const canvasRef = useRef(null);
   const [isComputing, setIsComputing] = useState(true);
-  const { width, height } = room.header;
+  const { width, height } = screen.header;
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
 
     setTimeout(() => {
-      draw(ctx, room, baseTiles, roomgfc, selectedObjects);
-      drawBoxes(ctx, room.boxes, hoveredBox);
+      draw(ctx, screen, baseTiles, gfc, selectedObjects, crop);
+      drawBoxes(ctx, screen.boxes, hoveredBox);
       setIsComputing(false);
     });
-  }, [room, selectedObjects, hoveredBox]);
+  }, [screen, selectedObjects, hoveredBox, crop]);
 
   return (
     <canvas
@@ -39,10 +42,18 @@ const RoomCanvasContainer = ({
   );
 };
 
-const draw = (ctx, room, baseTiles, roomgfc, selectedObjects) => {
+const draw = (
+  ctx,
+  room,
+  baseTiles = { gfx: [] },
+  roomgfc,
+  selectedObjects = [],
+  crop,
+) => {
+  const { width, height } = room.header;
   const { nametableObj, palette } = room.nametable;
   const attributes = room.attributes;
-  const baseTilesNum = baseTiles.gfx.length / 8 / 2;
+  const baseTilesNum = baseTiles?.gfx?.length / 8 / 2;
   const nametableObjCopy = nametableObj.map((arr) => arr.slice());
 
   // Overwrite tiles with selected object.
@@ -70,20 +81,31 @@ const draw = (ctx, room, baseTiles, roomgfc, selectedObjects) => {
   }
 
   // Now generate the image of the room.
-  for (let sprY = 0; sprY < 16; sprY++) {
-    for (let sprX = 2; sprX < 62; sprX++) {
+  for (let sprY = 0; sprY < height; sprY++) {
+    for (let sprX = 0; sprX < 62; sprX++) {
       let tile = nametableObjCopy[sprY][sprX];
 
-      let gfx = baseTiles.gfx;
+      let gfx = baseTiles?.gfx;
       if (tile >= baseTilesNum) {
         tile -= baseTilesNum;
         gfx = roomgfc.gfx;
       }
 
-      const paletteId =
-        (attributes[((sprY << 2) & 0x30) | ((sprX >> 2) & 0xf)] >>
-          (((sprY & 2) << 1) | (sprX & 2))) &
-        0x3;
+      let paletteId;
+
+      if (width === 32) {
+        // Title screen.
+        paletteId =
+          (attributes[((sprY & 0xfffc) << 1) + (sprX >> 2)] >>
+            (((sprY & 2) << 1) | (sprX & 2))) &
+          0x3;
+      } else {
+        // SCUMM room.
+        paletteId =
+          (attributes[((sprY << 2) & 0x30) | ((sprX >> 2) & 0xf)] >>
+            (((sprY & 2) << 1) | (sprX & 2))) &
+          0x3;
+      }
       const pal = getPalette([
         palette[paletteId * 4],
         palette[paletteId * 4 + 1],
@@ -99,15 +121,19 @@ const draw = (ctx, room, baseTiles, roomgfc, selectedObjects) => {
           const val = (n1 & mask ? 1 : 0) | ((n2 & mask ? 1 : 0) << 1);
 
           ctx.fillStyle = pal[val];
-          ctx.fillRect((sprX - 2) * 8 + 7 - k, sprY * 8 + j, 1, 1);
+          if (crop) {
+            ctx.fillRect((sprX - 2) * 8 + 7 - k, sprY * 8 + j, 1, 1);
+          } else {
+            ctx.fillRect(sprX * 8 + 7 - k, sprY * 8 + j, 1, 1);
+          }
         }
       }
     }
   }
 };
 
-const drawBoxes = (ctx, boxes, hoveredBox) => {
-  if (hoveredBox === null) {
+const drawBoxes = (ctx, boxes = null, hoveredBox) => {
+  if (boxes === null || hoveredBox === null) {
     return;
   }
 
@@ -135,4 +161,4 @@ const drawBox = (ctx, { uy, ly, ulx, urx, llx, lrx }) => {
   ctx.lineTo((ulx - 1) * 8, (uy - 1) * 2);
 };
 
-export default RoomCanvasContainer;
+export default ScreenCanvasContainer;

@@ -1,19 +1,14 @@
 import ColumnListHeader from './ColumnListHeader';
 import ColumnListItem from './ColumnListItem';
 
-const RoomsList = ({ items, currentId }) => {
+const TitlesList = ({ items, currentId }) => {
   return (
     <>
-      <ColumnListHeader>Rooms</ColumnListHeader>
-      {items.map(({ metadata, header }) => {
-        if (!header) {
-          // Some rooms are empty.
-          return null;
-        }
-
+      <ColumnListHeader>Titles</ColumnListHeader>
+      {items.map(({ metadata }) => {
         const selected = metadata.id === currentId;
-        const path = `/rooms/${metadata.id}`;
-        const label = `Room ${metadata.id}`;
+        const path = `/titles/${metadata.id}`;
+        const label = `Title ${metadata.id}`;
 
         return (
           <ColumnListItem
@@ -27,4 +22,4 @@ const RoomsList = ({ items, currentId }) => {
   );
 };
 
-export default RoomsList;
+export default TitlesList;
