@@ -22,7 +22,7 @@ const RoomTabs = ({
         <select
           id="tabs"
           name="tabs"
-          defaultValue={tabs.find((tab) => tab.current).name}
+          value={tabs.find((tab) => tab.current).name}
           onChange={({ target }) => setCurrentTab(target.value)}
           className="block w-full rounded border-slate-300 focus:border-primary-500 focus:ring-primary-500">
           {tabs.map((tab) => (
