@@ -1,14 +1,6 @@
 import { opCodes, varNames } from '../opcodes.js';
 import { hex } from '../utils.js';
 
-const getByte = (parser) => {
-  return parser.getUint8();
-};
-
-const getWord = (parser) => {
-  return parser.getUint16();
-};
-
 const getVariable = (parser) => {
   const i = parser.getUint8();
 
@@ -32,7 +24,7 @@ const getVariableOrByte = (parser, condition) => {
   if (condition) {
     return getVariable(parser);
   } else {
-    return getByte(parser);
+    return parser.getUint8();
   }
 };
 
@@ -40,12 +32,12 @@ const getVariableOrWord = (parser, condition) => {
   if (condition) {
     return getVariable(parser);
   } else {
-    return getWord(parser);
+    return parser.getUint16();
   }
 };
 
 const getOffset = (parser, startAddress) => {
-  const offset = getWord(parser);
+  const offset = parser.getUint16();
   const currentRow = parser.pointer - startAddress;
   return hex((currentRow + offset) % 0x10000, 4);
 };
@@ -54,7 +46,7 @@ const getString = (parser) => {
   let str = '';
   let charCode;
   do {
-    charCode = getByte(parser);
+    charCode = parser.getUint8();
     if (charCode === 0x00) {
       break;
     }
@@ -90,7 +82,7 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
     const scriptRow = [];
     const rowAddress = parser.pointer - startAddress;
 
-    const opCode = getByte(parser);
+    const opCode = parser.getUint8();
 
     scriptRow.push(opCode);
     scriptRow.push(`${opCodes[opCode].name ?? opCode}`);
@@ -172,7 +164,7 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
         scriptRow.push(getVariableOrWord(parser, opCode & 0x80));
 
         // Preposition Id
-        scriptRow.push(getByte(parser));
+        scriptRow.push(parser.getUint8());
 
         break;
 
@@ -190,7 +182,7 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
         ];
 
         const resId = getVariableOrByte(parser, opCode & 0x80);
-        const subOp = getByte(parser);
+        const subOp = parser.getUint8();
 
         let routine;
         if ((subOp & 0x0f) === 0 || (subOp & 0x0f) === 1) {
@@ -238,7 +230,7 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
 
         scriptRow.push(getVariableOrByte(parser, opCode & 0x40));
 
-        scriptRow.push(getByte(parser));
+        scriptRow.push(parser.getUint8());
 
         break;
 
@@ -263,7 +255,7 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
         scriptRow.push(getVariableOrByte(parser, opCode & 0x40));
         break;
 
-      //panCameraTo
+      // panCameraTo
       case 0x12:
       case 0x92:
         scriptRow.push(getVariableOrByte(parser, opCode & 0x80));
@@ -278,13 +270,13 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
 
         const subOpArg = getVariableOrByte(parser, opCode & 0x40);
 
-        const subOp = getByte(parser);
+        const subOp = parser.getUint8();
         switch (subOp) {
           case 0x01:
             scriptRow.push(`Sound(${subOpArg})`);
             break;
           case 0x02:
-            const value = getByte(parser);
+            const value = parser.getUint8();
             scriptRow.push(`Color(${value}, ${subOpArg})`);
             break;
           case 0x03:
@@ -335,7 +327,7 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
       // goto
       case 0x18:
         {
-          const offset = getWord(parser);
+          const offset = parser.getUint16();
           const currentRow = parser.pointer - startAddress;
           scriptRow.push(hex((currentRow + offset) % 0x10000, 4));
         }
@@ -365,7 +357,7 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
 
           scriptRow.push(getVariableOrWord(parser, opCode & 0x20));
 
-          scriptRow.push(getByte(parser));
+          scriptRow.push(parser.getUint8());
         }
         break;
 
@@ -374,7 +366,7 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
       case 0x5b:
       case 0x9b:
       case 0xdb:
-        scriptRow.push(getWord(parser));
+        scriptRow.push(parser.getUint16());
 
         scriptRow.push(getVariableOrByte(parser, opCode & 0x80));
 
@@ -435,10 +427,10 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
         scriptRow.push(getVariableOrByte(parser, opCode & 0x40));
 
         // x
-        scriptRow.push(getByte(parser));
+        scriptRow.push(parser.getUint8());
 
         // y
-        scriptRow.push(getByte(parser));
+        scriptRow.push(parser.getUint8());
 
         break;
 
@@ -447,15 +439,15 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
       case 0xa6:
         scriptRow.push(getVariable(parser));
 
-        let length = getByte(parser);
+        let length = parser.getUint8();
         scriptRow.push(length);
 
         const values = [];
         while (length > 0) {
           if (opCode & 0x80) {
-            values.push(getWord(parser));
+            values.push(parser.getUint16());
           } else {
-            values.push(getByte(parser));
+            values.push(parser.getUint8());
           }
           length--;
         }
@@ -501,7 +493,7 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
           (opCode & 0x7f) === 0x6a
         ) {
           // Assign to a variable defined by the value of another variable
-          const i = getByte(parser);
+          const i = parser.getUint8();
           scriptRow.push(`Var[Var[${i}]]`);
         } else {
           // Assign to a variable
@@ -509,7 +501,7 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
         }
 
         if ((opCode & 0x7f) === 0x2c) {
-          scriptRow.push(getByte(parser));
+          scriptRow.push(parser.getUint8());
         } else if ((opCode & 0x7f) !== 0x46) {
           scriptRow.push(getVariableOrWord(parser, opCode & 0x80));
         }
@@ -522,9 +514,9 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
 
       // delay
       case 0x2e:
-        let d = getByte(parser);
-        d |= getByte(parser) << 8;
-        d |= getByte(parser) << 16;
+        let d = parser.getUint8();
+        d |= parser.getUint8() << 8;
+        d |= parser.getUint8() << 16;
         d = 0xffffff - d;
 
         scriptRow.push(d);
@@ -548,7 +540,7 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
       case 0xb0:
         scriptRow.push(getVariableOrByte(parser, opCode & 0x80));
 
-        scriptRow.push(getByte(parser));
+        scriptRow.push(parser.getUint8());
 
         break;
 
@@ -557,7 +549,7 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
       case 0xb1:
         scriptRow.push(getVariable(parser));
 
-        scriptRow.push(getWord(parser));
+        scriptRow.push(parser.getUint16());
 
         scriptRow.push(getVariableOrByte(parser, opCode & 0x80));
         break;
@@ -577,7 +569,7 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
         const valueA = getVariableOrByte(parser, opCode & 0x80);
         const valueB = getVariableOrByte(parser, opCode & 0x40);
 
-        const subOp = getByte(parser);
+        const subOp = parser.getUint8();
 
         console.log(
           `Room Ops: ${(subOp & 0x1f).toString(16, 2)}, ${valueA} ${valueB}`,
@@ -851,7 +843,7 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
           scriptRow.push(`Hi(${variable})`);
           scriptRow.push(`Lo(${variable})`);
         } else {
-          const value = getWord(parser);
+          const value = parser.getUint16();
           scriptRow.push((value >> 8) & 0xff);
           scriptRow.push(value & 0xff);
         }
@@ -863,6 +855,7 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
         scriptRow.push(getVariable(parser));
 
         scriptRow.push(getVariableOrWord(parser, opCode & 0x80));
+        break;
 
       // isScriptRunning
       case 0x68:
@@ -885,8 +878,8 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
       case 0xf0:
         scriptRow.push(getVariableOrByte(parser, opCode & 0x80));
 
-        scriptRow.push(getByte(parser));
-        scriptRow.push(getByte(parser));
+        scriptRow.push(parser.getUint8());
+        scriptRow.push(parser.getUint8());
 
         break;
 
@@ -914,7 +907,7 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
       // verbOps
       case 0x7a:
       case 0xfa: {
-        const subOp = getByte(parser);
+        const subOp = parser.getUint8();
 
         switch (subOp) {
           case 0:
@@ -927,11 +920,11 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
           default:
             scriptRow.push(`New-${subOp}`);
 
-            scriptRow.push(getByte(parser));
-            scriptRow.push(getByte(parser));
+            scriptRow.push(parser.getUint8());
+            scriptRow.push(parser.getUint8());
             scriptRow.push(getVariableOrByte(parser, opCode & 0x80));
 
-            scriptRow.push(getByte(parser));
+            scriptRow.push(parser.getUint8());
 
             scriptRow.push(`"${getString(parser)}"`);
         }
@@ -956,7 +949,7 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
         // No arguments
         break;
 
-      //drawSentence
+      // drawSentence
       case 0xac:
         // No arguments
         break;
