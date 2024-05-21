@@ -20,6 +20,7 @@ const RoomGfx = ({
             nametable={nametable}
             objectImages={objectImages}
             nametableStart={0}
+            rowLength={8}
             zoom={2}
           />
         </Link>
@@ -37,6 +38,7 @@ const RoomGfx = ({
           nametable={nametable}
           objectImages={objectImages}
           nametableStart={baseTiles.gfx.length / 8 / 2}
+          rowLength={8}
           zoom={2}
         />
       </Link>
