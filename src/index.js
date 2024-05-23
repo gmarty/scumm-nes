@@ -1,3 +1,4 @@
+import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
@@ -8,9 +9,11 @@ const basename =
 
 const root = createRoot(document.body);
 root.render(
-  <BrowserRouter basename={basename}>
-    <App />
-  </BrowserRouter>,
+  <StrictMode>
+    <BrowserRouter basename={basename}>
+      <App />
+    </BrowserRouter>
+  </StrictMode>,
 );
 
 setColourTheme(localStorage.getItem('theme'));
