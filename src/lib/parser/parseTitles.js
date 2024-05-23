@@ -1,5 +1,4 @@
 import Parser from './parser.js';
-import { hex } from '../utils.js';
 
 const assert = console.assert;
 

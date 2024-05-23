@@ -41,7 +41,7 @@ const RoomsContainer = ({ rooms, titles, roomgfx, globdata }) => {
       selectedObjects[i] = !!(initialState & 0b10000000);
     }
     setSelectedObjects(selectedObjects);
-  }, [id]);
+  }, [currentId, globdata, rooms]);
 
   const setSelectedObjectState = (id, state) => {
     const newSelectedObjects = [...selectedObjects];

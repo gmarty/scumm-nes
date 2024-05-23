@@ -105,7 +105,7 @@ const DropZoneContainer = ({ onFile }) => {
     if (acceptedFiles.length === 1 && rom && res) {
       onFile(rom, res);
     }
-  }, [acceptedFiles, rom, res]);
+  }, [acceptedFiles, rom, res, onFile]);
 
   return (
     <Main>

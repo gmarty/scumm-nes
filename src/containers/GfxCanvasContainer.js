@@ -45,7 +45,7 @@ const GfxCanvasContainer = ({
       );
       setIsComputing(false);
     });
-  }, [gfx, nametable]);
+  }, [gfx, nametable, nametableStart, objectImages, rowLength, spacing]);
 
   return (
     <canvas

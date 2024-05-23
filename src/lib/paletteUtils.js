@@ -37,7 +37,7 @@ const getPalette = (palette = [], forceColour = false) => {
         }
       });
 
-    case 'dmg': // Unused
+    case 'dmg-alt': // Unused
       // Method 2: Sort the colours by brightness and maps to DMG's palette.
       // May result in the same colour being mapped to 2 different DMG colour on different palettes.
       // The colours looks harsher and there are some artefacts.

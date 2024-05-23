@@ -91,17 +91,6 @@ const prettifyArguments = (operation) => {
         </Link>,
       ];
       break;
-    case 0x28: // equalZero
-    case 0xa8: // notEqualZero
-      args = [
-        args[0],
-        <Link
-          className="underline"
-          to={`#L${args[1]}`}>
-          0x{args[1]}
-        </Link>,
-      ];
-      break;
     case 0x3f: // ifNotState01
     case 0x5f: // ifNotState02
     case 0x2f: // ifNotState04
@@ -118,6 +107,9 @@ const prettifyArguments = (operation) => {
           0x{args[1]}
         </Link>,
       ];
+      break;
+
+    default:
       break;
   }
   return args;

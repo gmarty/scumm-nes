@@ -1,4 +1,5 @@
-import pkg from '../../package.json' with { type: 'json' };
+// eslint-disable-next-line no-undef
+import pkg from '../../package.json';
 
 const navigation = [
   {

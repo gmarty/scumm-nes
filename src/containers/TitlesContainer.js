@@ -35,7 +35,7 @@ const TitlesContainer = ({ rooms, titles }) => {
     };
 
     setTitle(title);
-  }, [id]);
+  }, [id, titles]);
 
   const updatePalette = (i, colourId) => {
     const newRoom = structuredClone(title);

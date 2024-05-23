@@ -26,7 +26,7 @@ const ScreenCanvasContainer = ({
       drawBoxes(ctx, screen.boxes, hoveredBox);
       setIsComputing(false);
     });
-  }, [screen, selectedObjects, hoveredBox, crop]);
+  }, [screen, selectedObjects, hoveredBox, crop, baseTiles, gfc]);
 
   return (
     <canvas

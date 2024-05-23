@@ -59,7 +59,7 @@ const parseRom = (arrayBuffer, res) => {
 
   // The title screens are stored outside of SCUMM.
   for (let i = 0; i < res?.titleoffs?.length; i++) {
-    const [offset, length] = res.titleoffs[i];
+    const [offset] = res.titleoffs[i];
 
     // @todo Figure out the length of the title chunks.
     const buffer = arrayBuffer.slice(offset); //, offset + length);

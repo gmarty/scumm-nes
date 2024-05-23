@@ -33,6 +33,8 @@ const DropZone = ({ children, isDragActive, isDragReject, errorCode }) => {
     case 'reading-file-failed':
       errorMsg = 'File reading has failed. Please try again.';
       break;
+    default:
+      break;
   }
 
   return (

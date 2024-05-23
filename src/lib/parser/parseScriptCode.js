@@ -1,3 +1,4 @@
+/* eslint-disable no-fallthrough */
 import { opCodes, varNames } from '../opcodes.js';
 import { hex } from '../utils.js';
 

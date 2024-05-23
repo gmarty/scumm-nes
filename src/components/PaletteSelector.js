@@ -72,6 +72,7 @@ const PaletteSelector = ({ palette, paletteOptions, setPalette }) => {
                     <img
                       src={palette.img}
                       className="w-48 rounded"
+                      alt={`Preview of a room with palette ${palette.name}.`}
                     />
                   </RadioGroup.Description>
                   <span

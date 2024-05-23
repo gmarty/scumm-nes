@@ -18,8 +18,11 @@ root.render(
 
 setColourTheme(localStorage.getItem('theme'));
 
+// eslint-disable-next-line no-undef
 if (process.env.NODE_ENV === 'production' && insights) {
   // Load the analytics.
+  // eslint-disable-next-line no-undef
   insights.init('OTy7QFoUv4bUuKzo');
+  // eslint-disable-next-line no-undef
   insights.trackPages();
 }

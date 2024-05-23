@@ -8,7 +8,7 @@ const ScriptsList = ({ scripts, currentId }) => {
       {scripts
         .sort((a, b) => a.num > b.num)
         .map(({ metadata, code }) => {
-          if (code.length == 0) {
+          if (code.length === 0) {
             return null;
           }
 
