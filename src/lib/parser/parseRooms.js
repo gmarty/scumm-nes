@@ -293,9 +293,19 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
       }
     }
 
-    // @todo Implement attribute changes and mask tables for object images.
+    // Parse object attrtable override.
+    const attributes = [];
+    if (tiles?.length) {
+      // Is that this length number of bytes to parse?
+      for (let i = 0; i < (objWidth >> 1) * (objHeight >> 1); i++) {
+        attributes.push(objectImagesParser.getUint8());
+      }
+    }
 
-    objectImages.push({ tiles });
+    const objectImage = { tiles, attributes };
+    objectImages.push(objectImage);
+
+    // @todo Implement mask tables for object images.
 
     // @fixme This does not account for object scripts.
     if (objectCodeMap.to < objectOffs + objectImagesParser.pointer) {

@@ -51,17 +51,20 @@ const draw = (
   crop,
 ) => {
   const { width, height } = room.header;
-  const { nametableObj, palette } = room.nametable;
-  const attributes = room.attributes;
+  const { palette } = room.nametable;
   const baseTilesNum = baseTiles?.gfx?.length / 8 / 2;
-  const nametableObjCopy = nametableObj.map((arr) => arr.slice());
+  const nametableObj = structuredClone(room.nametable.nametableObj);
+  const attributes = structuredClone(room.attributes);
 
-  // Overwrite tiles with selected object.
+  // Overwrite tiles and palette with selected object.
   // Start with highest id as it is the way it is implemented with overlapping object images.
   for (let i = selectedObjects.length - 1; i >= 0; i--) {
+    const object = room?.objects[i];
     const objectImage = room?.objectImages[i];
-    const x = room?.objects[i]?.x; // Can be 0?
-    const y = room?.objects[i]?.y; // Can be 0?
+    const x = object?.x; // Can be 0?
+    const y = object?.y; // Can be 0?
+    const width = object?.width;
+    const height = object?.height;
 
     if (
       !selectedObjects[i] ||
@@ -75,15 +78,50 @@ const draw = (
 
     for (let j = 0; j < objectImage.tiles.length; j++) {
       for (let i = 0; i < objectImage.tiles[j].length; i++) {
-        nametableObjCopy[y + j][x + i + 2] = objectImage.tiles[j][i];
+        nametableObj[y + j][x + i + 2] = objectImage.tiles[j][i];
       }
+    }
+
+    // Port of https://github.com/scummvm/scummvm/blob/master/engines/scumm/gfx.cpp#L3103-L3134
+    let j = height >> 1;
+    let ay = y;
+    let ptr = 0;
+    while (j) {
+      let ax = x + 2;
+      let i = 0;
+      let adata = 0;
+      while (i < width >> 1) {
+        if (!(i & 3)) {
+          adata = objectImage.attributes[ptr++];
+        }
+
+        let aand = 3;
+        let aor = adata & 3;
+        if (ay & 0x02) {
+          aand <<= 4;
+          aor <<= 4;
+        }
+        if (ax & 0x02) {
+          aand <<= 2;
+          aor <<= 2;
+        }
+        const attr = attributes[((ay << 2) & 0x30) | ((ax >> 2) & 0xf)];
+        attributes[((ay << 2) & 0x30) | ((ax >> 2) & 0xf)] =
+          (~aand & attr) | aor;
+
+        adata >>= 2;
+        ax += 2;
+        i++;
+      }
+      ay += 2;
+      j--;
     }
   }
 
   // Now generate the image of the room.
   for (let sprY = 0; sprY < height; sprY++) {
     for (let sprX = 0; sprX < 62; sprX++) {
-      let tile = nametableObjCopy[sprY][sprX];
+      let tile = nametableObj[sprY][sprX];
 
       let gfx = baseTiles?.gfx;
       if (tile >= baseTilesNum) {
