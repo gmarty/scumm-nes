@@ -51,9 +51,9 @@ const draw = (
   crop,
 ) => {
   const { width, height } = room.header;
-  const { palette } = room.nametable;
+  const { palette } = room;
   const baseTilesNum = baseTiles?.gfx?.length / 8 / 2;
-  const nametableObj = structuredClone(room.nametable.nametableObj);
+  const nametable = structuredClone(room.nametable);
   const attributes = structuredClone(room.attributes);
 
   // Overwrite tiles and palette with selected object.
@@ -78,7 +78,7 @@ const draw = (
 
     for (let j = 0; j < objectImage.tiles.length; j++) {
       for (let i = 0; i < objectImage.tiles[j].length; i++) {
-        nametableObj[y + j][x + i + 2] = objectImage.tiles[j][i];
+        nametable[y + j][x + i + 2] = objectImage.tiles[j][i];
       }
     }
 
@@ -121,7 +121,7 @@ const draw = (
   // Now generate the image of the room.
   for (let sprY = 0; sprY < height; sprY++) {
     for (let sprX = 0; sprX < 62; sprX++) {
-      let tile = nametableObj[sprY][sprX];
+      let tile = nametable[sprY][sprX];
 
       let gfx = baseTiles?.gfx;
       if (tile >= baseTilesNum) {

@@ -73,7 +73,7 @@ const draw = (
   const tilesNum = gfx.length / 8 / 2;
 
   // Massage the different tilesets to speed up code later.
-  const nametableTiles = nametable?.nametableObj?.flat();
+  const nametableTiles = nametable?.flat();
   const objectImagesTiles = objectImages
     ?.map((objectImages) => objectImages.tiles)
     .filter(Boolean)

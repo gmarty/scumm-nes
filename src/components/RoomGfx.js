@@ -3,6 +3,7 @@ import GfxCanvasContainer from '../containers/GfxCanvasContainer';
 
 const RoomGfx = ({
   baseTiles,
+  tileset,
   nametable,
   objectImages,
   roomgfc,
@@ -27,12 +28,8 @@ const RoomGfx = ({
       ) : null}
       <Link
         className="text-center text-sm"
-        to={
-          type === 'room'
-            ? `/roomgfx/${nametable.tileset}`
-            : `/titlegfx/${nametable.tileset}`
-        }>
-        Tileset {nametable.tileset} ({roomgfc.gfx.length / 8 / 2} tiles)
+        to={type === 'room' ? `/roomgfx/${tileset}` : `/titlegfx/${tileset}`}>
+        Tileset {tileset} ({roomgfc.gfx.length / 8 / 2} tiles)
         <GfxCanvasContainer
           gfx={roomgfc.gfx}
           nametable={nametable}

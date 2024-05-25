@@ -24,9 +24,7 @@ const RoomsContainer = ({ rooms, titles, roomgfx, globdata }) => {
 
   const currentId = typeof id === 'undefined' ? null : parseInt(id, 10);
   const baseTiles = roomgfx?.find(({ metadata }) => metadata.id === 0);
-  let roomgfc = roomgfx?.find(
-    ({ metadata }) => metadata.id === room?.nametable?.tileset,
-  );
+  let roomgfc = roomgfx?.find(({ metadata }) => metadata.id === room?.tileset);
 
   useEffect(() => {
     const room =
@@ -56,16 +54,16 @@ const RoomsContainer = ({ rooms, titles, roomgfx, globdata }) => {
   };
 
   const updatePalette = (i, colourId) => {
-    const newRoom = structuredClone(room);
+    const newScreen = structuredClone(room);
     if (i % 4 === 0) {
       // Keep the first colours in sync.
       for (let i = 0; i < 16; i += 4) {
-        newRoom.nametable.palette[i] = colourId;
+        newScreen.palette[i] = colourId;
       }
     } else {
-      newRoom.nametable.palette[i] = colourId;
+      newScreen.palette[i] = colourId;
     }
-    setRoom(newRoom);
+    setRoom(newScreen);
   };
 
   if (room && !room.header) {
@@ -125,13 +123,14 @@ const RoomsContainer = ({ rooms, titles, roomgfx, globdata }) => {
             />
             {currentTab === 'Palettes' && (
               <Palettes
-                palette={room.nametable.palette}
+                palette={room.palette}
                 onUpdate={updatePalette}
               />
             )}
             {currentTab === 'Tilesets' && (
               <RoomGfx
                 baseTiles={baseTiles}
+                tileset={room.tileset}
                 nametable={room.nametable}
                 objectImages={room.objectImages}
                 roomgfc={roomgfc}

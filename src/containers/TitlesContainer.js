@@ -28,26 +28,21 @@ const TitlesContainer = ({ rooms, titles }) => {
       width: title.width,
       height: title.height,
     };
-    title.nametable = {
-      tileset: id,
-      palette: title.palette,
-      nametableObj: title.nametableObj,
-    };
 
     setTitle(title);
   }, [id, titles]);
 
   const updatePalette = (i, colourId) => {
-    const newRoom = structuredClone(title);
+    const newScreen = structuredClone(title);
     if (i % 4 === 0) {
       // Keep the first colours in sync.
       for (let i = 0; i < 16; i += 4) {
-        newRoom.nametable.palette[i] = colourId;
+        newScreen.palette[i] = colourId;
       }
     } else {
-      newRoom.nametable.palette[i] = colourId;
+      newScreen.palette[i] = colourId;
     }
-    setTitle(newRoom);
+    setTitle(newScreen);
   };
 
   if (!title) {
@@ -87,13 +82,14 @@ const TitlesContainer = ({ rooms, titles }) => {
             />
             {currentTab === 'Palettes' && (
               <Palettes
-                palette={title.nametable.palette}
+                palette={title.palette}
                 onUpdate={updatePalette}
               />
             )}
             {currentTab === 'Tilesets' && (
               <RoomGfx
                 baseTiles={{ gfx: [] }}
+                tileset={id}
                 nametable={title.nametable}
                 objectImages={title.objectImages}
                 roomgfc={{ gfx: title.gfx }}

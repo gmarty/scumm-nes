@@ -1,6 +1,7 @@
 import Parser from './parser.js';
 import parseRoomHeader from './room/parseRoomHeader.js';
 import parseRoomNametable from './room/parseRoomNametable.js';
+import parsePalette from './parsePalette.js';
 import parseRoomAttributes from './room/parseRoomAttributes.js';
 import parseRoomBoxes from './room/parseRoomBoxes.js';
 import parseRoomMatrix from './room/parseRoomMatrix.js';
@@ -61,10 +62,29 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
     });
   }
 
+  // Parse the tileset id.
+  const tilesetParser = new Parser(
+    arrayBuffer.slice(nametableOffs, nametableOffs + 1),
+  );
+  const tileset = tilesetParser.getUint8();
+  map.push({
+    type: 'tileset',
+    from: nametableOffs,
+    to: nametableOffs,
+  });
+
+  // Parse the palette.
+  const { palette, paletteMap } = parsePalette(
+    arrayBuffer.slice(nametableOffs + 1, nametableOffs + 17),
+    nametableOffs + 1,
+  );
+
+  map.push(paletteMap);
+
   // Parse gfx nametable.
   const { nametable, nametableMap } = parseRoomNametable(
-    arrayBuffer.slice(nametableOffs, attrOffs),
-    nametableOffs,
+    arrayBuffer.slice(nametableOffs + 17, attrOffs),
+    nametableOffs + 17,
     width,
   );
 
@@ -396,6 +416,8 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
     boxes,
     matrixUnks,
     matrix,
+    tileset,
+    palette,
     nametable,
     attributes,
     masktable,
