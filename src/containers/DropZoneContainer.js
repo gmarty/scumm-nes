@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { useNavigate } from 'react-router-dom';
+import { useRomDispatch } from '../contexts/RomContext';
+import parseRom from '../lib/parser/parseRom';
 import Main from '../components/Main';
 import DropZone from '../components/DropZone';
 import BaseRomDialog from '../components/BaseRomDialog';
 
-const DropZoneContainer = ({ onFile }) => {
+const DropZoneContainer = () => {
   const validator = (file) => {
     setErrorCode(null);
-    setRom(null);
+    setPrg(null);
     setRes(null);
 
     if (!file.name) {
@@ -28,7 +31,7 @@ const DropZoneContainer = ({ onFile }) => {
       setErrorCode('reading-file-failed');
     };
     reader.onload = async () => {
-      const { hasNesHeader } = await import('../lib/utils');
+      const { hasNesHeader } = await import('../lib/romUtils');
       const { default: crc32 } = await import('../lib/crc32');
       const { isJapaneseVersion, getResFromCrc32 } = await import(
         '../lib/getResFromCrc32'
@@ -50,7 +53,7 @@ const DropZoneContainer = ({ onFile }) => {
 
       const res = getResFromCrc32(c);
 
-      setRom(arrayBuffer);
+      setPrg(arrayBuffer);
 
       if (!res) {
         setBaseRomDialogOpened(true);
@@ -64,10 +67,11 @@ const DropZoneContainer = ({ onFile }) => {
     return null;
   };
 
+  const dispatch = useRomDispatch();
   const [errorCode, setErrorCode] = useState(null);
   const [baseRomDialogOpened, setBaseRomDialogOpened] = useState(false);
   const [baseRom, setBaseRom] = useState(null);
-  const [rom, setRom] = useState(null);
+  const [prg, setPrg] = useState(null);
   const [res, setRes] = useState(null);
   const {
     getRootProps,
@@ -81,15 +85,15 @@ const DropZoneContainer = ({ onFile }) => {
     multiple: false,
     validator,
   });
+  const navigate = useNavigate();
 
   if (baseRom) {
     (async () => {
       const { getResFromBaseRom } = await import('../lib/getResFromCrc32');
-      const { default: parseRom } = await import('../lib/parser/parseRom');
       const res = getResFromBaseRom(baseRom);
 
       try {
-        parseRom(rom, res);
+        parseRom(prg, res);
         setRes(res);
       } catch (err) {
         setErrorCode('invalid-rom-file');
@@ -102,10 +106,17 @@ const DropZoneContainer = ({ onFile }) => {
   }
 
   useEffect(() => {
-    if (acceptedFiles.length === 1 && rom && res) {
-      onFile(rom, res);
+    if (acceptedFiles.length === 1 && prg && res) {
+      const resources = parseRom(prg, res);
+      dispatch({
+        type: 'initialised',
+        rom: { prg, res, resources },
+      });
+
+      // Redirect to the first room.
+      navigate('/rooms/1');
     }
-  }, [acceptedFiles, rom, res, onFile]);
+  }, [acceptedFiles, prg, res, dispatch, navigate]);
 
   return (
     <Main>

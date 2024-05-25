@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useMatch, useParams } from 'react-router-dom';
+import { useRomDispatch } from '../contexts/RomContext';
 import PrimaryColumn from '../components/PrimaryColumn';
 import Main from '../components/Main';
 import RoomsList from '../components/RoomsList';
@@ -12,6 +13,7 @@ import MainHeader from '../components/MainHeader';
 import ResourceMetadata from '../components/ResourceMetadata';
 
 const TitlesContainer = ({ rooms, titles }) => {
+  const dispatch = useRomDispatch();
   const isRoom = !!useMatch('/rooms/:id');
   const { id } = useParams();
   const [currentTab, setCurrentTab] = useState('Palettes');
@@ -33,16 +35,22 @@ const TitlesContainer = ({ rooms, titles }) => {
   }, [id, titles]);
 
   const updatePalette = (i, colourId) => {
-    const newScreen = structuredClone(title);
+    const newPalette = structuredClone(title.palette);
     if (i % 4 === 0) {
       // Keep the first colours in sync.
       for (let i = 0; i < 16; i += 4) {
-        newScreen.palette[i] = colourId;
+        newPalette[i] = colourId;
       }
     } else {
-      newScreen.palette[i] = colourId;
+      newPalette[i] = colourId;
     }
-    setTitle(newScreen);
+
+    dispatch({
+      type: 'changed-palette',
+      screenType: 'title',
+      id: currentId,
+      palette: newPalette,
+    });
   };
 
   if (!title) {

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useMatch, useParams } from 'react-router-dom';
+import { useRomDispatch } from '../contexts/RomContext';
 import PrimaryColumn from '../components/PrimaryColumn';
 import SecondaryColumn from '../components/SecondaryColumn';
 import Main from '../components/Main';
@@ -14,6 +15,7 @@ import RoomGfx from '../components/RoomGfx';
 import RoomScripts from '../components/RoomScripts';
 
 const RoomsContainer = ({ rooms, titles, roomgfx, globdata }) => {
+  const dispatch = useRomDispatch();
   const isRoom = !!useMatch('/rooms/:id');
   const { id } = useParams();
   const [hoveredObject, setHoveredObject] = useState(null);
@@ -54,16 +56,22 @@ const RoomsContainer = ({ rooms, titles, roomgfx, globdata }) => {
   };
 
   const updatePalette = (i, colourId) => {
-    const newScreen = structuredClone(room);
+    const newPalette = structuredClone(room.palette);
     if (i % 4 === 0) {
       // Keep the first colours in sync.
       for (let i = 0; i < 16; i += 4) {
-        newScreen.palette[i] = colourId;
+        newPalette[i] = colourId;
       }
     } else {
-      newScreen.palette[i] = colourId;
+      newPalette[i] = colourId;
     }
-    setRoom(newScreen);
+
+    dispatch({
+      type: 'changed-palette',
+      screenType: 'room',
+      id: currentId,
+      palette: newPalette,
+    });
   };
 
   if (room && !room.header) {

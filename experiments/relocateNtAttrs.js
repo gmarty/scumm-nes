@@ -2,7 +2,8 @@
 
 import { parseArgs } from 'node:util';
 import { basename } from 'node:path';
-import { loadRom, saveRom, expandRom, inject } from '../src/lib/cliUtils.js';
+import { loadRom, saveRom, expandRom } from '../src/lib/cliUtils.js';
+import { inject } from '../src/lib/romUtils.js';
 import parseRoom from '../src/lib/parser/parseRooms.js';
 import { zeroPad, hex } from '../src/lib/utils.js';
 
@@ -119,7 +120,7 @@ for (let i = 0; i < roomNum; i++) {
     nametableLength,
     hex(bankOffset + nametableLength, 4),
     hex(atOffset + headerLength),
-    attrsLength
+    attrsLength,
   );
   bankOffset += nametableLength;
   bankOffset += attrsLength;

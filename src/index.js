@@ -1,7 +1,10 @@
 import { StrictMode } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+import { RomProvider } from './contexts/RomContext';
 import App from './App';
+import ErrorMessage from './components/ErrorMessage';
 import { setColourTheme } from './lib/colourThemeUtils';
 
 const basename =
@@ -10,9 +13,13 @@ const basename =
 const root = createRoot(document.body);
 root.render(
   <StrictMode>
-    <BrowserRouter basename={basename}>
-      <App />
-    </BrowserRouter>
+    <ErrorBoundary FallbackComponent={ErrorMessage}>
+      <BrowserRouter basename={basename}>
+        <RomProvider>
+          <App />
+        </RomProvider>
+      </BrowserRouter>
+    </ErrorBoundary>
   </StrictMode>,
 );
 

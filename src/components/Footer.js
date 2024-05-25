@@ -46,40 +46,40 @@ const navigation = [
   },
 ];
 
-export default function Footer() {
-  return (
-    <footer className="bg-slate-200 dark:bg-black">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-x-2 px-3 py-2 md:px-4">
-        <p className="text-balance text-center font-geohumanist text-xs text-slate-500">
-          &copy; 2024 SCUMM NES resource explorer
-        </p>
-        <div className="flex gap-x-2 sm:gap-x-4 md:gap-x-6">
-          {navigation.map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              className="fill-transparent stroke-slate-500 transition-all hover:stroke-slate-800 hover:dark:stroke-slate-200"
-              rel="me">
-              <span className="sr-only">{item.name}</span>
-              <item.icon
-                className="size-6"
-                strokeWidth="1.5"
-                aria-hidden="true"
-              />
-            </a>
-          ))}
-          {process.env.NODE_ENV === 'development' && (
-            <div className="text-sm leading-6 text-slate-400">
-              <span className="hidden max-sm:inline">XS</span>
-              <span className="hidden sm:max-md:inline">SM</span>
-              <span className="hidden md:max-lg:inline">MD</span>
-              <span className="hidden lg:max-xl:inline">LG</span>
-              <span className="hidden xl:max-2xl:inline">XL</span>
-              <span className="hidden 2xl:inline">2XL</span>
-            </div>
-          )}
-        </div>
+const Footer = () => (
+  <footer className="bg-slate-200 dark:bg-black">
+    <div className="mx-auto flex max-w-7xl items-center justify-between gap-x-2 px-3 py-2 md:px-4">
+      <p className="text-balance text-center font-geohumanist text-xs text-slate-500">
+        &copy; 2024 SCUMM-NES
+      </p>
+      <div className="flex gap-x-2 sm:gap-x-4 md:gap-x-6">
+        {navigation.map((item) => (
+          <a
+            key={item.name}
+            href={item.href}
+            className="fill-transparent stroke-slate-500 transition-all hover:stroke-slate-800 hover:dark:stroke-slate-200"
+            rel="me">
+            <span className="sr-only">{item.name}</span>
+            <item.icon
+              className="size-6"
+              strokeWidth="1.5"
+              aria-hidden="true"
+            />
+          </a>
+        ))}
+        {process.env.NODE_ENV === 'development' && (
+          <div className="text-sm leading-6 text-slate-400">
+            <span className="hidden max-sm:inline">XS</span>
+            <span className="hidden sm:max-md:inline">SM</span>
+            <span className="hidden md:max-lg:inline">MD</span>
+            <span className="hidden lg:max-xl:inline">LG</span>
+            <span className="hidden xl:max-2xl:inline">XL</span>
+            <span className="hidden 2xl:inline">2XL</span>
+          </div>
+        )}
       </div>
-    </footer>
-  );
-}
+    </div>
+  </footer>
+);
+
+export default Footer;

@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import { useRom } from '../contexts/RomContext';
 import RoomsContainer from './RoomsContainer';
 import GfxContainer from './GfxContainer';
 import PrepositionsContainer from './PrepositionsContainer';
@@ -7,7 +8,9 @@ import TitlesContainer from './TitlesContainer';
 import SettingsContainer from './SettingsContainer';
 import ScriptContainer from './ScriptContainer';
 
-const ResourceExplorer = ({ rom, res, resources }) => {
+const ResourceExplorer = () => {
+  const { prg, res, resources } = useRom();
+
   if (!resources) {
     return null;
   }
@@ -111,7 +114,7 @@ const ResourceExplorer = ({ rom, res, resources }) => {
         path="/rom-map"
         element={
           <RomMapContainer
-            rom={rom}
+            rom={prg}
             res={res}
           />
         }

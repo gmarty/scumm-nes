@@ -2,7 +2,8 @@
 
 import { parseArgs } from 'node:util';
 import { basename } from 'node:path';
-import { loadRom, saveRom, inject } from '../src/lib/cliUtils.js';
+import { loadRom, saveRom } from '../src/lib/cliUtils.js';
+import { inject } from '../src/lib/romUtils.js';
 import serialisePreps from '../src/lib/serialiser/serialisePreps.js';
 
 /*

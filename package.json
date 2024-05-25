@@ -1,7 +1,7 @@
 {
   "name": "scumm-nes",
-  "version": "0.1.2",
-  "description": "An app to explore the content of the Maniac Mansion game on NES.",
+  "version": "0.2.0",
+  "description": "An app to explore and modify the game Maniac Mansion on NES.",
   "author": "edo999@gmail.com",
   "license": "BlueOak-1.0.0",
   "keywords": [

@@ -15,12 +15,12 @@ class Serialiser {
   }
 
   setUint8(value = 0x00) {
-    this.#view.buffer.resize(this.#ptr + 1);
+    this.#resize(this.#ptr + 1);
     this.#view.setUint8(this.#ptr++, value);
   }
 
   setUint16(value = 0x00) {
-    this.#view.buffer.resize(this.#ptr + 2);
+    this.#resize(this.#ptr + 2);
     this.#view.setUint16(this.#ptr, value, true);
     this.#ptr += 2;
   }
@@ -33,6 +33,21 @@ class Serialiser {
       }
       this.setUint8(codePoint.codePointAt(0));
     }
+  }
+
+  // Firefox doesn't support ArrayBuffer#resize.
+  #resize(newByteLength) {
+    if (ArrayBuffer.prototype.resize) {
+      this.#view.buffer.resize(newByteLength);
+      return;
+    }
+
+    const newArrayBuffer = new ArrayBuffer(newByteLength);
+    const view = new DataView(newArrayBuffer);
+    for (let i = 0; i < this.#view.buffer.byteLength; i++) {
+      view.setUint8(i, this.#view.getUint8(i));
+    }
+    this.#view = view;
   }
 
   get buffer() {

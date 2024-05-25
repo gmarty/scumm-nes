@@ -1,13 +1,13 @@
-# SCUMM NES resource explorer
+# SCUMM-NES
 
-> An app to explore the content of the Maniac Mansion game on NES.
+> An app to explore and modify the game Maniac Mansion on NES.
 
 ## What is this?
 
-This tool is a web app to explore the resources from the Maniac Mansion game on NES.
+This tool is a web app to explore and modify the resources contained in the Maniac Mansion game on NES.
 The goal is to encourage the ROM hacking community to modify the game and create new hacks.
 
-This app only works with Maniac Mansion on NES, it won't work with data files from other platforms or other games.
+This app only works with Maniac Mansion on NES, it won't work with SCUMM files from other platforms or other NES games.
 
 Some of the code comes from the [ScummVM](https://github.com/scummvm) project.
 
@@ -36,8 +36,6 @@ The Japanese version is not supported.
 ## What does it NOT do?
 
 The app doesn't use the runtime code used by the NES to start and play the game. It only works with the SCUMM resources stored in the ROM files.
-
-It does not modify the ROM, it is only an explorer of the resources present in the game.
 
 ## How to use it?
 
@@ -82,9 +80,8 @@ Then deploy the content of the `dist` folder.
 
 - Use Typescript.
 - Write more tests.
-- Parse more resource types (scripts, sounds...).
+- Parse more resource types (sprites, sounds...).
 - QoF improvements (store the ROM files locally...)
-- Enable modification of the resources to create new games.
 
 ### Out of scope for now
 

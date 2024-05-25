@@ -1,5 +1,6 @@
 import { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
+import DownloadRom from './DownloadRom';
 import {
   Dialog,
   DialogPanel,
@@ -7,6 +8,7 @@ import {
   TransitionChild,
 } from '@headlessui/react';
 import {
+  ArrowDownTrayIcon,
   Cog8ToothIcon,
   Bars3Icon,
   XMarkIcon,
@@ -22,7 +24,7 @@ const navigation = [
   { name: 'Settings', href: '/settings', sideBarOnly: true },
 ];
 
-export default function Header() {
+const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -31,7 +33,7 @@ export default function Header() {
         className="mx-auto flex max-w-7xl items-center justify-between px-3 py-2 md:px-4"
         aria-label="Global">
         <div className="flex md:flex-1">
-          <span className="sr-only">SCUMM NES resource explorer</span>
+          <span className="sr-only">SCUMM-NES</span>
           <img
             className="h-6 w-auto"
             src={meteor}
@@ -63,7 +65,13 @@ export default function Header() {
               </Link>
             ))}
         </div>
-        <div className="hidden md:flex md:flex-1 md:justify-end">
+        <div className="hidden gap-x-4 md:flex md:flex-1 md:justify-end">
+          <DownloadRom>
+            <ArrowDownTrayIcon
+              strokeWidth="1.5"
+              className="size-6"
+            />
+          </DownloadRom>
           <Link to="/settings">
             <Cog8ToothIcon
               strokeWidth="1.5"
@@ -100,7 +108,7 @@ export default function Header() {
             leaveTo="translate-x-full">
             <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-slate-100 px-3 py-2 pl-6 sm:max-w-sm dark:bg-slate-900">
               <div className="flex items-center justify-between">
-                <span className="sr-only">SCUMM NES resource explorer</span>
+                <span className="sr-only">SCUMM-NES</span>
                 <img
                   className="h-6 w-auto"
                   src={meteor}
@@ -130,6 +138,11 @@ export default function Header() {
                         {item.name}
                       </Link>
                     ))}
+                    <DownloadRom>
+                      <span className="-mx-3 block rounded px-3 py-2 text-base font-semibold leading-7 text-slate-700 hover:bg-slate-200 dark:text-slate-300 hover:dark:bg-slate-800">
+                        Download modified ROM
+                      </span>
+                    </DownloadRom>
                   </div>
                 </div>
               </div>
@@ -139,4 +152,6 @@ export default function Header() {
       </Transition>
     </header>
   );
-}
+};
+
+export default Header;
