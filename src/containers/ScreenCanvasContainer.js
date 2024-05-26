@@ -16,6 +16,13 @@ const ScreenCanvasContainer = ({
   const canvasRef = useRef(null);
   const [isComputing, setIsComputing] = useState(true);
   const { width, height } = screen.header;
+  // Aspect ratio of 5:4 for all possible screen sizes.
+  const ratio =
+    width === 28
+      ? 'aspect-[4.375/2.133333333333333]'
+      : width === 60
+        ? 'aspect-[9.375/2.133333333333333]'
+        : 'aspect-[5/4]';
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -34,6 +41,7 @@ const ScreenCanvasContainer = ({
       width={width * 8}
       height={height * 8}
       className={clsx(
+        ratio,
         'w-full rounded',
         isComputing ? 'opacity-0' : 'opacity-100 transition-opacity',
       )}
