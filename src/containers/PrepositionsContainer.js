@@ -1,4 +1,4 @@
-import SecondaryColumn from '../components/SecondaryColumn';
+import PrimaryColumn from '../components/PrimaryColumn';
 import PrepositionsList from '../components/PrepositionsList';
 import Main from '../components/Main';
 import MainHeader from '../components/MainHeader';
@@ -7,12 +7,12 @@ import ResourceMetadata from '../components/ResourceMetadata';
 const PrepositionsContainer = ({ preps, lang }) => {
   return (
     <>
-      <SecondaryColumn>
+      <PrimaryColumn>
         <PrepositionsList
           preps={preps}
           lang={lang}
         />
-      </SecondaryColumn>
+      </PrimaryColumn>
       <Main>
         <MainHeader title="Prepositions">
           <ResourceMetadata metadata={preps.metadata} />

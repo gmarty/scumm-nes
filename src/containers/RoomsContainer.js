@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useMatch, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useRomDispatch } from '../contexts/RomContext';
 import PrimaryColumn from '../components/PrimaryColumn';
-import SecondaryColumn from '../components/SecondaryColumn';
 import Main from '../components/Main';
-import RoomsList from '../components/RoomsList';
-import TitlesList from '../components/TitlesList';
+import ScreenSelector from '../components/ScreenSelector';
 import RoomsObjectList from '../components/RoomsObjectList';
 import RoomsBoxList from '../components/RoomsBoxList';
 import Room from '../components/Room';
@@ -16,7 +14,6 @@ import RoomScripts from '../components/RoomScripts';
 
 const RoomsContainer = ({ rooms, titles, roomgfx, globdata }) => {
   const dispatch = useRomDispatch();
-  const isRoom = !!useMatch('/rooms/:id');
   const { id } = useParams();
   const [hoveredObject, setHoveredObject] = useState(null);
   const [selectedObjects, setSelectedObjects] = useState([]);
@@ -81,35 +78,28 @@ const RoomsContainer = ({ rooms, titles, roomgfx, globdata }) => {
   return (
     <>
       <PrimaryColumn>
-        <RoomsList
-          items={rooms}
-          currentId={isRoom ? currentId : null}
+        <ScreenSelector
+          rooms={rooms}
+          titles={titles}
         />
-        <TitlesList
-          items={titles}
-          currentId={isRoom ? null : currentId}
-        />
+        {room?.objectImages?.length > 0 && (
+          <RoomsObjectList
+            objects={room.objects}
+            objectImages={room.objectImages}
+            hoveredObject={hoveredObject}
+            setHoveredObject={setHoveredObject}
+            selectedObjects={selectedObjects}
+            setSelectedObjectState={setSelectedObjectState}
+          />
+        )}
+        {room?.boxes?.length > 0 && (
+          <RoomsBoxList
+            boxes={room.boxes}
+            setHoveredBox={setHoveredBox}
+          />
+        )}
       </PrimaryColumn>
-      {(room?.objectImages?.length || room?.boxes?.length) && (
-        <SecondaryColumn>
-          {room?.objectImages?.length > 0 && (
-            <RoomsObjectList
-              objects={room.objects}
-              objectImages={room.objectImages}
-              hoveredObject={hoveredObject}
-              setHoveredObject={setHoveredObject}
-              selectedObjects={selectedObjects}
-              setSelectedObjectState={setSelectedObjectState}
-            />
-          )}
-          {room?.boxes?.length > 0 && (
-            <RoomsBoxList
-              boxes={room.boxes}
-              setHoveredBox={setHoveredBox}
-            />
-          )}
-        </SecondaryColumn>
-      )}
+
       <Main>
         {!room ? (
           <h1>Rooms</h1>

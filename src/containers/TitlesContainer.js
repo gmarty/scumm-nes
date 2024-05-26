@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useMatch, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useRomDispatch } from '../contexts/RomContext';
 import PrimaryColumn from '../components/PrimaryColumn';
 import Main from '../components/Main';
-import RoomsList from '../components/RoomsList';
-import TitlesList from '../components/TitlesList';
+import ScreenSelector from '../components/ScreenSelector';
 import ScreenCanvasContainer from './ScreenCanvasContainer';
 import RoomTabs from '../components/RoomTabs';
 import Palettes from '../components/Palettes';
@@ -14,7 +13,6 @@ import ResourceMetadata from '../components/ResourceMetadata';
 
 const TitlesContainer = ({ rooms, titles }) => {
   const dispatch = useRomDispatch();
-  const isRoom = !!useMatch('/rooms/:id');
   const { id } = useParams();
   const [currentTab, setCurrentTab] = useState('Palettes');
   const [title, setTitle] = useState(null);
@@ -60,13 +58,9 @@ const TitlesContainer = ({ rooms, titles }) => {
   return (
     <>
       <PrimaryColumn>
-        <RoomsList
-          items={rooms}
-          currentId={isRoom ? currentId : null}
-        />
-        <TitlesList
-          items={titles}
-          currentId={isRoom ? null : currentId}
+        <ScreenSelector
+          rooms={rooms}
+          titles={titles}
         />
       </PrimaryColumn>
       <Main>
