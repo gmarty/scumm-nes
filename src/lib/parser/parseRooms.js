@@ -340,6 +340,7 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
     );
 
     objects.push({
+      id: j,
       size: objectSize,
       objUnk1,
       objUnk2,
