@@ -984,7 +984,7 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
         break;
     }
 
-    script.push([hex(rowAddress, 4), scriptRow]);
+    script.push([rowAddress, scriptRow]);
   } while (!stop);
 
   return script;
