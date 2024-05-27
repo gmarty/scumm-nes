@@ -267,7 +267,7 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
     const objectScriptOffsParser = new Parser(
       arrayBuffer.slice(objectOffs + 0x0f, objectOffs + objectSize),
     );
-    const objScripts = [];
+    const scripts = [];
     while (objectScriptOffsParser.pointer < objectSize) {
       const verbId = objectScriptOffsParser.getUint8();
       if (verbId === 0) {
@@ -285,7 +285,7 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
       );
 
       const script = parseScriptCode(scriptOffsParser, 0, 0);
-      objScripts.push([verbs[verbId] ?? `(${verbId})`, script]);
+      scripts.push([verbs[verbId] ?? `(${verbId})`, script]);
     }
 
     // Parse object images.
@@ -335,7 +335,7 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
     // Calculate the number of object script given the value of object name offset.
     const calculatedObjScriptNum = (objNameOffs - 16) / 2;
     assert(
-      calculatedObjScriptNum === objScripts.length,
+      calculatedObjScriptNum === scripts.length,
       'Unknown data before object name offset.',
     );
 
@@ -357,7 +357,7 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
       actorDir: objActorDir,
       nameOffs: objNameOffs,
       name: objName,
-      objScripts,
+      scripts,
     });
   }
 
