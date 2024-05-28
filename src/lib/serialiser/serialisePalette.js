@@ -1,4 +1,4 @@
-import Serialiser from './serialiser.js';
+import Serialiser from './Serialiser.js';
 
 const serialisePalette = (palette = []) => {
   const serialiser = new Serialiser();

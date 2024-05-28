@@ -1,4 +1,4 @@
-import Serialiser from '../serialiser.js';
+import Serialiser from '../Serialiser.js';
 import { compress } from '../serialiserUtils.js';
 
 const serialiseRoomAttributes = (attributes = [], width = 0) => {

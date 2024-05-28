@@ -1,4 +1,4 @@
-import Parser from './parser.js';
+import Parser from './Parser.js';
 
 // Generic palette parser used in rooms and title screens.
 const parsePalette = (arrayBuffer, offset = 0) => {

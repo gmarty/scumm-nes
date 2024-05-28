@@ -1,4 +1,4 @@
-import Parser from './parser.js';
+import Parser from './Parser.js';
 
 const assert = console.assert;
 

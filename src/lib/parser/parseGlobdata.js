@@ -1,4 +1,4 @@
-import Parser from './parser.js';
+import Parser from './Parser.js';
 
 const parseGlobdata = (arrayBuffer, i = 0, offset = 0) => {
   const parser = new Parser(arrayBuffer);

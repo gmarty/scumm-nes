@@ -1,4 +1,4 @@
-import Parser from '../parser.js';
+import Parser from '../Parser.js';
 
 const parseRoomAttributes = (arrayBuffer, offset = 0, width = 0) => {
   const parser = new Parser(arrayBuffer);

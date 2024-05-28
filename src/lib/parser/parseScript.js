@@ -1,5 +1,5 @@
 import parseScriptCode from './parseScriptCode.js';
-import Parser from './parser.js';
+import Parser from './Parser.js';
 const assert = console.assert;
 
 const parseScript = (arrayBuffer, i, offset = 0, characters = {}) => {

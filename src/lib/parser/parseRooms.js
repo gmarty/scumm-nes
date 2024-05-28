@@ -1,4 +1,4 @@
-import Parser from './parser.js';
+import Parser from './Parser.js';
 import parseRoomHeader from './room/parseRoomHeader.js';
 import parseRoomNametable from './room/parseRoomNametable.js';
 import parsePalette from './parsePalette.js';
