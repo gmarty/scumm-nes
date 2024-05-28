@@ -4,16 +4,12 @@ const RoomScripts = ({ excdScript, encdScript }) => {
   return (
     <div className="flex gap-4 md:gap-5 xl:gap-6">
       <div>
-        <h2>Enter Script</h2>
-        <div>
-          <ScriptCode code={encdScript} />
-        </div>
+        <h2 className="text-sm">Enter Script</h2>
+        <ScriptCode code={encdScript} />
       </div>
       <div>
-        <h2>Exit Script</h2>
-        <div>
-          <ScriptCode code={excdScript} />
-        </div>
+        <h2 className="text-sm">Exit Script</h2>
+        <ScriptCode code={excdScript} />
       </div>
     </div>
   );

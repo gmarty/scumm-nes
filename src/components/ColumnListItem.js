@@ -5,7 +5,7 @@ const ColumnListItem = ({ path, selected, className, children, ...props }) => {
   return !path ? (
     <li
       className={clsx(
-        'bg-slate-200 px-1 py-1 text-slate-700 sm:px-2 md:px-3 lg:px-4 xl:px-5',
+        'bg-slate-200 px-1 py-1 text-slate-700 sm:px-2 md:px-3 lg:px-4',
         className,
       )}
       {...props}>
@@ -19,7 +19,7 @@ const ColumnListItem = ({ path, selected, className, children, ...props }) => {
       )}
       {...props}>
       <Link
-        className="px-1 py-1 sm:px-2 md:px-3 lg:px-4 xl:px-5"
+        className="px-1 py-1 sm:px-2 md:px-3 lg:px-4"
         to={path}>
         {children}
       </Link>

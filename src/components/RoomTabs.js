@@ -3,12 +3,13 @@ import { clsx } from 'clsx';
 const RoomTabs = ({
   currentTab,
   setCurrentTab,
-  allowList = ['Palettes', 'Tilesets', 'Scripts'],
+  allowList = ['Palettes', 'Tilesets', 'Scripts', 'Object properties'],
 }) => {
   const tabs = [
     { name: 'Palettes', current: currentTab === 'Palettes' },
     { name: 'Tilesets', current: currentTab === 'Tilesets' },
     { name: 'Scripts', current: currentTab === 'Scripts' },
+    { name: 'Object properties', current: currentTab === 'Object properties' },
   ].filter(({ name }) => allowList.includes(name));
 
   return (

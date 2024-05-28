@@ -5,6 +5,7 @@ import PrimaryColumn from '../components/PrimaryColumn';
 import Main from '../components/Main';
 import ScreenSelector from '../components/ScreenSelector';
 import RoomsObjectList from '../components/RoomsObjectList';
+import RoomObjectProperties from '../components/RoomObjectProperties';
 import RoomsBoxList from '../components/RoomsBoxList';
 import Room from '../components/Room';
 import RoomTabs from '../components/RoomTabs';
@@ -20,6 +21,7 @@ const RoomsContainer = ({ rooms, titles, roomgfx, globdata }) => {
   const [hoveredBox, setHoveredBox] = useState(null);
   const [currentTab, setCurrentTab] = useState('Palettes');
   const [room, setRoom] = useState(null);
+  const [inspectedObject, setInspectedObject] = useState(null);
 
   const currentId = typeof id === 'undefined' ? null : parseInt(id, 10);
   const baseTiles = roomgfx?.find(({ metadata }) => metadata.id === 0);
@@ -38,7 +40,16 @@ const RoomsContainer = ({ rooms, titles, roomgfx, globdata }) => {
       selectedObjects[i] = !!(initialState & 0b10000000);
     }
     setSelectedObjects(selectedObjects);
+
+    // Reset the inspected object when the room changes.
+    setInspectedObject(null);
   }, [currentId, globdata, rooms]);
+
+  useEffect(() => {
+    if (inspectedObject !== null) {
+      setCurrentTab('Object properties');
+    }
+  }, [inspectedObject]);
 
   const setSelectedObjectState = (id, state) => {
     const newSelectedObjects = [...selectedObjects];
@@ -90,6 +101,8 @@ const RoomsContainer = ({ rooms, titles, roomgfx, globdata }) => {
             setHoveredObject={setHoveredObject}
             selectedObjects={selectedObjects}
             setSelectedObjectState={setSelectedObjectState}
+            inspectedObject={inspectedObject}
+            setInspectedObject={setInspectedObject}
           />
         )}
         {room?.boxes?.length > 0 && (
@@ -139,6 +152,9 @@ const RoomsContainer = ({ rooms, titles, roomgfx, globdata }) => {
                 excdScript={room.excdScript}
                 encdScript={room.encdScript}
               />
+            )}
+            {currentTab === 'Object properties' && (
+              <RoomObjectProperties object={room.objects[inspectedObject]} />
             )}
           </>
         )}

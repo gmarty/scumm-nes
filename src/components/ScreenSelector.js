@@ -28,7 +28,7 @@ const ScreenSelector = ({ rooms, titles }) => {
       as="div">
       {({ open }) => (
         <div className="relative mx-1">
-          <Label className="block px-1 font-medium leading-6 text-slate-100 sm:px-2 md:px-3 lg:px-4 xl:px-5">
+          <Label className="block px-1 font-medium leading-6 text-slate-100 sm:px-2 md:px-3 lg:px-4">
             <h2>Screen selector</h2>
           </Label>
           <ListboxButton className="relative w-full cursor-default rounded bg-slate-100 py-1.5 pl-3 pr-10 text-left text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 focus:outline-none focus:ring-2 focus:ring-primary-600 dark:bg-slate-900 dark:text-slate-100 dark:ring-slate-700">
