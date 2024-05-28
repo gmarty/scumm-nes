@@ -44,7 +44,7 @@ const parseRom = (arrayBuffer, res) => {
     const [offset, length] = res.scripts[i];
 
     const resBuffer = arrayBuffer.slice(offset, offset + length);
-    const script = parseScript(resBuffer, i, offset);
+    const script = parseScript(resBuffer, i, offset, res.characters);
     scripts.push(script);
   }
 

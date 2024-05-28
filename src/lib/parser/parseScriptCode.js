@@ -43,38 +43,6 @@ const getOffset = (parser, startAddress) => {
   return hex((currentRow + offset) % 0x10000, 4);
 };
 
-const getString = (parser) => {
-  let str = '';
-  let charCode;
-  do {
-    charCode = parser.getUint8();
-    if (charCode === 0x00) {
-      break;
-    }
-    const flag = (charCode & 0x80) !== 0;
-    charCode &= 0x7f;
-
-    // TODO: Properly handle escape codes
-    if (charCode < 8) {
-      str += `\\u${hex(charCode, 4)}`;
-      if (charCode > 3) {
-        str += `\\${parser.getUint8()}`;
-      }
-    } else {
-      if (charCode === '\\' || charCode === '"') {
-        str += '\\';
-      }
-    }
-    str += String.fromCharCode(charCode);
-
-    if (flag) {
-      str += ' ';
-    }
-  } while (true);
-
-  return str;
-};
-
 const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
   const script = [];
   let stop = false;
@@ -281,7 +249,7 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
             scriptRow.push(`Color(${value}, ${subOpArg})`);
             break;
           case 0x03:
-            const name = getString(parser);
+            const name = parser.getString();
             scriptRow.push(`Name("${name}")`);
             break;
           case 0x04:
@@ -300,7 +268,7 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
       case 0x94:
         scriptRow.push(getVariableOrByte(parser, opCode & 0x80));
 
-        scriptRow.push(`"${getString(parser)}"`);
+        scriptRow.push(`"${parser.getString()}"`);
         break;
 
       // actorFromPos
@@ -809,7 +777,7 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
       case 0xd4:
         scriptRow.push(getVariableOrWord(parser, opCode & 0x80));
 
-        const name = getString(parser);
+        const name = parser.getString();
         scriptRow.push(`"${name}"`);
 
         break;
@@ -927,7 +895,7 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
 
             scriptRow.push(parser.getUint8());
 
-            scriptRow.push(`"${getString(parser)}"`);
+            scriptRow.push(`"${parser.getString()}"`);
         }
         break;
       }
@@ -966,7 +934,7 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
         break;
 
       case 0xd8: // printEgo
-        const str = getString(parser);
+        const str = parser.getString();
         scriptRow.push(`"${str}"`);
 
         break;

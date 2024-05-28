@@ -2,8 +2,8 @@ import parseScriptCode from './parseScriptCode.js';
 import Parser from './parser.js';
 const assert = console.assert;
 
-const parseScript = (arrayBuffer, i, offset = 0) => {
-  const parser = new Parser(arrayBuffer);
+const parseScript = (arrayBuffer, i, offset = 0, characters = {}) => {
+  const parser = new Parser(arrayBuffer, characters);
   const metadata = {
     id: i,
     offset,

@@ -282,6 +282,7 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
           objectOffs + objectScriptStart,
           objectOffs + objectScriptStart + objectSize,
         ),
+        characters,
       );
 
       const script = parseScriptCode(scriptOffsParser, 0, 0);
@@ -396,13 +397,19 @@ const parseRooms = (arrayBuffer, i = 0, offset = 0, characters = {}) => {
 
   let excdScript;
   if (excdOffs !== 0) {
-    const excdScriptParser = new Parser(arrayBuffer.slice(excdOffs));
+    const excdScriptParser = new Parser(
+      arrayBuffer.slice(excdOffs),
+      characters,
+    );
     excdScript = parseScriptCode(excdScriptParser, 0);
   }
 
   let encdScript;
   if (encdOffs !== 0) {
-    const encdScriptParser = new Parser(arrayBuffer.slice(encdOffs));
+    const encdScriptParser = new Parser(
+      arrayBuffer.slice(encdOffs),
+      characters,
+    );
     encdScript = parseScriptCode(encdScriptParser, 0);
   }
 

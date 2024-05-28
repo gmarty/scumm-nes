@@ -121,7 +121,7 @@ const ScriptCodeInstruction = ({ command }) => {
   const args = prettifyArguments(command);
 
   return (
-    <span>
+    <pre>
       <span className="text-primary-600 dark:text-primary-300">
         (${opCode}) {instruction}
       </span>{' '}
@@ -131,7 +131,7 @@ const ScriptCodeInstruction = ({ command }) => {
           {i < args.length - 1 ? <span className={'opacity-50'}>, </span> : ''}
         </span>
       ))}
-    </span>
+    </pre>
   );
 };
 

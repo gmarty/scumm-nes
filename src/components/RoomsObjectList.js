@@ -68,16 +68,18 @@ const RoomObject = ({
   const namedClass = object.name ? 'first-letter:capitalize' : 'italic';
 
   const InspectorButton = () => (
-    <InspectIcon
-      strokeWidth="1.5"
-      className={clsx(
-        isInspected
-          ? 'text-primary-600'
-          : 'opacity-0 group-hover:text-slate-400 group-hover:opacity-100',
-        'size-4 cursor-pointer',
-      )}
-      onClick={() => setInspectedObject(object.id)}
-    />
+    <span className="text-slate-400">
+      <InspectIcon
+        strokeWidth="1.5"
+        className={clsx(
+          isInspected
+            ? 'text-primary-600'
+            : 'opacity-0 hover:text-slate-600 group-hover:opacity-100',
+          'size-4 cursor-pointer transition',
+        )}
+        onClick={() => setInspectedObject(object.id)}
+      />
+    </span>
   );
 
   if (!objectImage?.tiles) {
