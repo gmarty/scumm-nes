@@ -9,11 +9,12 @@ import {
 } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import { clsx } from 'clsx';
+import getScreenLabel from '../lib/getScreenLabel';
 
 const getScreenNameFromPathname = (pathname) => {
   const id = pathname.split('/').pop();
   const screenType = pathname.startsWith('/rooms/') ? 'room' : 'title';
-  return screenType === 'title' ? `Title screen ${id}` : `Room ${id}`;
+  return getScreenLabel(screenType, id);
 };
 
 const ScreenSelector = ({ rooms, titles }) => {
@@ -72,7 +73,7 @@ const ScreenSelector = ({ rooms, titles }) => {
                           selected ? 'font-semibold' : 'font-normal',
                           'block truncate',
                         )}>
-                        {`Title screen ${metadata.id}`}
+                        {getScreenLabel('title', metadata.id)}
                       </span>
 
                       {selected ? (
@@ -117,7 +118,7 @@ const ScreenSelector = ({ rooms, titles }) => {
                             selected ? 'font-semibold' : 'font-normal',
                             'block truncate',
                           )}>
-                          {`Room ${metadata.id}`}
+                          {getScreenLabel('room', metadata.id)}
                         </span>
 
                         {selected ? (

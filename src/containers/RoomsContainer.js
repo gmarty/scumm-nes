@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRomDispatch } from '../contexts/RomContext';
+import getScreenLabel from '../lib/getScreenLabel';
 import PrimaryColumn from '../components/PrimaryColumn';
 import Main from '../components/Main';
 import ScreenSelector from '../components/ScreenSelector';
@@ -12,6 +13,8 @@ import RoomTabs from '../components/RoomTabs';
 import Palettes from '../components/Palettes';
 import RoomGfx from '../components/RoomGfx';
 import RoomScripts from '../components/RoomScripts';
+import MainHeader from '../components/MainHeader';
+import ResourceMetadata from '../components/ResourceMetadata';
 
 const RoomsContainer = ({ rooms, titles, roomgfx, globdata }) => {
   const dispatch = useRomDispatch();
@@ -118,6 +121,9 @@ const RoomsContainer = ({ rooms, titles, roomgfx, globdata }) => {
           <h1>Rooms</h1>
         ) : (
           <>
+            <MainHeader title={getScreenLabel('room', room.metadata.id, true)}>
+              <ResourceMetadata metadata={room.metadata} />
+            </MainHeader>
             <Room
               room={room}
               baseTiles={baseTiles}

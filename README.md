@@ -9,7 +9,7 @@ The goal is to encourage the ROM hacking community to modify the game and create
 
 This app only works with Maniac Mansion on NES, it won't work with SCUMM files from other platforms or other NES games.
 
-Some of the code comes from the [ScummVM](https://github.com/scummvm) project.
+Portion of the code comes from [ScummVM](https://github.com/scummvm) and [Maniac Mansion Decoded](https://github.com/gzip/nes-6502-maniac-mansion-decoded).
 
 ## What does it do?
 

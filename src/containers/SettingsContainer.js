@@ -3,6 +3,7 @@ import Main from '../components/Main';
 import MainHeader from '../components/MainHeader';
 import ThemeSwitcher from '../components/ThemeSwitcher';
 import PaletteSelector from '../components/PaletteSelector';
+import ScreenNamesSelector from '../components/ScreenNamesSelector';
 import { setColourTheme } from '../lib/colourThemeUtils';
 
 import digitalPrimeFbxImg from '../assets/palettes/digital-prime-fbx.png';
@@ -38,6 +39,20 @@ const paletteOptions = [
   },
 ];
 
+const screenNameOptions = [
+  {
+    value: 'mm',
+    name: 'Maniac Mansion screen names',
+    description: 'Useful when working on a Maniac Mansion ROM hack.',
+    defaultOption: true,
+  },
+  {
+    value: 'numbers',
+    name: 'Numbered screen names',
+    description: 'Better if your ROM hack is a completely different game.',
+  },
+];
+
 const SettingsContainer = () => {
   // Find the options set, or the default ones.
   const selectedThemeValue = localStorage.getItem('theme');
@@ -50,8 +65,14 @@ const SettingsContainer = () => {
     paletteOptions.find(({ value }) => value === selectedPaletteValue) ||
     paletteOptions.find(({ defaultOption }) => defaultOption);
 
+  const selectedScreenNameValue = localStorage.getItem('screen-name');
+  const selectedScreenName =
+    screenNameOptions.find(({ value }) => value === selectedScreenNameValue) ||
+    screenNameOptions.find(({ defaultOption }) => defaultOption);
+
   const [theme, setTheme] = useState(selectedTheme);
   const [palette, setPalette] = useState(selectedPalette);
+  const [screenName, setScreenName] = useState(selectedScreenName);
 
   // Keep the local storage and the DOM in sync with the state.
   const setThemeWrapper = (theme) => {
@@ -78,6 +99,17 @@ const SettingsContainer = () => {
     localStorage.setItem('palette', palette.value);
   };
 
+  const setScreenNameWrapper = (screenName) => {
+    setScreenName(screenName);
+
+    if (screenName.defaultOption) {
+      localStorage.removeItem('screen-name');
+      return;
+    }
+
+    localStorage.setItem('screen-name', screenName.value);
+  };
+
   return (
     <Main>
       <MainHeader title="Settings" />
@@ -90,6 +122,11 @@ const SettingsContainer = () => {
         palette={palette}
         paletteOptions={paletteOptions}
         setPalette={setPaletteWrapper}
+      />
+      <ScreenNamesSelector
+        screenName={screenName}
+        screenNameOptions={screenNameOptions}
+        setScreenName={setScreenNameWrapper}
       />
     </Main>
   );

@@ -1,5 +1,3 @@
-import MainHeader from './MainHeader';
-import ResourceMetadata from './ResourceMetadata';
 import ScreenCanvasContainer from '../containers/ScreenCanvasContainer';
 import HoveredObjects from './HoveredObjects';
 
@@ -18,9 +16,6 @@ const Room = ({
 
   return (
     <>
-      <MainHeader title={`Room ${room.metadata.id}`}>
-        <ResourceMetadata metadata={room.metadata} />
-      </MainHeader>
       <div
         className="relative overflow-hidden"
         style={{ maxWidth: width * 8 * zoom }}>

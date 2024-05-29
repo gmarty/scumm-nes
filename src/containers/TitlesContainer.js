@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRomDispatch } from '../contexts/RomContext';
+import getScreenLabel from '../lib/getScreenLabel';
 import PrimaryColumn from '../components/PrimaryColumn';
 import Main from '../components/Main';
 import ScreenSelector from '../components/ScreenSelector';
@@ -68,7 +69,8 @@ const TitlesContainer = ({ rooms, titles }) => {
           <h1>Titles</h1>
         ) : (
           <>
-            <MainHeader title={`Title screen ${title.metadata.id}`}>
+            <MainHeader
+              title={getScreenLabel('title', title.metadata.id, true)}>
               <ResourceMetadata metadata={title.metadata} />
             </MainHeader>
             <ScreenCanvasContainer
