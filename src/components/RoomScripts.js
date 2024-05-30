@@ -2,7 +2,7 @@ import ScriptCode from './ScriptCode';
 
 const RoomScripts = ({ excdScript, encdScript }) => {
   return (
-    <div className="flex gap-4 md:gap-5 xl:gap-6">
+    <div className="flex flex-col gap-4 md:gap-5 lg:flex-row xl:gap-6">
       <div>
         <h2 className="text-sm">Enter Script</h2>
         <ScriptCode code={encdScript} />
