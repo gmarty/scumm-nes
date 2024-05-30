@@ -394,6 +394,7 @@ const verbs = {
   0x0d: 'Go To',
   0x0e: 'Get',
   0x0f: undefined,
+  0xff: 'Any verb', // Also used for buttons in the UI (e.g. character selection, num pad...).
 };
 
 export { opCodes, varNames, verbs };
