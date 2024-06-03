@@ -1,8 +1,14 @@
 import parseRooms from './parseRooms.js';
 import parseRoomGfx from './parseRoomGfx.js';
 import parseGlobdata from './parseGlobdata.js';
-import parsePreps from './parsePreps.js';
 import parseScript from './parseScript.js';
+import parseCostumes from './sprites/parseCostumes.js';
+import parseSprpals from './sprites/parseSprpals.js';
+import parseSprdesc from './sprites/parseSprdesc.js';
+import parseSprlens from './sprites/parseSprlens.js';
+import parseSproffs from './sprites/parseSproffs.js';
+import parseSprdata from './sprites/parseSprdata.js';
+import parsePreps from './parsePreps.js';
 import parseTitles from './parseTitles.js';
 
 const parseRom = (arrayBuffer, res) => {
@@ -10,6 +16,12 @@ const parseRom = (arrayBuffer, res) => {
   const roomgfx = [];
   const globdata = [];
   const scripts = [];
+  const costumes = [];
+  const sprpals = [];
+  const sprdesc = [];
+  const sprlens = [];
+  const sproffs = [];
+  const sprdata = [];
   const preps = [];
   const titles = [];
 
@@ -43,10 +55,77 @@ const parseRom = (arrayBuffer, res) => {
   for (let i = 0; i < res.scripts.length; i++) {
     const [offset, length] = res.scripts[i];
 
-    const resBuffer = arrayBuffer.slice(offset, offset + length);
-    const script = parseScript(resBuffer, i, offset, res.characters);
-    scripts.push(script);
+    const buffer = arrayBuffer.slice(offset, offset + length);
+    const item = parseScript(buffer, i, offset, res.characters);
+    item.buffer = buffer;
+    scripts.push(item);
   }
+
+  for (let i = 0; i < res.costumes.length; i++) {
+    const [offset, length] = res.costumes[i];
+
+    const buffer = arrayBuffer.slice(offset, offset + length);
+    const item = parseCostumes(buffer, i, offset);
+    item.buffer = buffer;
+    costumes.push(item);
+  }
+
+  for (let i = 0; i < res.sprpals.length; i++) {
+    const [offset, length] = res.sprpals[i];
+
+    const buffer = arrayBuffer.slice(offset, offset + length);
+    const item = parseSprpals(buffer, i, offset);
+    item.buffer = buffer;
+    sprpals.push(item);
+  }
+
+  for (let i = 0; i < res.sprdesc.length; i++) {
+    const [offset, length] = res.sprdesc[i];
+
+    const buffer = arrayBuffer.slice(offset, offset + length);
+    const item = parseSprdesc(buffer, i, offset);
+    item.buffer = buffer;
+    sprdesc.push(item);
+  }
+
+  for (let i = 0; i < res.sprlens.length; i++) {
+    const [offset, length] = res.sprlens[i];
+
+    const buffer = arrayBuffer.slice(offset, offset + length);
+    const item = parseSprlens(buffer, i, offset);
+    item.buffer = buffer;
+    sprlens.push(item);
+  }
+
+  for (let i = 0; i < res.sproffs.length; i++) {
+    const [offset, length] = res.sproffs[i];
+
+    const buffer = arrayBuffer.slice(offset, offset + length);
+    const item = parseSproffs(buffer, i, offset);
+    item.buffer = buffer;
+    sproffs.push(item);
+  }
+
+  // @todo Assert that the highest value of sprdesc is within sprlens and sproffs.
+  // @todo Assert that sprlens and sproffs have the same length.
+
+  for (let i = 0; i < res.sprdata.length; i++) {
+    const [offset, length] = res.sprdata[i];
+
+    const buffer = arrayBuffer.slice(offset, offset + length);
+    const item = parseSprdata(buffer, i, offset);
+    item.buffer = buffer;
+    sprdata.push(item);
+  }
+
+  // @todo Assert that the highest value of sproffs is within sprdata.
+
+  console.log(costumes);
+  console.log(sprpals);
+  console.log(sprdesc);
+  console.log(sprlens);
+  console.log(sproffs);
+  console.log(sprdata);
 
   for (let i = 0; i < res?.preplist?.length; i++) {
     const [offset, length] = res.preplist[i];
@@ -72,8 +151,14 @@ const parseRom = (arrayBuffer, res) => {
     rooms,
     roomgfx,
     globdata,
-    preps,
     scripts,
+    costumes,
+    sprpals,
+    sprdesc,
+    sprlens,
+    sproffs,
+    sprdata,
+    preps,
     titles,
   };
 };
