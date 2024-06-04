@@ -131,14 +131,6 @@ const parseRom = (arrayBuffer, res) => {
 
   // @todo Assert that the highest value of sproffs is within sprdata.
 
-  console.log(costumegfx);
-  console.log(costumes);
-  console.log(sprpals);
-  console.log(sprdesc);
-  console.log(sprlens);
-  console.log(sproffs);
-  console.log(sprdata);
-
   for (let i = 0; i < res?.preplist?.length; i++) {
     const [offset, length] = res.preplist[i];
 
