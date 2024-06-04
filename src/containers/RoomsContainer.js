@@ -28,7 +28,9 @@ const RoomsContainer = ({ rooms, titles, roomgfx, globdata }) => {
 
   const currentId = typeof id === 'undefined' ? null : parseInt(id, 10);
   const baseTiles = roomgfx?.find(({ metadata }) => metadata.id === 0);
-  let roomgfc = roomgfx?.find(({ metadata }) => metadata.id === room?.tileset);
+  const roomgfc = roomgfx?.find(
+    ({ metadata }) => metadata.id === room?.tileset,
+  );
 
   useEffect(() => {
     const room =

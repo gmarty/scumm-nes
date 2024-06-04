@@ -9,18 +9,17 @@ import ResourceMetadata from '../components/ResourceMetadata';
 import GfxCanvasContainer from './GfxCanvasContainer';
 
 const GfxContainer = ({ titlegfx, costumegfx, roomgfx }) => {
-  const isTitleGfx = !!useMatch('/titlegfx/:gfcId');
-  const isCostumeGfx = !!useMatch('/costumegfx/:gfcId');
-  const isRoomGfx = !!useMatch('/roomgfx/:gfcId');
-  const { gfcId } = useParams();
+  const isTitleGfx = !!useMatch('/titlegfx/:id');
+  const isCostumeGfx = !!useMatch('/costumegfx/:id');
+  const isRoomGfx = !!useMatch('/roomgfx/:id');
+  const { id } = useParams();
 
-  const currentGfcId =
-    typeof gfcId === 'undefined' ? null : parseInt(gfcId, 10);
+  const currentId = typeof id === 'undefined' ? null : parseInt(id, 10);
   const gfc = isTitleGfx
-    ? titlegfx[currentGfcId]
+    ? titlegfx[currentId]
     : isCostumeGfx
-      ? costumegfx[currentGfcId]
-      : roomgfx[currentGfcId];
+      ? costumegfx[currentId]
+      : roomgfx[currentId];
 
   if (!gfc) {
     return null;
@@ -31,31 +30,29 @@ const GfxContainer = ({ titlegfx, costumegfx, roomgfx }) => {
       <PrimaryColumn>
         <TitleGfxList
           gfx={titlegfx}
-          currentId={isTitleGfx ? currentGfcId : null}
+          currentId={isTitleGfx ? currentId : null}
         />
         <CostumeGfxList
           gfx={costumegfx}
-          currentId={isCostumeGfx ? currentGfcId : null}
+          currentId={isCostumeGfx ? currentId : null}
         />
         <RoomGfxList
           gfx={roomgfx}
-          currentId={isRoomGfx ? currentGfcId : null}
+          currentId={isRoomGfx ? currentId : null}
         />
       </PrimaryColumn>
       <Main>
         <MainHeader
           title={
-            currentGfcId === null
+            currentId === null
               ? 'Graphics'
               : isTitleGfx
-                ? `Title graphics tileset ${currentGfcId}`
+                ? `Title graphics tileset ${currentId}`
                 : isCostumeGfx
-                  ? `Costume graphics tileset ${currentGfcId}`
-                  : `Room graphics tileset ${currentGfcId}`
+                  ? `Costume graphics tileset ${currentId}`
+                  : `Room graphics tileset ${currentId}`
           }>
-          {currentGfcId !== null && (
-            <ResourceMetadata metadata={gfc.metadata} />
-          )}
+          {currentId !== null && <ResourceMetadata metadata={gfc.metadata} />}
         </MainHeader>
         <GfxCanvasContainer
           gfx={gfc.gfx}

@@ -5,20 +5,18 @@ import ScriptsList from '../components/ScriptsList';
 import Script from '../components/Script';
 
 const ScriptContainer = ({ scripts }) => {
-  const { scriptId } = useParams();
+  const { id } = useParams();
 
-  const currentScriptId =
-    typeof scriptId === 'undefined' ? null : parseInt(scriptId, 10);
-
+  const currentId = typeof id === 'undefined' ? null : parseInt(id, 10);
   const script =
-    scripts.find(({ metadata }) => metadata.id === currentScriptId) || null;
+    scripts.find(({ metadata }) => metadata.id === currentId) || null;
 
   return (
     <>
       <PrimaryColumn>
         <ScriptsList
           scripts={scripts}
-          currentId={currentScriptId}
+          currentId={currentId}
         />
       </PrimaryColumn>
       <Main>

@@ -67,7 +67,7 @@ const ResourceExplorer = () => {
           />
         }>
         <Route
-          path=":gfcId"
+          path=":id"
           element={
             <GfxContainer
               titlegfx={resources.titles}
@@ -87,7 +87,7 @@ const ResourceExplorer = () => {
           />
         }>
         <Route
-          path=":gfcId"
+          path=":id"
           element={
             <GfxContainer
               titlegfx={resources.titles}
@@ -107,7 +107,7 @@ const ResourceExplorer = () => {
           />
         }>
         <Route
-          path=":gfcId"
+          path=":id"
           element={
             <GfxContainer
               titlegfx={resources.titles}
@@ -130,7 +130,7 @@ const ResourceExplorer = () => {
         path="/scripts"
         element={<ScriptContainer scripts={resources.scripts} />}>
         <Route
-          path=":scriptId"
+          path=":id"
           element={<ScriptContainer scripts={resources.scripts} />}
         />
       </Route>
