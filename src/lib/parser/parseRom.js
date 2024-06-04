@@ -2,6 +2,7 @@ import parseRooms from './parseRooms.js';
 import parseRoomGfx from './parseRoomGfx.js';
 import parseGlobdata from './parseGlobdata.js';
 import parseScript from './parseScript.js';
+import parseCostumeGfx from './sprites/parseCostumeGfx.js';
 import parseCostumes from './sprites/parseCostumes.js';
 import parseSprpals from './sprites/parseSprpals.js';
 import parseSprdesc from './sprites/parseSprdesc.js';
@@ -16,6 +17,7 @@ const parseRom = (arrayBuffer, res) => {
   const roomgfx = [];
   const globdata = [];
   const scripts = [];
+  const costumegfx = [];
   const costumes = [];
   const sprpals = [];
   const sprdesc = [];
@@ -70,6 +72,15 @@ const parseRom = (arrayBuffer, res) => {
     costumes.push(item);
   }
 
+  for (let i = 0; i < res.costumegfx.length; i++) {
+    const [offset, length] = res.costumegfx[i];
+
+    const buffer = arrayBuffer.slice(offset, offset + length);
+    const item = parseCostumeGfx(buffer, i, offset);
+    item.buffer = buffer;
+    costumegfx.push(item);
+  }
+
   for (let i = 0; i < res.sprpals.length; i++) {
     const [offset, length] = res.sprpals[i];
 
@@ -120,6 +131,7 @@ const parseRom = (arrayBuffer, res) => {
 
   // @todo Assert that the highest value of sproffs is within sprdata.
 
+  console.log(costumegfx);
   console.log(costumes);
   console.log(sprpals);
   console.log(sprdesc);
