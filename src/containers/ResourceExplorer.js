@@ -58,37 +58,61 @@ const ResourceExplorer = () => {
         />
       </Route>
       <Route
-        path="/roomgfx"
+        path="/titlegfx"
         element={
           <GfxContainer
-            roomgfx={resources.roomgfx}
             titlegfx={resources.titles}
+            costumegfx={resources.costumegfx}
+            roomgfx={resources.roomgfx}
           />
         }>
         <Route
           path=":gfcId"
           element={
             <GfxContainer
-              roomgfx={resources.roomgfx}
               titlegfx={resources.titles}
+              costumegfx={resources.costumegfx}
+              roomgfx={resources.roomgfx}
             />
           }
         />
       </Route>
       <Route
-        path="/titlegfx"
+        path="/costumegfx"
         element={
           <GfxContainer
-            roomgfx={resources.roomgfx}
             titlegfx={resources.titles}
+            costumegfx={resources.costumegfx}
+            roomgfx={resources.roomgfx}
           />
         }>
         <Route
           path=":gfcId"
           element={
             <GfxContainer
-              roomgfx={resources.roomgfx}
               titlegfx={resources.titles}
+              costumegfx={resources.costumegfx}
+              roomgfx={resources.roomgfx}
+            />
+          }
+        />
+      </Route>
+      <Route
+        path="/roomgfx"
+        element={
+          <GfxContainer
+            titlegfx={resources.titles}
+            costumegfx={resources.costumegfx}
+            roomgfx={resources.roomgfx}
+          />
+        }>
+        <Route
+          path=":gfcId"
+          element={
+            <GfxContainer
+              titlegfx={resources.titles}
+              costumegfx={resources.costumegfx}
+              roomgfx={resources.roomgfx}
             />
           }
         />

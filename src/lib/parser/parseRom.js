@@ -156,6 +156,7 @@ const parseRom = (arrayBuffer, res) => {
     roomgfx,
     globdata,
     scripts,
+    costumegfx,
     costumes,
     sprpals,
     sprdesc,
