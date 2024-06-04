@@ -17,6 +17,7 @@ It currently support:
 
 - Rooms (partially)
 - Room graphics
+- Costumes (not yet exposed to the UI)
 - Prepositions
 - Title screens
 

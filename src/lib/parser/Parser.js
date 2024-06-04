@@ -12,6 +12,10 @@ class Parser {
     return this.#view.getUint8(this.#ptr++);
   }
 
+  getInt8() {
+    return this.#view.getInt8(this.#ptr++);
+  }
+
   getUint16() {
     const val = this.#view.getUint16(this.#ptr, true);
     this.#ptr += 2;
