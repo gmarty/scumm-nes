@@ -21,8 +21,8 @@ const parseRom = (arrayBuffer, res) => {
   const costumes = [];
   const sprpals = [];
   const sprdesc = [];
-  const sprlens = [];
   const sproffs = [];
+  const sprlens = [];
   const sprdata = [];
   const preps = [];
   const titles = [];
@@ -63,15 +63,6 @@ const parseRom = (arrayBuffer, res) => {
     scripts.push(item);
   }
 
-  for (let i = 0; i < res.costumes.length; i++) {
-    const [offset, length] = res.costumes[i];
-
-    const buffer = arrayBuffer.slice(offset, offset + length);
-    const item = parseCostumes(buffer, i, offset);
-    item.buffer = buffer;
-    costumes.push(item);
-  }
-
   for (let i = 0; i < res.costumegfx.length; i++) {
     const [offset, length] = res.costumegfx[i];
 
@@ -79,6 +70,15 @@ const parseRom = (arrayBuffer, res) => {
     const item = parseCostumeGfx(buffer, i, offset);
     item.buffer = buffer;
     costumegfx.push(item);
+  }
+
+  for (let i = 0; i < res.costumes.length; i++) {
+    const [offset, length] = res.costumes[i];
+
+    const buffer = arrayBuffer.slice(offset, offset + length);
+    const item = parseCostumes(buffer, i, offset);
+    item.buffer = buffer;
+    costumes.push(item);
   }
 
   for (let i = 0; i < res.sprpals.length; i++) {
@@ -99,15 +99,6 @@ const parseRom = (arrayBuffer, res) => {
     sprdesc.push(item);
   }
 
-  for (let i = 0; i < res.sprlens.length; i++) {
-    const [offset, length] = res.sprlens[i];
-
-    const buffer = arrayBuffer.slice(offset, offset + length);
-    const item = parseSprlens(buffer, i, offset);
-    item.buffer = buffer;
-    sprlens.push(item);
-  }
-
   for (let i = 0; i < res.sproffs.length; i++) {
     const [offset, length] = res.sproffs[i];
 
@@ -115,6 +106,15 @@ const parseRom = (arrayBuffer, res) => {
     const item = parseSproffs(buffer, i, offset);
     item.buffer = buffer;
     sproffs.push(item);
+  }
+
+  for (let i = 0; i < res.sprlens.length; i++) {
+    const [offset, length] = res.sprlens[i];
+
+    const buffer = arrayBuffer.slice(offset, offset + length);
+    const item = parseSprlens(buffer, i, offset);
+    item.buffer = buffer;
+    sprlens.push(item);
   }
 
   // @todo Assert that the highest value of sprdesc is within sprlens and sproffs.
@@ -160,8 +160,8 @@ const parseRom = (arrayBuffer, res) => {
     costumes,
     sprpals,
     sprdesc,
-    sprlens,
     sproffs,
+    sprlens,
     sprdata,
     preps,
     titles,

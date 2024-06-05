@@ -6,7 +6,6 @@ const parseCostumes = (arrayBuffer, i = 0, offset = 0) => {
     id: i,
     offset,
     size: arrayBuffer.byteLength,
-    decompressedSize: 0,
   };
 
   const costumes = [];
@@ -24,8 +23,6 @@ const parseCostumes = (arrayBuffer, i = 0, offset = 0) => {
     }
     costumes.push(costume);
   }
-
-  metadata.decompressedSize = costumes.length;
 
   const map = {
     type: 'costumes',
