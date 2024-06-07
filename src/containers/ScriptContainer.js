@@ -19,6 +19,7 @@ const ScriptContainer = ({ scripts }) => {
           currentId={currentId}
         />
       </PrimaryColumn>
+
       <Main>
         {!script ? (
           <h1>Scripts</h1>

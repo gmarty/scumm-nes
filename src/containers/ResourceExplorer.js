@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import { useRom } from '../contexts/RomContext';
 import RoomsContainer from './RoomsContainer';
+import CostumesContainer from './CostumesContainer';
 import GfxContainer from './GfxContainer';
 import PrepositionsContainer from './PrepositionsContainer';
 import RomMapContainer from './RomMapContainer';
@@ -17,6 +18,24 @@ const ResourceExplorer = () => {
 
   return (
     <Routes>
+      <Route
+        path="/titles"
+        element={
+          <TitlesContainer
+            rooms={resources.rooms}
+            titles={resources.titles}
+          />
+        }>
+        <Route
+          path=":id"
+          element={
+            <TitlesContainer
+              rooms={resources.rooms}
+              titles={resources.titles}
+            />
+          }
+        />
+      </Route>
       <Route
         path="/rooms"
         element={
@@ -40,19 +59,29 @@ const ResourceExplorer = () => {
         />
       </Route>
       <Route
-        path="/titles"
+        path="/costumes"
         element={
-          <TitlesContainer
-            rooms={resources.rooms}
-            titles={resources.titles}
+          <CostumesContainer
+            costumegfx={resources.costumegfx}
+            costumes={resources.costumes}
+            sprpals={resources.sprpals}
+            sprdesc={resources.sprdesc}
+            sprlens={resources.sprlens}
+            sproffs={resources.sproffs}
+            sprdata={resources.sprdata}
           />
         }>
         <Route
           path=":id"
           element={
-            <TitlesContainer
-              rooms={resources.rooms}
-              titles={resources.titles}
+            <CostumesContainer
+              costumegfx={resources.costumegfx}
+              costumes={resources.costumes}
+              sprpals={resources.sprpals}
+              sprdesc={resources.sprdesc}
+              sprlens={resources.sprlens}
+              sproffs={resources.sproffs}
+              sprdata={resources.sprdata}
             />
           }
         />
