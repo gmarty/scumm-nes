@@ -22,6 +22,7 @@ const darkpalette = [
 ];
 
 const CostumeCanvasContainer = ({
+  cIndex,
   frame,
   gfx,
   sprdesc,
@@ -34,9 +35,10 @@ const CostumeCanvasContainer = ({
   const canvasRef = useRef(null);
   const [isComputing, setIsComputing] = useState(true);
 
-  const id = costumeIdLookupTable[frame];
+  const id = costumeIdLookupTable[cIndex + 1];
   const desc = sprdesc[id];
-  const offset = sproffs[frame];
+  // this was 3 bytes per sprite in the data but has been parsed to 1 byte
+  const offset = sproffs[desc + frame] / 3;
   const spritesNum = sprlens[desc + frame];
   const palette = sprpals.palette;
 
@@ -53,7 +55,7 @@ const CostumeCanvasContainer = ({
   let bottom = 0;
 
   for (let i = 0; i < spritesNum; i++) {
-    const { x, y } = sprdata[i];
+    const { x, y } = sprdata[offset + i] || {};
 
     left = Math.min(left, x);
     right = Math.max(right, x + 8);
@@ -143,7 +145,7 @@ const draw = (
   ctx.clearRect(0, 0, width, height);
 
   for (let i = 0; i < spritesNum; i++) {
-    const { x, y, tile, flip, paletteId } = sprdata[offset + i];
+    const { x, y, tile, flip, paletteId } = sprdata[offset + i] || {};
     // console.log(sprdata[i]);
 
     const pal = getPalette([
