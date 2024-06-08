@@ -46,16 +46,16 @@ const CostumesContainer = ({
       </PrimaryColumn>
 
       <Main>
-        <MainHeader title={`Costume ${currentId}`}>
+        <MainHeader title={`Costumes`}>
           <ResourceMetadata metadata={costume.metadata} />
         </MainHeader>
         {costume.costumes.map((costume, i) => (
           <div key={i}>
-            <h2>{`Costume ${i}`}</h2>
+            <h2>{`Costume ${i+1}`}</h2>
             <div className="flex flex-row gap-4">
               {costume.map((frame, j) => (
                 <div key={j}>
-                  <h3>{`Frame ${j}`}</h3>
+                  <h3 class="text-xs">{`Frame ${j}`}</h3>
                   <CostumeCanvasContainer
                     cIndex={i}
                     frame={j}
@@ -65,7 +65,7 @@ const CostumesContainer = ({
                     sprlens={sprlens[0].sprlens}
                     sprdata={sprdata[0].sprdata}
                     sprpals={sprpals[0]}
-                    zoom={4}
+                    zoom={2}
                   />
                 </div>
               ))}
