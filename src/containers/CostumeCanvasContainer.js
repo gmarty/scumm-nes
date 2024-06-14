@@ -5,15 +5,6 @@ import { getPalette } from '../lib/paletteUtils';
 // Display a costume on a canvas.
 
 // prettier-ignore
-const costumeIdLookupTable = [
-  0x00, 0x03, 0x01, 0x06, 0x08,
-  0x02, 0x00, 0x07, 0x0c, 0x04,
-  0x09, 0x0a, 0x12, 0x0b, 0x14,
-  0x0d, 0x11, 0x0f, 0x0e, 0x10,
-  0x17, 0x00, 0x01, 0x05, 0x16,
-];
-
-// prettier-ignore
 const darkpalette = [
   0x2d, 0x1d, 0x2d, 0x3d,
   0x2d, 0x1d, 0x2d, 0x3d,
@@ -22,7 +13,7 @@ const darkpalette = [
 ];
 
 const CostumeCanvasContainer = ({
-  cIndex,
+  id,
   frame,
   gfx,
   sprdesc,
@@ -35,18 +26,17 @@ const CostumeCanvasContainer = ({
   const canvasRef = useRef(null);
   const [isComputing, setIsComputing] = useState(true);
 
-  const id = costumeIdLookupTable[cIndex + 1];
   const desc = sprdesc[id];
   // this was 3 bytes per sprite in the data but has been parsed down to 1 byte
   const offset = sproffs[desc + frame] / 3;
   const spritesNum = sprlens[desc + frame];
   const palette = sprpals.palette;
 
-  console.log('frame', frame);
-  console.log('id', id);
-  console.log('offset', offset);
-  console.log('spritesNum', spritesNum);
-  console.log('---');
+  // console.log('frame', frame);
+  // console.log('id', id);
+  // console.log('offset', offset);
+  // console.log('spritesNum', spritesNum);
+  // console.log('---');
 
   // Compute the bounding box.
   let left = 239;
