@@ -5,7 +5,6 @@ import Main from '../components/Main';
 import MainHeader from '../components/MainHeader';
 import ResourceMetadata from '../components/ResourceMetadata';
 import CostumeCanvasContainer from './CostumeCanvasContainer';
-import { hex } from '../lib/utils';
 
 // @todo Parse it from 3DAED-3DB05 instead of hardcoding.
 // prettier-ignore
@@ -43,23 +42,6 @@ const CostumesContainer = ({
   const frameNum = getFramesNumbersFromCostumeId(
     costumeIdLookupTable[currentId],
   );
-
-  //console.log('costumegfx', costumegfx);
-  // console.log('costumes', costumes);
-  //console.log('sprpals', sprpals);
-  // console.log(
-  //   'sprdesc',
-  //   sprdesc[0].sprdesc.map((v) => hex(v, 4)),
-  // );
-  // console.log(
-  //   'sproffs',
-  //   sproffs[0].sproffs.map((v) => hex(v, 4)),
-  // );
-  // console.log('sprlens', sprlens[0].sprlens);
-  // console.log('sprdata', sprdata[0].sprdata);
-  // console.log('frameNum', frameNum);
-
-  //console.log('costume', costume);
 
   if (!costume) {
     return null;

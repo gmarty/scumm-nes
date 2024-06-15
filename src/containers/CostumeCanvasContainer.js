@@ -32,18 +32,11 @@ const CostumeCanvasContainer = ({
   const spritesNum = sprlens[desc + frame];
   const palette = sprpals.palette;
 
-  // console.log('frame', frame);
-  // console.log('id', id);
-  // console.log('offset', offset);
-  // console.log('spritesNum', spritesNum);
-  // console.log('---');
-
   // Compute the bounding box.
   let left = 239;
   let right = 0;
   let top = 239;
   let bottom = 0;
-
   for (let i = 0; i < spritesNum; i++) {
     const { x, y } = sprdata[offset + i];
 
@@ -55,9 +48,6 @@ const CostumeCanvasContainer = ({
 
   const width = right - left;
   const height = bottom - top;
-
-  // console.log(left, right, top, bottom);
-  // console.log(width, height);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -117,19 +107,12 @@ const draw = (
   width,
   height,
 ) => {
-  // console.log('---');
-  // console.log('dataOffset', dataOffset);
-  // console.log('palette', palette);
-  // console.log('gfx', gfx);
-
   // Clear the canvas.
-  ctx.clearRect(0, 0, width, height);
   ctx.fillStyle = 'lightgrey';
   ctx.fillRect(0, 0, width, height);
 
   for (let i = 0; i < spritesNum; i++) {
     const { x, y, tile, flip, paletteId } = sprdata[offset + i];
-    // console.log(sprdata[i]);
 
     const pal = getPalette([
       palette[paletteId],
@@ -138,16 +121,12 @@ const draw = (
       palette[paletteId + 3],
     ]);
 
-    // console.log('pal', pal);
-
     for (let j = 0; j < 8; j++) {
       const n1 = gfx[tile * 2 * 8 + j];
       const n2 = gfx[(tile * 2 + 1) * 8 + j];
       for (let k = 0; k < 8; k++) {
         const mask = 1 << k;
         const val = (n1 & mask ? 1 : 0) | ((n2 & mask ? 1 : 0) << 1);
-
-        // console.log('val', val, pal[val]);
 
         // Skip the transparent palette colour.
         if (val === 0) {
