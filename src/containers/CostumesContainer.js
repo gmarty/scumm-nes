@@ -78,26 +78,23 @@ const CostumesContainer = ({
         <MainHeader title={`Costume ${currentId + 1}`}>
           <ResourceMetadata metadata={costume.metadata} />
         </MainHeader>
-        <div>
-          <div className="flex flex-row gap-4">
-            {Array(frameNum)
-              .fill()
-              .map((unused, frame) => (
-                <div key={frame}>
-                  <CostumeCanvasContainer
-                    id={costumeIdLookupTable[currentId]}
-                    frame={frame}
-                    gfx={costumegfx[0]}
-                    sprdesc={sprdesc[0].sprdesc}
-                    sproffs={sproffs[0].sproffs}
-                    sprlens={sprlens[0].sprlens}
-                    sprdata={sprdata[0].sprdata}
-                    sprpals={sprpals[0]}
-                    zoom={2}
-                  />
-                </div>
-              ))}
-          </div>
+        <div className="flex flex-row flex-wrap gap-4">
+          {Array(frameNum)
+            .fill()
+            .map((unused, frame) => (
+              <CostumeCanvasContainer
+                key={frame}
+                id={costumeIdLookupTable[currentId]}
+                frame={frame}
+                gfx={costumegfx[0]}
+                sprdesc={sprdesc[0].sprdesc}
+                sproffs={sproffs[0].sproffs}
+                sprlens={sprlens[0].sprlens}
+                sprdata={sprdata[0].sprdata}
+                sprpals={sprpals[0]}
+                zoom={2}
+              />
+            ))}
         </div>
       </Main>
     </>

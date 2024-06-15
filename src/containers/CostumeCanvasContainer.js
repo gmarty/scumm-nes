@@ -59,14 +59,6 @@ const CostumeCanvasContainer = ({
   // console.log(left, right, top, bottom);
   // console.log(width, height);
 
-  // Aspect ratio of 5:4 for all possible screen sizes.
-  const ratio = 'aspect-[1/1]';
-  //   width === 28
-  //     ? 'aspect-[4.375/2.133333333333333]'
-  //     : width === 60
-  //       ? 'aspect-[9.375/2.133333333333333]'
-  //       : 'aspect-[5/4]';
-
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
@@ -105,11 +97,10 @@ const CostumeCanvasContainer = ({
       width={width}
       height={height}
       className={clsx(
-        // ratio,
-        'w-full rounded',
+        'rounded',
         isComputing ? 'opacity-0' : 'opacity-100 transition-opacity',
       )}
-      style={{ width: width * zoom }}
+      style={{ width: width * zoom, height: height * zoom }}
     />
   );
 };
@@ -133,6 +124,8 @@ const draw = (
 
   // Clear the canvas.
   ctx.clearRect(0, 0, width, height);
+  ctx.fillStyle = 'lightgrey';
+  ctx.fillRect(0, 0, width, height);
 
   for (let i = 0; i < spritesNum; i++) {
     const { x, y, tile, flip, paletteId } = sprdata[offset + i];
