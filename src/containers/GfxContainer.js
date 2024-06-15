@@ -41,6 +41,7 @@ const GfxContainer = ({ titlegfx, costumegfx, roomgfx }) => {
           currentId={isRoomGfx ? currentId : null}
         />
       </PrimaryColumn>
+
       <Main>
         <MainHeader
           title={

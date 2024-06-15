@@ -64,6 +64,7 @@ const TitlesContainer = ({ rooms, titles }) => {
           titles={titles}
         />
       </PrimaryColumn>
+
       <Main>
         {!title ? (
           <h1>Titles</h1>
