@@ -163,9 +163,9 @@ const draw = (
 
         ctx.fillStyle = pal[val];
         if (flip) {
-          ctx.fillRect(7 - k - x, j + y - top, 1, 1);
+          ctx.fillRect(k + x - left, j + y - top, 1, 1);
         } else {
-          ctx.fillRect(k - x, j + y - top, 1, 1);
+          ctx.fillRect(7 - k + x - left, j + y - top, 1, 1);
         }
       }
     }

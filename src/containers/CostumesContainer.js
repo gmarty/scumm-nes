@@ -75,17 +75,15 @@ const CostumesContainer = ({
       </PrimaryColumn>
 
       <Main>
-        <MainHeader title={`Costumes`}>
+        <MainHeader title={`Costume ${currentId + 1}`}>
           <ResourceMetadata metadata={costume.metadata} />
         </MainHeader>
         <div>
-          <h2>{`Costume ${currentId + 1}`}</h2>
           <div className="flex flex-row gap-4">
             {Array(frameNum)
               .fill()
               .map((unused, frame) => (
                 <div key={frame}>
-                  <h3 className="text-xs">{`Frame ${frame}`}</h3>
                   <CostumeCanvasContainer
                     id={costumeIdLookupTable[currentId]}
                     frame={frame}
