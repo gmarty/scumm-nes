@@ -1,23 +1,27 @@
 import ColumnListHeader from './ColumnListHeader';
 import ColumnListItem from './ColumnListItem';
 
-const CostumesList = ({ costumes, currentId }) => {
+const CostumesList = ({ costumeSets, currentSetId, currentId }) => {
   return (
     <>
-      <ColumnListHeader>Costumes</ColumnListHeader>
-      {costumes.map(({ metadata }) => {
-        const selected = metadata.id === currentId;
-        const path = `/costumes/${metadata.id}`;
-        const label = `Costume ${metadata.id}`;
+      {costumeSets.map((costumeSet, costumeSetId) => (
+        <div key={costumeSetId}>
+          <ColumnListHeader>Costume set {costumeSetId}</ColumnListHeader>
+          {costumeSet.sprdesc.map((unused, id) => {
+            const selected = costumeSetId === currentSetId && id === currentId;
+            const path = `/costumes/${costumeSetId}/${id}`;
+            const label = `Costume ${id}`;
 
-        return (
-          <ColumnListItem
-            key={metadata.id}
-            path={selected ? null : path}>
-            {label}
-          </ColumnListItem>
-        );
-      })}
+            return (
+              <ColumnListItem
+                key={id}
+                path={selected ? null : path}>
+                {label}
+              </ColumnListItem>
+            );
+          })}
+        </div>
+      ))}
     </>
   );
 };

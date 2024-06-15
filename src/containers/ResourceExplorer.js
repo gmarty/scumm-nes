@@ -72,7 +72,7 @@ const ResourceExplorer = () => {
           />
         }>
         <Route
-          path=":id"
+          path=":setId/:id"
           element={
             <CostumesContainer
               costumegfx={resources.costumegfx}

@@ -25,23 +25,29 @@ const CostumesContainer = ({
   sprlens,
   sprdata,
 }) => {
-  const { id } = useParams();
+  const { setId, id } = useParams();
 
+  const currentSetId =
+    typeof setId === 'undefined' ? null : parseInt(setId, 10);
   const currentId = typeof id === 'undefined' ? null : parseInt(id, 10);
   const costume =
     costumes.find(({ metadata }) => metadata.id === currentId) || null;
+  const costumeId =
+    currentSetId === 0 ? costumeIdLookupTable[currentId] : currentId;
 
-  const getFramesNumbersFromCostumeId = (id) => {
-    if (id === sprdesc[0].sprdesc.length - 1) {
-      return sprdesc[0].sprdesc.length - id + 1;
+  const getFramesNumbersFromCostumeId = (costumeId = 0) => {
+    if (costumeId === sprdesc[currentSetId].sprdesc.length - 1) {
+      // @todo Find a better way than hardcoding it.
+      return currentSetId === 0 ? 2 : 1;
     }
 
-    return sprdesc[0].sprdesc[id + 1] - sprdesc[0].sprdesc[id];
+    return (
+      sprdesc[currentSetId].sprdesc[costumeId + 1] -
+      sprdesc[currentSetId].sprdesc[costumeId]
+    );
   };
 
-  const frameNum = getFramesNumbersFromCostumeId(
-    costumeIdLookupTable[currentId],
-  );
+  const frameNum = getFramesNumbersFromCostumeId(costumeId);
 
   if (!costume) {
     return null;
@@ -51,13 +57,14 @@ const CostumesContainer = ({
     <>
       <PrimaryColumn>
         <CostumesList
-          costumes={costumes}
+          costumeSets={sprdesc}
+          currentSetId={currentSetId}
           currentId={currentId}
         />
       </PrimaryColumn>
 
       <Main>
-        <MainHeader title={`Costume ${currentId + 1}`}>
+        <MainHeader title={`Costume ${currentId}`}>
           <ResourceMetadata metadata={costume.metadata} />
         </MainHeader>
         <div className="flex flex-row flex-wrap gap-4">
@@ -66,14 +73,14 @@ const CostumesContainer = ({
             .map((unused, frame) => (
               <CostumeCanvasContainer
                 key={frame}
-                id={costumeIdLookupTable[currentId]}
+                id={costumeId}
                 frame={frame}
-                gfx={costumegfx[0]}
-                sprdesc={sprdesc[0].sprdesc}
-                sproffs={sproffs[0].sproffs}
-                sprlens={sprlens[0].sprlens}
-                sprdata={sprdata[0].sprdata}
-                sprpals={sprpals[0]}
+                gfx={costumegfx[currentSetId]}
+                sprdesc={sprdesc[currentSetId].sprdesc}
+                sproffs={sproffs[currentSetId].sproffs}
+                sprlens={sprlens[currentSetId].sprlens}
+                sprdata={sprdata[currentSetId].sprdata}
+                sprpals={sprpals[currentSetId]}
                 zoom={2}
               />
             ))}
