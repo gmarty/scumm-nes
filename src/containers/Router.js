@@ -9,7 +9,7 @@ import TitlesContainer from './TitlesContainer';
 import SettingsContainer from './SettingsContainer';
 import ScriptContainer from './ScriptContainer';
 
-const ResourceExplorer = () => {
+const Router = () => {
   const { prg, res, resources } = useRom();
 
   if (!resources) {
@@ -180,4 +180,4 @@ const ResourceExplorer = () => {
   );
 };
 
-export default ResourceExplorer;
+export default Router;

@@ -1,18 +1,14 @@
 import { useRom } from './contexts/RomContext';
 import Layout from './components/Layout';
 import DropZoneContainer from './containers/DropZoneContainer';
-import ResourceExplorer from './containers/ResourceExplorer';
+import Router from './containers/Router';
 
 const App = () => {
   const { prg, res, resources } = useRom();
 
   return (
     <Layout>
-      {!prg || !res || !resources ? (
-        <DropZoneContainer />
-      ) : (
-        <ResourceExplorer />
-      )}
+      {!prg || !res || !resources ? <DropZoneContainer /> : <Router />}
     </Layout>
   );
 };
