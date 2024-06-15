@@ -30,6 +30,13 @@ const CostumesContainer = ({
   const currentSetId =
     typeof setId === 'undefined' ? null : parseInt(setId, 10);
   const currentId = typeof id === 'undefined' ? null : parseInt(id, 10);
+  // Used for the side navbar:
+  // * Costume set 0 has 25 costumes (hardcoded value?).
+  // * Costume set 1 has as many costumes as entries in the corresponding sprdesc.
+  const costumeSets = [
+    Array(costumeIdLookupTable.length).fill(0),
+    sprdesc[1].sprdesc,
+  ];
   const costume =
     costumes.find(({ metadata }) => metadata.id === currentId) || null;
   const costumeId =
@@ -57,7 +64,7 @@ const CostumesContainer = ({
     <>
       <PrimaryColumn>
         <CostumesList
-          costumeSets={sprdesc}
+          costumeSets={costumeSets}
           currentSetId={currentSetId}
           currentId={currentId}
         />
@@ -67,24 +74,52 @@ const CostumesContainer = ({
         <MainHeader title={`Costume ${currentId}`}>
           <ResourceMetadata metadata={costume.metadata} />
         </MainHeader>
-        <div className="flex flex-row flex-wrap gap-4">
-          {Array(frameNum)
-            .fill()
-            .map((unused, frame) => (
-              <CostumeCanvasContainer
-                key={frame}
-                id={costumeId}
-                frame={frame}
-                gfx={costumegfx[currentSetId]}
-                sprdesc={sprdesc[currentSetId].sprdesc}
-                sproffs={sproffs[currentSetId].sproffs}
-                sprlens={sprlens[currentSetId].sprlens}
-                sprdata={sprdata[currentSetId].sprdata}
-                sprpals={sprpals[currentSetId]}
-                zoom={2}
-              />
+        {currentSetId === 0 ? (
+          <div className="space-y-4">
+            {costume.costumes.map((animation, i) => (
+              <div key={i}>
+                <h2 className="mb-1 text-sm font-semibold text-slate-700 md:text-base dark:text-slate-300">
+                  Animation {i}
+                </h2>
+                <div className="flex flex-row flex-wrap gap-4">
+                  {animation.map((frame, key) => (
+                    <CostumeCanvasContainer
+                      key={key}
+                      id={costumeId}
+                      frame={frame}
+                      gfx={costumegfx[currentSetId]}
+                      sprdesc={sprdesc[currentSetId].sprdesc}
+                      sproffs={sproffs[currentSetId].sproffs}
+                      sprlens={sprlens[currentSetId].sprlens}
+                      sprdata={sprdata[currentSetId].sprdata}
+                      sprpals={sprpals[currentSetId]}
+                      zoom={2}
+                    />
+                  ))}
+                </div>
+              </div>
             ))}
-        </div>
+          </div>
+        ) : (
+          <div className="flex flex-row flex-wrap gap-4">
+            {Array(frameNum)
+              .fill()
+              .map((unused, frame) => (
+                <CostumeCanvasContainer
+                  key={frame}
+                  id={costumeId}
+                  frame={frame}
+                  gfx={costumegfx[currentSetId]}
+                  sprdesc={sprdesc[currentSetId].sprdesc}
+                  sproffs={sproffs[currentSetId].sproffs}
+                  sprlens={sprlens[currentSetId].sprlens}
+                  sprdata={sprdata[currentSetId].sprdata}
+                  sprpals={sprpals[currentSetId]}
+                  zoom={2}
+                />
+              ))}
+          </div>
+        )}
       </Main>
     </>
   );

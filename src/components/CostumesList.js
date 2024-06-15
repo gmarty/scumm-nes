@@ -7,7 +7,7 @@ const CostumesList = ({ costumeSets, currentSetId, currentId }) => {
       {costumeSets.map((costumeSet, costumeSetId) => (
         <div key={costumeSetId}>
           <ColumnListHeader>Costume set {costumeSetId}</ColumnListHeader>
-          {costumeSet.sprdesc.map((unused, id) => {
+          {costumeSet.map((unused, id) => {
             const selected = costumeSetId === currentSetId && id === currentId;
             const path = `/costumes/${costumeSetId}/${id}`;
             const label = `Costume ${id}`;
