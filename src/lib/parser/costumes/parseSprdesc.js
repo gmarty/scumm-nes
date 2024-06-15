@@ -13,8 +13,8 @@ const parseSprdesc = (arrayBuffer, i = 0, offset = 0) => {
     sprdesc.push(parser.getUint16());
   }
 
-  // For some reason, the last element is a Uint8, probably unused.
-  sprdesc.push(parser.getUint8());
+  // For some reason, the last element is an unused Uint8.
+  parser.getUint8();
 
   const map = {
     type: 'sprdesc',

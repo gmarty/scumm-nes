@@ -32,19 +32,32 @@ const CostumesContainer = ({
   const costume =
     costumes.find(({ metadata }) => metadata.id === currentId) || null;
 
+  const getFramesNumbersFromCostumeId = (id) => {
+    if (id === sprdesc[0].sprdesc.length - 1) {
+      return sprdesc[0].sprdesc.length - id + 1;
+    }
+
+    return sprdesc[0].sprdesc[id + 1] - sprdesc[0].sprdesc[id];
+  };
+
+  const frameNum = getFramesNumbersFromCostumeId(
+    costumeIdLookupTable[currentId],
+  );
+
   //console.log('costumegfx', costumegfx);
-  console.log('costumes', costumes);
+  // console.log('costumes', costumes);
   //console.log('sprpals', sprpals);
-  console.log(
-    'sprdesc',
-    sprdesc[0].sprdesc.map((v) => hex(v, 4)),
-  );
-  console.log(
-    'sproffs',
-    sproffs[0].sproffs.map((v) => hex(v, 4)),
-  );
-  console.log('sprlens', sprlens[0].sprlens);
-  console.log('sprdata', sprdata[0].sprdata);
+  // console.log(
+  //   'sprdesc',
+  //   sprdesc[0].sprdesc.map((v) => hex(v, 4)),
+  // );
+  // console.log(
+  //   'sproffs',
+  //   sproffs[0].sproffs.map((v) => hex(v, 4)),
+  // );
+  // console.log('sprlens', sprlens[0].sprlens);
+  // console.log('sprdata', sprdata[0].sprdata);
+  // console.log('frameNum', frameNum);
 
   //console.log('costume', costume);
 
@@ -68,7 +81,7 @@ const CostumesContainer = ({
         <div>
           <h2>{`Costume ${currentId + 1}`}</h2>
           <div className="flex flex-row gap-4">
-            {Array(17)
+            {Array(frameNum)
               .fill()
               .map((unused, frame) => (
                 <div key={frame}>
