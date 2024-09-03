@@ -9,7 +9,7 @@ const parseTitles = (arrayBuffer, i = 0, offset = 0) => {
     id: i,
     offset,
     size: arrayBuffer.byteLength,
-    // decompressedSize: 0, // Commented out until the buffer size is known.
+    decompressedSize: 0,
   };
   const map = [];
 
@@ -81,7 +81,7 @@ const parseTitles = (arrayBuffer, i = 0, offset = 0) => {
   const attrWidth = parser.getUint8() + 1;
   const attrHeight = parser.getUint8() + 1;
 
-  assert(unk5 === 0xc002, 'Unknown 5 is not 1.');
+  assert(unk5 === 0xc002, 'Unknown 5 is not 0xc002.');
   assert(unk6 === 0x23, 'Unknown 6 is not 0x23.');
   assert(attrWidth === 8, 'attrWidth is not 8.');
   assert(attrHeight === 8, 'attrHeight is not 8.');
@@ -121,8 +121,7 @@ const parseTitles = (arrayBuffer, i = 0, offset = 0) => {
 
   assert(endOfData === 0xff, 'endOfData is not 0xff.');
 
-  // metadata.decompressedSize = gfx.length;
-  metadata.size = parser.pointer;
+  metadata.decompressedSize = gfx.length + nametableTmp.length + attributes.length;
 
   return {
     metadata,
