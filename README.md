@@ -5,7 +5,7 @@
 ## What is this?
 
 This tool is a web app to explore and modify the resources contained in the Maniac Mansion game on NES.
-The goal is to encourage the ROM hacking community to modify the game and create new hacks.
+The goal is to encourage the ROM hacking community to modify the game and create new ROM hacks or translations based on this game.
 
 This app only works with Maniac Mansion on NES, it won't work with SCUMM files from other platforms or other NES games.
 
@@ -13,13 +13,13 @@ Portion of the code comes from [ScummVM](https://github.com/scummvm) and [Maniac
 
 ## What does it do?
 
-It currently support:
+It currently supports:
 
 - Rooms (partially)
-- Room graphics
-- Costumes (not yet exposed to the UI)
-- Prepositions
 - Title screens
+- Graphics
+- Costumes
+- Prepositions
 
 The following version are supported:
 
@@ -30,17 +30,23 @@ The following version are supported:
 - Italian
 - Spanish
 - Swedish
-- American English prototype (partial support)
+- American English prototype
 
-The Japanese version is not supported.
+The Japanese version is not supported as it doesn't use SCUMM but implements its own engine instead.
 
 ## What does it NOT do?
 
 The app doesn't use the runtime code used by the NES to start and play the game. It only works with the SCUMM resources stored in the ROM files.
 
+## What can you modify in the game?
+
+At this stage, only the room palettes can be modified. Click on any colour to display a colour picker.
+
+When you're happy with your changes, export a ROM file with the download icon on the top left corner.
+
 ## How to use it?
 
-On top of the app, there is a command line interface to export the resources to JSON. This is useful to do process or compare the data.
+On top of the app, there is a command line interface to export the resources to JSON. This is useful to process or compare the data.
 
 ```
 node index.js --input path/to/rom --output resources.json
@@ -81,7 +87,8 @@ Then deploy the content of the `dist` folder.
 
 - Use Typescript.
 - Write more tests.
-- Parse more resource types (sprites, sounds...).
+- Parse more resource types (charset, sounds...).
+- Make more elements modifiable.
 - QoF improvements (store the ROM files locally...)
 
 ### Out of scope for now
