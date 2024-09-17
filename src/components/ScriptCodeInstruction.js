@@ -69,7 +69,11 @@ const prettifyArguments = (operation) => {
         </Link>,
       ];
       break;
-    case 0x24: // loadRoomWithEgo
+    // loadRoomWithEgo
+    case 0x24:
+    case 0x64:
+    case 0xa4:
+    case 0xe4:
       args = [
         args[0],
         <Link
@@ -83,6 +87,7 @@ const prettifyArguments = (operation) => {
       break;
     // loadRoom
     case 0x72:
+    case 0xf2:
       args = [
         <Link
           className="underline"
@@ -91,7 +96,11 @@ const prettifyArguments = (operation) => {
         </Link>,
       ];
       break;
-    case 0x2d: // putActorInRoom
+    // putActorInRoom
+    case 0x2d:
+    case 0x6d:
+    case 0xad:
+    case 0xed:
       args = [
         args[0],
         <Link
@@ -102,8 +111,11 @@ const prettifyArguments = (operation) => {
       ];
       break;
     case 0x42: // startScript
+    case 0xc2:
     case 0x62: // stopScript
+    case 0xe2:
     case 0x4a: // chainScript
+    case 0xca:
       args = [
         <Link
           className="underline"
