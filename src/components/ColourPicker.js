@@ -43,7 +43,7 @@ const ColourPicker = ({ colourId, onPick, children }) => {
           </CloseButton>
         </div>
 
-        <div className="grid-cols-14 mx-2 mb-2 grid">
+        <div className="mx-2 mb-2 grid grid-cols-14">
           {colourPalette.map((c, i) =>
             i % 16 <= 13 ? (
               <ColourSwatch
