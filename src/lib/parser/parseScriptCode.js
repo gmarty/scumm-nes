@@ -141,11 +141,11 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
       case 0x0c:
       case 0x8c: {
         const resTypes = [
-          0, // Invalid
-          0, // Invalid
+          null, // Invalid
+          null, // Invalid
           'Costume',
           'Room',
-          '0', // Invalid
+          null, // Invalid
           'Script',
           'Sound',
         ];
@@ -169,7 +169,7 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
         }
 
         const type = resTypes[subOp >> 4];
-        if (type === 0) {
+        if (!type) {
           console.error(`Resource Routines: Invalid type ${type}`);
         }
 
@@ -242,21 +242,27 @@ const parseScriptCode = (parser, startAddress, parentOffset = 0) => {
         const subOp = parser.getUint8();
         switch (subOp) {
           case 0x01:
-            scriptRow.push(`Sound(${subOpArg})`);
+            scriptRow.push(`Sound`);
+            scriptRow.push(subOpArg);
             break;
           case 0x02:
             const value = parser.getUint8();
-            scriptRow.push(`Color(${value}, ${subOpArg})`);
+            scriptRow.push(`Color`);
+            scriptRow.push(subOpArg);
+            scriptRow.push(value);
             break;
           case 0x03:
             const name = parser.getString();
-            scriptRow.push(`Name("${name}")`);
+            scriptRow.push(`Name`);
+            scriptRow.push(name);
             break;
           case 0x04:
-            scriptRow.push(`Costume(${subOpArg})`);
+            scriptRow.push(`Costume`);
+            scriptRow.push(subOpArg);
             break;
           case 0x05:
-            scriptRow.push(`TalkColor(${subOpArg})`);
+            scriptRow.push(`TalkColor`);
+            scriptRow.push(subOpArg);
             break;
           default:
             scriptRow.push(`// Unknown subop: 0x${hex(subOp, 2)}`);

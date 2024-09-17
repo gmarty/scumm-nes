@@ -7,6 +7,59 @@ const prettifyArguments = (operation) => {
   let args = operation.slice(2);
 
   switch (opCode) {
+    // resourceRoutines
+    case 0x0c:
+    case 0x8c:
+      if (args[0].endsWith('Costume')) {
+        // Note: The link goes to costume set 0. The actual costume set used can't be determined statically.
+        args = [
+          <Link
+            className="underline"
+            to={`/costumes/0/${args[1]}`}>
+            {args[0]}({args[1]})
+          </Link>,
+        ];
+      } else if (args[0].endsWith('Room')) {
+        args = [
+          <Link
+            className="underline"
+            to={`/rooms/${args[1]}`}>
+            {args[0]}({args[1]})
+          </Link>,
+        ];
+      } else if (args[0].endsWith('Script')) {
+        args = [
+          <Link
+            className="underline"
+            to={`/scripts/${args[1]}`}>
+            {args[0]}({args[1]})
+          </Link>,
+        ];
+      }
+      break;
+    // actorOps
+    case 0x13:
+    case 0x53:
+    case 0x93:
+    case 0xd3:
+      if (args[1] === 'Color') {
+        args = [args[0], `${args[1]}(${args[3]}, ${args[2]})`];
+      } else if (args[1] === 'Name') {
+        args = [args[0], `${args[1]}("${args[2]}")`];
+      } else if (args[1] === 'Costume') {
+        // Note: The link goes to costume set 0. The actual costume set used can't be determined statically.
+        args = [
+          args[0],
+          <Link
+            className="underline"
+            to={`/costumes/0/${args[2]}`}>
+            {args[1]}({args[2]})
+          </Link>,
+        ];
+      } else {
+        args = [args[0], `${args[1]}(${args[2]})`];
+      }
+      break;
     case 0x18: // goTo
       args = [
         <Link
@@ -28,6 +81,7 @@ const prettifyArguments = (operation) => {
         args[3],
       ];
       break;
+    // loadRoom
     case 0x72:
       args = [
         <Link
