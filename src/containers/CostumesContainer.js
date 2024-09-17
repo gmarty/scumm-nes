@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom';
+import getCostumeLabel from '../lib/getCostumeLabel';
 import PrimaryColumn from '../components/PrimaryColumn';
 import CostumesList from '../components/CostumesList';
 import Main from '../components/Main';
@@ -71,7 +72,7 @@ const CostumesContainer = ({
       </PrimaryColumn>
 
       <Main>
-        <MainHeader title={`Costume ${currentId}`}>
+        <MainHeader title={getCostumeLabel(currentSetId, currentId, true)}>
           <ResourceMetadata metadata={costume.metadata} />
         </MainHeader>
         {currentSetId === 0 ? (

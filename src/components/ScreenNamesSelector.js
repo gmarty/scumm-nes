@@ -16,7 +16,7 @@ const ScreenNamesSelector = ({
   return (
     <>
       <h2 className="text-xl font-semibold leading-6 text-slate-700 md:text-2xl dark:text-slate-300">
-        Screen names
+        Resource naming scheme
       </h2>
 
       <RadioGroup
