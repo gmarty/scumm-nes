@@ -15,11 +15,19 @@ Portion of the code comes from [ScummVM](https://github.com/scummvm) and [Maniac
 
 It currently supports:
 
-- Rooms (partially)
-- Title screens
-- Graphics
-- Costumes
-- Prepositions
+| Resource       | Parser         | Serialiser   | UI Editor         |
+| -------------- | -------------- | ------------ | ----------------- |
+| Graphics       | ✅             | ❌           | ❌                |
+| Rooms          | ✅ (partial)   | ✅ (partial) | ❌ (palette only) |
+| Title screens  | ✅             | ❌ (partial) | ❌ (palette only) |
+| Scripts        | ✅             | ❌           | ❌                |
+| Sounds         | ❌             | ❌           | ❌                |
+| Costumes       | ✅             | ❌           | ❌                |
+| Initial States | ✅             | ❌           | ❌                |
+| Charset        | ❌ (hardcoded) | ❌           | ❌                |
+| Prepositions   | ✅             | ✅           | ❌                |
+
+Parsers are used to view the resources. Serialisers allows the modification of the resources to create new ROM hacks. The UI Editor column indicates resources that can be modified using the app.
 
 The following version are supported:
 
@@ -94,3 +102,10 @@ Then deploy the content of the `dist` folder.
 ### Out of scope for now
 
 - Cover other SCUMM versions.
+
+## Developer
+
+`scumm-nes` is developed by edo999. Find me on social media:
+
+- Mastodon: <a href="https://mastodon.social/@edo999" rel="nofollow me">edo999 (mastodon.social)</a>
+- Bluesky: <a href="https://bsky.app/profile/edo999.bsky.social" rel="nofollow me">@edo999.bsky.social</a>
